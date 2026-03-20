@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc Nghiệm Hướng Nghiệp RIASEC - TS. Vũ Xuân Hùng</title>
+    <title>Trắc nghiệm Hướng nghiệp RIASEC - TS. Vũ Xuân Hùng</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
@@ -72,49 +72,48 @@
 
         .question-block {
             margin-bottom: 25px;
-            padding: 15px;
+            padding: 20px 15px; /* Tăng khoảng cách để thoáng hơn */
             background: #fdfdfd;
-            border-left: 4px solid var(--primary-color);
+            border-left: 5px solid var(--primary-color);
             border-radius: 4px;
             transition: all 0.2s;
         }
         .question-block:hover {
             background-color: #f9f9f9;
-            transform: translateX(5px);
         }
         .question-text {
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-size: 1.1em;
+            color: #2c3e50;
         }
         .options-group {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            flex-direction: column; /* Luôn xếp dọc để đáp ứng mọi độ dài văn bản */
+            gap: 10px;
         }
-        @media (min-width: 600px) {
-            .options-group {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-        }
+        
+        /* Đã điều chỉnh CSS cho phần đáp án: Căn trái, căn chỉnh icon mượt mà */
         .option-label {
-            background: #ecf0f1;
-            padding: 8px 12px;
-            border-radius: 4px;
+            background: #f1f2f6;
+            padding: 12px 15px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9em;
-            flex: 1;
-            text-align: center;
+            font-size: 0.95em;
+            text-align: left; /* Căn trái văn bản */
+            display: flex;
+            align-items: center; /* Căn giữa theo chiều dọc giữa nút radio và chữ */
             transition: background 0.2s, color 0.2s;
             border: 1px solid transparent;
         }
         .option-label:hover {
-            background: #dcdde1;
+            background: #eccc6;
         }
         input[type="radio"] {
-            margin-right: 5px;
+            margin-right: 12px;
             cursor: pointer;
+            transform: scale(1.2); /* Phóng to nút chọn một chút cho dễ bấm */
+            flex-shrink: 0; /* Đảm bảo nút radio không bị méo khi chữ quá dài */
         }
         input[type="radio"]:checked + span {
             font-weight: bold;
@@ -162,10 +161,10 @@
             border-top: 2px dashed #bdc3c7;
         }
 
-        /* KHU VỰC IN PDF ĐƯỢC CHUẨN HÓA LẠI CSS */
+        /* KHU VỰC IN PDF */
         #pdf-content {
             padding: 30px;
-            background-color: #ffffff; /* Bắt buộc có nền trắng để tránh lỗi đen/trắng nền */
+            background-color: #ffffff;
             color: #000000;
             width: 100%;
             box-sizing: border-box;
@@ -196,7 +195,7 @@
             margin-bottom: 20px;
             border-radius: 8px;
             border-left: 5px solid #1abc9c;
-            page-break-inside: avoid; /* Ngăn cắt trang giữa nội dung */
+            page-break-inside: avoid;
         }
         .result-card h4 {
             margin-top: 0;
@@ -245,9 +244,6 @@
     </form>
 
     <div id="result-container">
-        <button type="button" id="download-btn" class="btn pdf-btn" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF (Bản in)</button>
-        <div style="height: 30px;"></div>
-
         <div id="pdf-content">
             <div class="pdf-header">
                 <h2>BÁO CÁO PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
@@ -275,6 +271,9 @@
                 Kết quả mang tính chất tư vấn khoa học, hỗ trợ học sinh đưa ra quyết định chọn ngành nghề phù hợp.
             </div>
         </div>
+
+        <div style="height: 20px;"></div>
+        <button type="button" id="download-btn" class="btn pdf-btn" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF (Bản in)</button>
     </div>
 </div>
 
@@ -292,7 +291,7 @@
         { "id": "I01", "category": "I", "text": "2. Tôi thường xuyên đặt câu hỏi 'Tại sao?' và luôn muốn tìm hiểu nguyên lý hoạt động sâu xa của mọi sự vật." },
         { "id": "A01", "category": "A", "text": "3. Tôi có khả năng cảm thụ tốt và đam mê các hình thức biểu đạt nghệ thuật (âm nhạc, hội họa, thiết kế)." },
         { "id": "S01", "category": "S", "text": "4. Tôi tìm thấy niềm vui khi được lắng nghe, thấu hiểu và giúp đỡ người khác vượt qua khó khăn tâm lý." },
-        { "id": "E01", "category": "E", "text": "5. Tôi tự tin khi phát biểu trước đám đông và có năng lực thuyết phục để người khác ủng hộ ý tưởng của mình." },
+        { "id": "E01", "category": "E", "text": "5. Tôi tự tự tin khi phát biểu trước đám đông và có năng lực thuyết phục để người khác ủng hộ ý tưởng của mình." },
         { "id": "C01", "category": "C", "text": "6. Tôi phát huy thế mạnh ở các công việc đòi hỏi sự tỉ mỉ, độ chính xác tuyệt đối và tuân thủ quy trình." },
         { "id": "R02", "category": "R", "text": "7. Tôi ưu tiên các hoạt động ngoài trời, gắn liền với thiên nhiên, không gian mở hơn là ngồi làm việc hành chính." },
         { "id": "I02", "category": "I", "text": "8. Tôi làm việc hiệu quả nhất khi được độc lập suy nghĩ, nghiên cứu chuyên sâu thay vì làm việc nhóm quá nhiều." },
@@ -310,7 +309,6 @@
       "labor_market_insight": "Thị trường lao động Việt Nam đang chuyển dịch mạnh mẽ theo hướng số hóa. Các nhóm ngành đòi hỏi sự kết hợp liên ngành (Ví dụ: Công nghệ + Giáo dục, Kinh tế + Dữ liệu) sẽ dẫn dắt thị trường. Những năng lực cốt lõi khó bị thay thế bởi AI bao gồm: Trí tuệ cảm xúc (S), Tư duy sáng tạo giải pháp (A), và Năng lực lãnh đạo chiến lược (E)."
     };
 
-    // Render câu hỏi
     const container = document.getElementById('questions-container');
     quizData.questions.forEach((q, index) => {
         let questionHtml = `<div class="question-block">
@@ -358,7 +356,6 @@
         let top3 = sortedScores.slice(0, 3);
         let resultCode = top3.map(t => t.category).join(" - ");
 
-        // Cập nhật dữ liệu vào bản in
         document.getElementById('pdf-render-name').innerText = sName;
         document.getElementById('pdf-render-class').innerText = sClass;
         document.getElementById('pdf-render-date').innerText = new Date().toLocaleDateString('vi-VN');
@@ -381,40 +378,35 @@
         document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Hàm tải PDF đã được tinh chỉnh triệt để lỗi cuộn trang (scrollY)
     function downloadPDF() {
         const element = document.getElementById('pdf-content');
         const sName = document.getElementById('student-name').value.trim() || "Hoc_Sinh";
         
-        // Loại bỏ dấu tiếng Việt để tên file không bị lỗi font khi lưu trên máy tính
         const removeAccents = (str) => {
             return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
         };
         const safeName = removeAccents(sName).replace(/\s+/g, '_');
         const fileName = `Bao_Cao_Huong_Nghiep_${safeName}.pdf`;
 
-        // Thay đổi trạng thái nút bấm
         const btn = document.getElementById('download-btn');
         const originalText = btn.innerText;
         btn.innerText = "⏳ Đang tạo PDF, vui lòng đợi...";
         btn.disabled = true;
 
         const opt = {
-            margin:       10, // Đơn vị mm
+            margin:       10, 
             filename:     fileName,
-            image:        { type: 'jpeg', quality: 1 }, // Chất lượng cao nhất
+            image:        { type: 'jpeg', quality: 1 }, 
             html2canvas:  { 
                 scale: 2, 
                 useCORS: true,
-                scrollY: 0, // Bắt buộc: Khắc phục lỗi trang trắng khi cuộn màn hình
-                backgroundColor: '#ffffff' // Bắt buộc: Khắc phục lỗi nền đen/trắng
+                scrollY: 0, 
+                backgroundColor: '#ffffff' 
             },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // Chạy tiến trình lưu PDF
         html2pdf().set(opt).from(element).save().then(() => {
-            // Khôi phục nút bấm sau khi tải xong
             btn.innerText = originalText;
             btn.disabled = false;
         }).catch(err => {
