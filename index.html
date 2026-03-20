@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc Nghiệm Hướng Nghiệp Đa Chiều - TS. Vũ Xuân Hùng</title>
+    <title>Trắc nghiệm Hướng nghiệp đa chiều - TS. Vũ Xuân Hùng</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -79,7 +79,7 @@
 
 <div class="container">
     <div class="main-header">
-        <h1>Hệ Thống Đánh Giá Năng Lực & Hướng Nghiệp Đa Chiều</h1>
+        <h1>Hệ thống Đánh giá năng lực và hướng nghiệp đa Chiều</h1>
         <div class="header-desc">
             Phát triển chuyên môn: TS. Vũ Xuân Hùng<br>
             Tích hợp mô hình: RIASEC + Đa trí tuệ (Gardner) + ASK<br>
@@ -88,26 +88,26 @@
     </div>
 
     <div class="student-info-form">
-        <h3>Thông Tin Khai Báo</h3>
+        <h3>Thông tin cá nhân</h3>
         <p style="text-align:center; color: #7f8c8d; margin-top:-10px; font-size:0.9em;">(Vui lòng điền đầy đủ để hệ thống cấp báo cáo PDF)</p>
         <div class="form-group"><label>Họ và Tên:</label><input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A" required></div>
         <div class="form-group"><label>Lớp / Trường:</label><input type="text" id="student-class" placeholder="Ví dụ: 12A1 - THPT Chuyên" required></div>
     </div>
 
     <form id="quiz-form">
-        <div class="section-title">Phần 1: Khám Phá Sở Thích</div>
+        <div class="section-title">Phần 1: Khám phá Sở Thích</div>
         <div class="section-desc">Đánh giá môi trường làm việc, sở thích nghề nghiệp (Cơ sở phân tích 7 nhóm RIASEC & An ninh Quốc phòng).</div>
         <div id="part1-container"></div>
 
-        <div class="section-title">Phần 2: Tự Đánh Giá Năng Lực</div>
+        <div class="section-title">Phần 2: Tự đánh giá Năng Lực</div>
         <div class="section-desc">Đánh giá thái độ, kỹ năng mềm và các loại hình Đa trí tuệ nổi trội (Mô hình ASK & Howard Gardner).</div>
         <div id="part2-container"></div>
 
-        <div class="section-title">Phần 3: Bài Test Tư Duy (G-Factor)</div>
+        <div class="section-title">Phần 3: Bài Test Tư duy (G-Factor)</div>
         <div class="section-desc">Khảo sát mức độ tự tin trong khả năng tư duy logic, xử lý không gian và ngôn ngữ.</div>
         <div id="part3-container"></div>
 
-        <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp Bài & Chờ AI Phân Tích</button>
+        <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp bài và chờ AI phân tích</button>
         <div id="ai-loading" class="loading-ai">⚙️ Trí tuệ nhân tạo đang tổng hợp, vẽ biểu đồ và phân tích dữ liệu...</div>
     </form>
 
@@ -151,7 +151,7 @@
         const scale = [
             { value: 1, label: "Hoàn toàn không đúng" },
             { value: 2, label: "Không đúng" },
-            { value: 3, label: "Phân vân" },
+            { value: 3, label: "Gần đúng/Phân vân" },
             { value: 4, label: "Đúng với tôi" },
             { value: 5, label: "Hoàn toàn đúng" }
         ];
