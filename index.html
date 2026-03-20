@@ -41,7 +41,6 @@
             border-bottom: 2px solid #eee;
             padding-bottom: 15px;
         }
-        /* Style cho phần thông tin học sinh */
         .student-info-form {
             background-color: #eaf2f8;
             padding: 20px;
@@ -63,7 +62,7 @@
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box; /* Cần thiết để padding không làm tăng chiều rộng */
+            box-sizing: border-box;
         }
         .form-group input[type="text"]:focus {
             border-color: var(--primary-color);
@@ -117,13 +116,9 @@
             margin-right: 5px;
             cursor: pointer;
         }
-        /* Style khi option được chọn */
         input[type="radio"]:checked + span {
             font-weight: bold;
             color: var(--primary-color);
-        }
-        input[type="radio"]:checked input[type="radio"] {
-             border: 2px solid var(--primary-color);
         }
 
         .btn {
@@ -150,10 +145,14 @@
         }
         .pdf-btn {
             background: var(--accent-color);
-            display: none; /* Ẩn cho đến khi có kết quả */
+            display: none; 
         }
         .pdf-btn:hover {
             background: #c0392b;
+        }
+        .pdf-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
         }
 
         #result-container {
@@ -163,11 +162,13 @@
             border-top: 2px dashed #bdc3c7;
         }
 
-        /* --- Style dành riêng cho vùng in PDF --- */
+        /* KHU VỰC IN PDF ĐƯỢC CHUẨN HÓA LẠI CSS */
         #pdf-content {
             padding: 30px;
-            background: #fff;
-            color: #000; /* Đảm bảo chữ đen khi in */
+            background-color: #ffffff; /* Bắt buộc có nền trắng để tránh lỗi đen/trắng nền */
+            color: #000000;
+            width: 100%;
+            box-sizing: border-box;
         }
         .pdf-header {
             text-align: center;
@@ -175,27 +176,27 @@
             padding-bottom: 15px;
             margin-bottom: 25px;
         }
-        .pdf-header h2 { margin: 0; font-size: 1.6em; }
+        .pdf-header h2 { margin: 0; font-size: 1.6em; color: #2c3e50; }
         .pdf-header p { margin: 5px 0 0; font-size: 0.9em; color: #555; }
 
         .pdf-student-meta {
             margin-bottom: 25px;
             font-size: 1.1em;
-            border: 1px solid #eee;
-            padding: 10px;
+            border: 1px solid #ddd;
+            padding: 15px;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: #fafafa;
         }
-        .pdf-student-meta div { margin-bottom: 5px; }
-        .pdf-student-meta strong { color: #2980b9; }
+        .pdf-student-meta div { margin-bottom: 8px; }
+        .pdf-student-meta strong { color: #2980b9; display: inline-block; width: 180px;}
 
         .result-card {
-            background: #f4fdfb; /* Màu nhạt hơn để in đẹp */
+            background-color: #f4fdfb; 
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 8px;
             border-left: 5px solid #1abc9c;
-            page-break-inside: avoid; /* Tránh cắt đôi card khi qua trang mới */
+            page-break-inside: avoid; /* Ngăn cắt trang giữa nội dung */
         }
         .result-card h4 {
             margin-top: 0;
@@ -205,11 +206,11 @@
             padding-bottom: 10px;
         }
         .insight-box {
-            background: #fffdf9;
-            padding: 15px;
+            background-color: #fffdf9;
+            padding: 20px;
             border-radius: 5px;
             border-left: 4px solid #ff9800;
-            margin-top: 20px;
+            margin-top: 30px;
             page-break-inside: avoid;
         }
     </style>
@@ -226,27 +227,28 @@
     </div>
 
     <div class="student-info-form">
-        <h3>Thông Tin Học Sinh</h3>
-        <p style="text-align:center; color: #7f8c8d; margin-top:-10px; font-size:0.9em;">(Vui lòng điền đầy đủ để in vào báo cáo PDF)</p>
+        <h3>Thông Tin Khai Báo</h3>
+        <p style="text-align:center; color: #7f8c8d; margin-top:-10px; font-size:0.9em;">(Vui lòng điền đầy đủ để hệ thống cấp báo cáo PDF)</p>
         <div class="form-group">
             <label for="student-name">Họ và Tên:</label>
             <input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A" required>
         </div>
         <div class="form-group">
-            <label for="student-class">Lớp:</label>
-            <input type="text" id="student-class" placeholder="Ví dụ: 12A1" required>
+            <label for="student-class">Lớp / Trường:</label>
+            <input type="text" id="student-class" placeholder="Ví dụ: 12A1 - THPT Chuyên" required>
         </div>
     </div>
 
     <form id="quiz-form">
-        <div id="questions-container">
-            </div>
+        <div id="questions-container"></div>
         <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp Bài & Xem Kết Quả</button>
     </form>
 
     <div id="result-container">
         <button type="button" id="download-btn" class="btn pdf-btn" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF (Bản in)</button>
-        <div style="height: 30px;"></div> <div id="pdf-content">
+        <div style="height: 30px;"></div>
+
+        <div id="pdf-content">
             <div class="pdf-header">
                 <h2>BÁO CÁO PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
                 <p>Mô hình Holland RIASEC chuẩn hóa theo thị trường lao động Việt Nam</p>
@@ -254,30 +256,29 @@
 
             <div class="pdf-student-meta">
                 <div><strong>Họ và Tên học sinh:</strong> <span id="pdf-render-name"></span></div>
-                <div><strong>Lớp:</strong> <span id="pdf-render-class"></span></div>
-                <div><strong>Ngày thực hiện:</strong> <span id="pdf-render-date"></span></div>
+                <div><strong>Lớp / Trường:</strong> <span id="pdf-render-class"></span></div>
+                <div><strong>Ngày thực hiện đánh giá:</strong> <span id="pdf-render-date"></span></div>
             </div>
             
             <h3 id="code-result" style="color: #e74c3c; font-size: 2em; text-align: center; margin-bottom: 10px;"></h3>
-            <p style="text-align: center; margin-bottom: 25px;">Dựa trên câu trả lời của bạn, dưới đây là phân tích chi tiết về 3 nhóm năng lực nổi trội nhất:</p>
+            <p style="text-align: center; margin-bottom: 25px; font-weight: bold;">Dựa trên dữ liệu khảo sát, dưới đây là 3 nhóm năng lực nổi trội nhất của bạn:</p>
             
-            <div id="detailed-results">
-                </div>
+            <div id="detailed-results"></div>
             
             <div class="insight-box">
-                <h4>Tầm nhìn thị trường lao động (2026 - 2030)</h4>
-                <p id="insight-text"></p>
+                <h4 style="color: #d35400; margin-top: 0;">Tầm nhìn thị trường lao động (2026 - 2030)</h4>
+                <p id="insight-text" style="margin-bottom: 0;"></p>
             </div>
 
-            <div style="margin-top: 30px; text-align: center; font-size: 0.8em; color: #7f8c8d; border-top: 1px solid #eee; padding-top: 10px;">
-                Báo cáo được tạo tự động bởi Hệ thống trắc nghiệm hướng nghiệp TS. Vũ Xuân Hùng.
+            <div style="margin-top: 40px; text-align: center; font-size: 0.85em; color: #7f8c8d; border-top: 1px solid #ddd; padding-top: 15px;">
+                Báo cáo được trích xuất tự động từ Hệ thống trắc nghiệm hướng nghiệp TS. Vũ Xuân Hùng.<br>
+                Kết quả mang tính chất tư vấn khoa học, hỗ trợ học sinh đưa ra quyết định chọn ngành nghề phù hợp.
             </div>
         </div>
-        </div>
+    </div>
 </div>
 
 <script>
-    // Dữ liệu JSON được nhúng trực tiếp (Giữ nguyên 10 câu demo)
     const quizData = {
       "scale": [
         { "value": 1, "label": "Hoàn toàn không đúng" },
@@ -309,16 +310,15 @@
       "labor_market_insight": "Thị trường lao động Việt Nam đang chuyển dịch mạnh mẽ theo hướng số hóa. Các nhóm ngành đòi hỏi sự kết hợp liên ngành (Ví dụ: Công nghệ + Giáo dục, Kinh tế + Dữ liệu) sẽ dẫn dắt thị trường. Những năng lực cốt lõi khó bị thay thế bởi AI bao gồm: Trí tuệ cảm xúc (S), Tư duy sáng tạo giải pháp (A), và Năng lực lãnh đạo chiến lược (E)."
     };
 
-    // Khởi tạo: Render câu hỏi ra màn hình
+    // Render câu hỏi
     const container = document.getElementById('questions-container');
     quizData.questions.forEach((q, index) => {
         let questionHtml = `<div class="question-block">
                                 <div class="question-text">${q.text}</div>
                                 <div class="options-group">`;
         quizData.scale.forEach(s => {
-            // Dùng nhãn <span> bao quanh text để dễ style khi được chọn
             questionHtml += `<label class="option-label">
-                                <input type="radio" name="q${index}" value="${s.value}" data-category="${q.category}" required>
+                                <input type="radio" name="q${index}" value="${s.value}" data-category="${q.category}">
                                 <span>${s.label}</span>
                              </label>`;
         });
@@ -326,19 +326,16 @@
         container.innerHTML += questionHtml;
     });
 
-    // Hàm cộng điểm và xuất kết quả ra màn hình
     function calculateResult() {
-        // 1. Kiểm tra thông tin học sinh (MỚI)
         const sName = document.getElementById('student-name').value.trim();
         const sClass = document.getElementById('student-class').value.trim();
 
         if (!sName || !sClass) {
-            alert("Vui lòng nhập Họ tên và Lớp của bạn ở phần đầu trang!");
+            alert("Vui lòng điền đầy đủ Họ tên và Lớp/Trường của bạn!");
             document.getElementById('student-name').focus();
             return;
         }
 
-        // 2. Kiểm tra và tính điểm trắc nghiệm
         let scores = { "R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0 };
         let allAnswered = true;
 
@@ -352,84 +349,79 @@
         });
 
         if (!allAnswered) {
-            alert("Vui lòng trả lời đầy đủ tất cả các câu hỏi trước khi nộp bài!");
+            alert("Vui lòng trả lời đầy đủ tất cả các câu hỏi để có kết quả chính xác nhất!");
             return;
         }
 
-        // 3. Xử lý logic tìm Top 3
         let sortedScores = Object.keys(scores).map(key => ({ category: key, score: scores[key] }));
         sortedScores.sort((a, b) => b.score - a.score);
         let top3 = sortedScores.slice(0, 3);
         let resultCode = top3.map(t => t.category).join(" - ");
 
-        // 4. Điền dữ liệu vào vùng hiển thị/in PDF (ĐÃ SỬA ĐỂ ĐẢM BẢO ĐIỀN CHẮC CHẮN)
-        
-        // Điền thông tin học sinh
+        // Cập nhật dữ liệu vào bản in
         document.getElementById('pdf-render-name').innerText = sName;
         document.getElementById('pdf-render-class').innerText = sClass;
-        // Điền ngày hiện tại (định dạng VN)
-        const now = new Date();
-        document.getElementById('pdf-render-date').innerText = now.toLocaleDateString('vi-VN');
-
-        // Điền mã kết quả
+        document.getElementById('pdf-render-date').innerText = new Date().toLocaleDateString('vi-VN');
         document.getElementById('code-result').innerText = "MẬT MÃ CỦA BẠN: " + resultCode;
-        
-        // Điền nhận định thị trường
         document.getElementById('insight-text').innerText = quizData.labor_market_insight;
         
-        // Điền 3 card kết quả chi tiết
         let detailsHtml = "";
         top3.forEach(t => {
             let info = quizData.report_results_database[t.category];
             detailsHtml += `<div class="result-card">
-                                <h4>${info.trait_name} (Điểm: ${t.score})</h4>
+                                <h4>${info.trait_name} (Điểm thành phần: ${t.score}/25)</h4>
                                 <p><strong>Năng lực cốt lõi:</strong> ${info.core_competency}</p>
-                                <p><strong>Ngành học đề xuất:</strong> ${info.recommended_majors}</p>
+                                <p><strong>Nhóm ngành đào tạo tương thích:</strong> ${info.recommended_majors}</p>
                             </div>`;
         });
         document.getElementById('detailed-results').innerHTML = detailsHtml;
         
-        // 5. Hiển thị khung kết quả và nút tải (Dùng flex để căn giữa nút)
         document.getElementById('result-container').style.display = 'block';
         document.getElementById('download-btn').style.display = 'block';
-        
-        // Cuộn màn hình xuống phần kết quả một cách mượt mà
         document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Hàm tạo và tải tệp PDF (ĐÃ CHỈNH SỬA ĐỂ SỬA LỖI TRANG TRẮNG)
+    // Hàm tải PDF đã được tinh chỉnh triệt để lỗi cuộn trang (scrollY)
     function downloadPDF() {
         const element = document.getElementById('pdf-content');
-        
-        // Đảm bảo phần tử tồn tại và có nội dung trước khi in
-        if (!element || element.innerHTML.trim() === "") {
-            alert("Lỗi: Không tìm thấy nội dung để in. Vui lòng thử nộp bài lại.");
-            return;
-        }
-
-        // Lấy tên học sinh để đặt tên file
         const sName = document.getElementById('student-name').value.trim() || "Hoc_Sinh";
-        const fileName = `Bao_Cao_RIASEC_${sName.replace(/\s+/g, '_')}.pdf`;
+        
+        // Loại bỏ dấu tiếng Việt để tên file không bị lỗi font khi lưu trên máy tính
+        const removeAccents = (str) => {
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+        };
+        const safeName = removeAccents(sName).replace(/\s+/g, '_');
+        const fileName = `Bao_Cao_Huong_Nghiep_${safeName}.pdf`;
 
-        // Cấu hình định dạng trang in PDF
+        // Thay đổi trạng thái nút bấm
+        const btn = document.getElementById('download-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "⏳ Đang tạo PDF, vui lòng đợi...";
+        btn.disabled = true;
+
         const opt = {
-            margin:       10, // Căn lề 10mm (hơi hẹp hơn để chứa đủ nội dung)
+            margin:       10, // Đơn vị mm
             filename:     fileName,
-            image:        { type: 'jpeg', quality: 0.98 },
+            image:        { type: 'jpeg', quality: 1 }, // Chất lượng cao nhất
             html2canvas:  { 
-                scale: 2, // Tăng độ nét
-                useCORS: true, // Cho phép tải ảnh từ nguồn khác nếu có
-                logging: false, // Tắt log để tăng tốc
-                letterRendering: true // Giúp render chữ đẹp hơn
+                scale: 2, 
+                useCORS: true,
+                scrollY: 0, // Bắt buộc: Khắc phục lỗi trang trắng khi cuộn màn hình
+                backgroundColor: '#ffffff' // Bắt buộc: Khắc phục lỗi nền đen/trắng
             },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Giấy A4 dọc
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // Kích hoạt thư viện để lưu file
-        // Thêm một chút delay (100ms) để chắc chắn trình duyệt đã render xong nội dung mới
-        setTimeout(() => {
-            html2pdf().set(opt).from(element).save();
-        }, 100);
+        // Chạy tiến trình lưu PDF
+        html2pdf().set(opt).from(element).save().then(() => {
+            // Khôi phục nút bấm sau khi tải xong
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }).catch(err => {
+            alert("Có lỗi xảy ra trong quá trình tạo PDF. Vui lòng thử lại.");
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
     }
 </script>
 
