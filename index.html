@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm Hướng nghiệp đa chiều - TS. Vũ Xuân Hùng</title>
+    <title>Trắc Nghiệm Hướng Nghiệp Đa Chiều - TS. Vũ Xuân Hùng</title>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -21,21 +22,22 @@
         h1, h2, h3, h4 { color: var(--primary-color); text-align: center; }
         .header-desc { text-align: center; color: #7f8c8d; margin-bottom: 30px; font-style: italic; border-bottom: 2px solid #eee; padding-bottom: 15px; }
         
-        .section-title { background-color: var(--primary-color); color: white; padding: 10px 15px; border-radius: 5px; margin-top: 30px; font-size: 1.2em; text-transform: uppercase; }
-        .section-desc { font-size: 0.9em; color: #555; margin-bottom: 20px; font-style: italic; }
+        .section-title { background-color: var(--primary-color); color: white; padding: 12px 15px; border-radius: 5px; margin-top: 35px; font-size: 1.15em; font-weight: bold; text-transform: uppercase; }
+        .section-desc { font-size: 0.95em; color: #555; margin-top: 10px; margin-bottom: 20px; font-style: italic; padding-left: 5px;}
 
         .student-info-form { background-color: #eaf2f8; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #d4e6f1; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #2980b9; }
         .form-group input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .form-group input[type="text"]:focus { border-color: var(--secondary-color); outline: none; box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); }
 
         .question-block { margin-bottom: 25px; padding: 20px 15px; background: #fdfdfd; border-left: 5px solid var(--secondary-color); border-radius: 4px; transition: all 0.2s; }
-        .question-block:hover { background-color: #f9f9f9; }
+        .question-block:hover { background-color: #f9f9f9; transform: translateX(3px); }
         .question-text { font-weight: bold; margin-bottom: 5px; font-size: 1.1em; color: var(--primary-color); }
-        .ai-hint { font-size: 0.85em; color: #e67e22; margin-bottom: 15px; font-style: italic; display: flex; align-items: center; }
-        .ai-hint::before { content: '💡 Gợi ý: '; font-weight: bold; margin-right: 5px; }
+        .ai-hint { font-size: 0.85em; color: #e67e22; margin-bottom: 15px; font-style: italic; }
+        .ai-hint::before { content: '💡 Gợi ý: '; font-weight: bold; }
 
-        /* Responsive Options */
+        /* Responsive CSS cho các nút chọn */
         .options-group { display: flex; flex-direction: column; gap: 10px; }
         .option-label { background: #f1f2f6; padding: 12px 15px; border-radius: 6px; cursor: pointer; font-size: 0.95em; text-align: left; display: flex; flex-direction: row; align-items: center; transition: background 0.2s; border: 1px solid transparent; }
         .option-label:hover { background: #eccc6; }
@@ -48,14 +50,14 @@
             input[type="radio"] { margin-right: 0; margin-bottom: 10px; transform: scale(1.3); }
         }
 
-        .btn { display: block; width: 100%; padding: 15px; color: white; border: none; border-radius: 5px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 20px; transition: background 0.3s; }
+        .btn { display: block; width: 100%; padding: 15px; color: white; border: none; border-radius: 5px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 30px; transition: background 0.3s; }
         .submit-btn { background: var(--success-color); }
         .submit-btn:hover { background: #27ae60; }
-        .pdf-btn { background: var(--accent-color); display: none; }
+        .pdf-btn { background: var(--accent-color); display: none; margin-top: 10px;}
         .pdf-btn:hover { background: #c0392b; }
         .pdf-btn:disabled { background: #95a5a6; cursor: not-allowed; }
 
-        /* KHU VỰC IN PDF */
+        /* Khu vực hiển thị kết quả và in PDF */
         #result-container { display: none; margin-top: 40px; padding-top: 20px; }
         #pdf-content { padding: 30px; background-color: #ffffff; color: #000000; width: 100%; box-sizing: border-box; }
         .pdf-header { text-align: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 15px; margin-bottom: 25px; }
@@ -63,14 +65,14 @@
         .pdf-student-meta div { margin-bottom: 8px; }
         .pdf-student-meta strong { color: #2980b9; display: inline-block; width: 180px;}
         
-        .chart-container { width: 80%; max-width: 600px; margin: 0 auto 30px auto; }
+        .chart-container { width: 90%; max-width: 550px; margin: 0 auto 30px auto; }
         
-        .ai-report-box { background-color: #f4fdfb; padding: 25px; border-radius: 8px; border-left: 5px solid var(--success-color); margin-bottom: 20px; page-break-inside: avoid; }
-        .ai-report-box h4 { color: #16a085; text-align: left; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; }
-        .ai-report-box ul { padding-left: 20px; }
+        .ai-report-box { background-color: #f4fdfb; padding: 20px; border-radius: 8px; border-left: 5px solid var(--success-color); margin-bottom: 20px; page-break-inside: avoid; }
+        .ai-report-box h4 { color: #16a085; text-align: left; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; margin-bottom: 15px;}
+        .ai-report-box ul { padding-left: 20px; margin-top: 0; }
         .ai-report-box li { margin-bottom: 8px; }
         
-        .loading-ai { text-align: center; font-style: italic; color: #e67e22; font-weight: bold; display: none; margin: 20px 0; }
+        .loading-ai { text-align: center; font-style: italic; color: #e67e22; font-weight: bold; display: none; margin: 20px 0; font-size: 1.1em;}
     </style>
 </head>
 <body>
@@ -81,38 +83,39 @@
         <div class="header-desc">
             Phát triển chuyên môn: TS. Vũ Xuân Hùng<br>
             Tích hợp mô hình: RIASEC + Đa trí tuệ (Gardner) + ASK<br>
-            Dữ liệu tham chiếu: Thông tư 09/2022/TT-BGDĐT
+            Căn cứ Danh mục đào tạo theo Thông tư 09/2022/TT-BGDĐT
         </div>
     </div>
 
     <div class="student-info-form">
         <h3>Thông Tin Khai Báo</h3>
-        <div class="form-group"><label>Họ và Tên:</label><input type="text" id="student-name" required></div>
-        <div class="form-group"><label>Lớp / Trường:</label><input type="text" id="student-class" required></div>
+        <p style="text-align:center; color: #7f8c8d; margin-top:-10px; font-size:0.9em;">(Vui lòng điền đầy đủ để hệ thống cấp báo cáo PDF)</p>
+        <div class="form-group"><label>Họ và Tên:</label><input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A" required></div>
+        <div class="form-group"><label>Lớp / Trường:</label><input type="text" id="student-class" placeholder="Ví dụ: 12A1 - THPT Chuyên" required></div>
     </div>
 
     <form id="quiz-form">
-        <div class="section-title">Phần 1: Khám Phá Sở Thích (Mô hình RIASEC + Quốc phòng An ninh)</div>
-        <div class="section-desc">Đánh giá môi trường làm việc và hoạt động bạn yêu thích.</div>
+        <div class="section-title">Phần 1: Khám Phá Sở Thích</div>
+        <div class="section-desc">Đánh giá môi trường làm việc, sở thích nghề nghiệp (Cơ sở phân tích 7 nhóm RIASEC & An ninh Quốc phòng).</div>
         <div id="part1-container"></div>
 
-        <div class="section-title">Phần 2: Tự Đánh Giá Năng Lực (Mô hình ASK & Đa trí tuệ)</div>
-        <div class="section-desc">Đánh giá thái độ, kỹ năng mềm và các loại hình trí thông minh thế mạnh.</div>
+        <div class="section-title">Phần 2: Tự Đánh Giá Năng Lực</div>
+        <div class="section-desc">Đánh giá thái độ, kỹ năng mềm và các loại hình Đa trí tuệ nổi trội (Mô hình ASK & Howard Gardner).</div>
         <div id="part2-container"></div>
 
-        <div class="section-title">Phần 3: Đánh Giá G-Factor (Tư duy Logic - Ngôn ngữ - Không gian)</div>
-        <div class="section-desc">Mức độ tự tin của bạn khi giải quyết các vấn đề phức tạp.</div>
+        <div class="section-title">Phần 3: Bài Test Tư Duy (G-Factor)</div>
+        <div class="section-desc">Khảo sát mức độ tự tin trong khả năng tư duy logic, xử lý không gian và ngôn ngữ.</div>
         <div id="part3-container"></div>
 
-        <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp Bài & Phân Tích Bằng AI</button>
-        <div id="ai-loading" class="loading-ai">⚙️ Trí tuệ nhân tạo đang tổng hợp và phân tích dữ liệu... Vui lòng đợi.</div>
+        <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp Bài & Chờ AI Phân Tích</button>
+        <div id="ai-loading" class="loading-ai">⚙️ Trí tuệ nhân tạo đang tổng hợp, vẽ biểu đồ và phân tích dữ liệu...</div>
     </form>
 
     <div id="result-container">
         <div id="pdf-content">
             <div class="pdf-header">
                 <h2>BÁO CÁO PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
-                <p>Tích hợp AI phân tích dựa trên Thông tư 09/2022/TT-BGDĐT</p>
+                <p>Tích hợp AI phân tích - Chuẩn hóa theo Thông tư 09/2022/TT-BGDĐT</p>
             </div>
 
             <div class="pdf-student-meta">
@@ -121,15 +124,20 @@
                 <div><strong>Ngày đánh giá:</strong> <span id="pdf-render-date"></span></div>
             </div>
 
-            <h3>BIỂU ĐỒ MẠNG NHỆN NĂNG LỰC (7 TRỤ CỘT)</h3>
+            <h3 style="margin-top: 30px;">BIỂU ĐỒ MẠNG NHỆN NĂNG LỰC CỐT LÕI (7 TRỤ CỘT)</h3>
             <div class="chart-container">
                 <canvas id="radarChart"></canvas>
             </div>
             
-            <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center; margin-bottom: 10px;"></h3>
+            <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center; margin-bottom: 25px;"></h3>
             
             <div id="ai-generated-report">
                 </div>
+            
+            <div style="margin-top: 40px; text-align: center; font-size: 0.85em; color: #7f8c8d; border-top: 1px solid #ddd; padding-top: 15px;">
+                Báo cáo được trích xuất tự động từ Hệ thống hướng nghiệp TS. Vũ Xuân Hùng.<br>
+                Kết quả mang tính chất tư vấn khoa học, hỗ trợ học sinh đưa ra quyết định chọn ngành nghề phù hợp.
+            </div>
         </div>
 
         <div style="height: 20px;"></div>
@@ -138,111 +146,134 @@
 </div>
 
 <script>
-    const scale = [
-        { value: 1, label: "Hoàn toàn không đúng" },
-        { value: 2, label: "Không đúng" },
-        { value: 3, label: "Phân vân" },
-        { value: 4, label: "Đúng với tôi" },
-        { value: 5, label: "Hoàn toàn đúng" }
-    ];
+    // Đảm bảo DOM đã tải xong mới chạy mã khởi tạo
+    document.addEventListener("DOMContentLoaded", function() {
+        const scale = [
+            { value: 1, label: "Hoàn toàn không đúng" },
+            { value: 2, label: "Không đúng" },
+            { value: 3, label: "Phân vân" },
+            { value: 4, label: "Đúng với tôi" },
+            { value: 5, label: "Hoàn toàn đúng" }
+        ];
 
-    // Ngân hàng câu hỏi tích hợp 3 phần
-    const questions = [
-        // --- PHẦN 1: RIASEC + D (An ninh Quốc phòng) ---
-        { part: 1, id: "R1", category: "R", text: "Tôi thích tự tay thao tác, lắp ráp, hoặc sửa chữa các thiết bị, máy móc.", hint: "Nhớ lại lúc bạn sửa xe, nối dây điện hoặc lắp ráp đồ dùng." },
-        { part: 1, id: "I1", category: "I", text: "Tôi luôn muốn tìm hiểu nguyên lý hoạt động sâu xa của mọi sự vật, hiện tượng.", hint: "Bạn có hay đọc tài liệu khoa học, khám phá vũ trụ hay sinh học không?" },
-        { part: 1, id: "A1", category: "A", text: "Tôi đam mê các hình thức biểu đạt nghệ thuật (âm nhạc, hội họa, thiết kế).", hint: "Bạn có thích trang trí, vẽ tranh, chụp ảnh hay viết lách sáng tạo?" },
-        { part: 1, id: "S1", category: "S", text: "Tôi tìm thấy niềm vui khi lắng nghe, thấu hiểu và giúp đỡ người khác.", hint: "Bạn có thường là người gỡ rối tâm lý cho bạn bè không?" },
-        { part: 1, id: "E1", category: "E", text: "Tôi tự tin thuyết phục và dẫn dắt người khác để đạt được mục tiêu chung.", hint: "Bạn có thích làm lớp trưởng, trưởng nhóm dự án hay kinh doanh buôn bán?" },
-        { part: 1, id: "C1", category: "C", text: "Tôi làm việc hiệu quả nhất với các con số, dữ liệu và quy trình hành chính rõ ràng.", hint: "Bạn có cẩn thận, ngăn nắp và thích lập bảng biểu Excel không?" },
-        { part: 1, id: "D1", category: "D", text: "Tôi sẵn sàng tuân thủ kỷ luật thép và mong muốn bảo vệ an ninh, trật tự xã hội.", hint: "Bạn có ngưỡng mộ môi trường quân đội, công an và sự rèn luyện thể chất cường độ cao?" },
-        
-        // --- PHẦN 2: ASK & Đa trí tuệ ---
-        { part: 2, id: "M1", category: "MI_Lang", text: "Tôi có vốn từ vựng phong phú và dễ dàng diễn đạt ý tưởng phức tạp thành lời nói/văn bản.", hint: "Trí thông minh Ngôn ngữ." },
-        { part: 2, id: "M2", category: "MI_Inter", text: "Tôi nhạy bén trong việc đọc vị cảm xúc và ý định của người đối diện khi giao tiếp.", hint: "Trí thông minh Tương tác xã hội." },
-        { part: 2, id: "A1", category: "ASK_Att", text: "Tôi luôn giữ thái độ tích cực, kiên trì tìm giải pháp khi đối mặt với thất bại.", hint: "Đánh giá Thái độ (Attitude) trong mô hình ASK." },
-        
-        // --- PHẦN 3: G-Factor ---
-        { part: 3, id: "G1", category: "G_Logic", text: "Tôi có thể giải quyết nhanh chóng các bài toán tư duy logic, tìm ra quy luật dãy số.", hint: "Đánh giá năng lực suy luận trừu tượng." },
-        { part: 3, id: "G2", category: "G_Space", text: "Tôi dễ dàng hình dung và xoay chuyển các vật thể 3D trong đầu mình.", hint: "Đánh giá năng lực không gian hình học." }
-    ];
-
-    // Hàm render câu hỏi
-    function renderQuestions() {
-        [1, 2, 3].forEach(partNum => {
-            const container = document.getElementById(`part${partNum}-container`);
-            const partQuestions = questions.filter(q => q.part === partNum);
+        // Dữ liệu câu hỏi với ID duy nhất (q1 đến q14)
+        const questions = [
+            // PHẦN 1: RIASEC + D
+            { part: 1, id: "q1", category: "R", text: "1. Tôi thích tự tay thao tác, lắp ráp, hoặc sửa chữa các thiết bị điện tử, máy móc.", hint: "Nhớ lại lúc bạn tự sửa xe đạp, nối dây điện hoặc tháo lắp đồ dùng gia đình." },
+            { part: 1, id: "q2", category: "I", text: "2. Tôi luôn muốn tìm hiểu nguyên lý hoạt động sâu xa của mọi sự vật, hiện tượng.", hint: "Bạn có hay đọc tài liệu khoa học, khám phá vũ trụ, giải mã các hiện tượng vật lý, hóa học không?" },
+            { part: 1, id: "q3", category: "A", text: "3. Tôi đam mê các hình thức biểu đạt nghệ thuật (âm nhạc, hội họa, thiết kế, văn học).", hint: "Bạn có thích trang trí, vẽ tranh, chụp ảnh, hoặc viết lách sáng tạo mang đậm dấu ấn cá nhân?" },
+            { part: 1, id: "q4", category: "S", text: "4. Tôi tìm thấy niềm vui và ý nghĩa khi được lắng nghe, thấu hiểu và giúp đỡ người khác.", hint: "Bạn có thường là người tư vấn, gỡ rối tâm lý cho bạn bè, hoặc thích các hoạt động thiện nguyện không?" },
+            { part: 1, id: "q5", category: "E", text: "5. Tôi tự tin thuyết phục và dẫn dắt người khác để đạt được mục tiêu chung.", hint: "Bạn có thích làm lớp trưởng, trưởng nhóm dự án, phát biểu trước đám đông hay kinh doanh buôn bán?" },
+            { part: 1, id: "q6", category: "C", text: "6. Tôi làm việc hiệu quả nhất với các con số, dữ liệu và quy trình hành chính rõ ràng.", hint: "Bạn là người cẩn thận, ngăn nắp, thích lập bảng biểu thống kê chi tiêu hoặc sắp xếp tài liệu khoa học?" },
+            { part: 1, id: "q7", category: "D", text: "7. Tôi sẵn sàng tuân thủ kỷ luật thép và có mong muốn bảo vệ an ninh, trật tự xã hội.", hint: "Bạn có ngưỡng mộ môi trường quân đội, công an, sự rèn luyện thể chất cường độ cao và tính tổ chức nghiêm ngặt?" },
             
-            partQuestions.forEach((q, index) => {
-                let html = `<div class="question-block">
-                                <div class="question-text">${q.text}</div>
-                                <div class="ai-hint">${q.hint}</div>
-                                <div class="options-group">`;
-                scale.forEach(s => {
-                    html += `<label class="option-label">
-                                <input type="radio" name="${q.id}" value="${s.value}" data-category="${q.category}">
-                                <span>${s.label}</span>
-                             </label>`;
-                });
-                html += `</div></div>`;
-                container.innerHTML += html;
-            });
-        });
-    }
-    renderQuestions();
+            // PHẦN 2: ASK & Đa trí tuệ
+            { part: 2, id: "q8", category: "MI_Lang", text: "8. (Đa trí tuệ) Tôi có vốn từ vựng phong phú và dễ dàng diễn đạt ý tưởng phức tạp thành lời nói hoặc văn bản.", hint: "Đánh giá Trí thông minh Ngôn ngữ (Howard Gardner)." },
+            { part: 2, id: "q9", category: "MI_Inter", text: "9. (Đa trí tuệ) Tôi rất nhạy bén trong việc đọc vị cảm xúc và ý định của người đối diện khi giao tiếp.", hint: "Đánh giá Trí thông minh Tương tác xã hội." },
+            { part: 2, id: "q10", category: "ASK_Att", text: "10. (ASK) Tôi luôn giữ thái độ tích cực, chủ động tìm giải pháp và không bỏ cuộc khi đối mặt với thất bại.", hint: "Đánh giá yếu tố Thái độ (Attitude) - Cốt lõi của sự thành công nghề nghiệp." },
+            { part: 2, id: "q11", category: "ASK_Skill", text: "11. (ASK) Tôi có kỹ năng thích ứng nhanh với các công nghệ, phần mềm mới (Kỹ năng số).", hint: "Đánh giá yếu tố Kỹ năng (Skill) trong thời đại chuyển đổi số." },
+            
+            // PHẦN 3: G-Factor
+            { part: 3, id: "q12", category: "G_Logic", text: "12. (G-Factor) Tôi có khả năng giải quyết nhanh chóng các bài toán tư duy logic, tìm ra quy luật của một dãy số hoặc chuỗi sự kiện.", hint: "Đo lường năng lực suy luận trừu tượng và logic toán học." },
+            { part: 3, id: "q13", category: "G_Space", text: "13. (G-Factor) Tôi dễ dàng hình dung, nhớ đường rất tốt và có thể xoay chuyển các vật thể 3D trong đầu mình.", hint: "Đo lường năng lực không gian hình học và trí nhớ thị giác." },
+            { part: 3, id: "q14", category: "G_Prob", text: "14. (G-Factor) Đứng trước một vấn đề phức tạp, tôi luôn biết cách chia nhỏ nó ra để xử lý từng bước một.", hint: "Đo lường kỹ năng phân tích và giải quyết vấn đề (Problem-solving)." }
+        ];
 
-    let radarChartInstance = null;
+        // Hàm render tự động đổ HTML vào các div tương ứng
+        function renderQuestions() {
+            [1, 2, 3].forEach(partNum => {
+                const container = document.getElementById(`part${partNum}-container`);
+                const partQuestions = questions.filter(q => q.part === partNum);
+                
+                partQuestions.forEach(q => {
+                    let html = `<div class="question-block">
+                                    <div class="question-text">${q.text}</div>
+                                    <div class="ai-hint">${q.hint}</div>
+                                    <div class="options-group">`;
+                    scale.forEach(s => {
+                        html += `<label class="option-label">
+                                    <input type="radio" name="${q.id}" value="${s.value}" data-category="${q.category}">
+                                    <span>${s.label}</span>
+                                 </label>`;
+                    });
+                    html += `</div></div>`;
+                    container.innerHTML += html;
+                });
+            });
+        }
+        
+        // Gọi hàm render
+        renderQuestions();
+    });
+
+    let radarChartInstance = null; // Biến toàn cục lưu trữ biểu đồ để có thể xóa/vẽ lại
 
     function calculateResult() {
+        // 1. Kiểm tra thông tin người dùng
         const sName = document.getElementById('student-name').value.trim();
         const sClass = document.getElementById('student-class').value.trim();
 
         if (!sName || !sClass) {
-            alert("Vui lòng điền đầy đủ Họ tên và Lớp/Trường!");
+            alert("Vui lòng khai báo đầy đủ Họ tên và Lớp/Trường ở đầu trang!");
             document.getElementById('student-name').focus();
             return;
         }
 
-        // Khởi tạo điểm số
-        let scores = { "R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0, "D": 0 };
+        // 2. Thu thập điểm số
+        let scores = { 
+            "R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0, "D": 0,
+            "MI_Lang": 0, "MI_Inter": 0, "ASK_Att": 0, "ASK_Skill": 0, 
+            "G_Logic": 0, "G_Space": 0, "G_Prob": 0 
+        };
         let allAnswered = true;
 
-        questions.forEach(q => {
-            const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+        // Quét 14 câu hỏi (từ q1 đến q14)
+        for (let i = 1; i <= 14; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
             if (selected) {
-                // Chỉ cộng điểm cho nhóm RIASEC+D để vẽ biểu đồ
-                if (scores[selected.dataset.category] !== undefined) {
-                    scores[selected.dataset.category] += parseInt(selected.value);
-                }
+                let cat = selected.dataset.category;
+                scores[cat] += parseInt(selected.value);
             } else {
                 allAnswered = false;
             }
-        });
+        }
 
         if (!allAnswered) {
-            alert("Vui lòng trả lời đầy đủ tất cả các câu hỏi!");
+            alert("Vui lòng trả lời đầy đủ tất cả các câu hỏi (bao gồm Phần 1, 2 và 3) trước khi nộp bài!");
             return;
         }
 
-        // Hiển thị trạng thái đang xử lý AI
+        // 3. Xử lý giao diện chờ AI
         document.getElementById('ai-loading').style.display = 'block';
         document.querySelector('.submit-btn').disabled = true;
 
-        // Tìm top 3 mã Holland + Quốc phòng
-        let sortedScores = Object.keys(scores).map(key => ({ category: key, score: scores[key] }));
-        sortedScores.sort((a, b) => b.score - a.score);
-        let top3 = sortedScores.slice(0, 3);
+        // 4. Phân tích kết quả RIASEC+D
+        let riasecD_Scores = [
+            { category: "R", score: scores["R"] },
+            { category: "I", score: scores["I"] },
+            { category: "A", score: scores["A"] },
+            { category: "S", score: scores["S"] },
+            { category: "E", score: scores["E"] },
+            { category: "C", score: scores["C"] },
+            { category: "D", score: scores["D"] }
+        ];
+        
+        // Sắp xếp lấy Top 3 nổi trội nhất
+        riasecD_Scores.sort((a, b) => b.score - a.score);
+        let top3 = riasecD_Scores.slice(0, 3);
         let resultCode = top3.map(t => t.category).join(" - ");
 
-        // Cập nhật thông tin cơ bản
+        // Cập nhật thông tin in
         document.getElementById('pdf-render-name').innerText = sName;
         document.getElementById('pdf-render-class').innerText = sClass;
         document.getElementById('pdf-render-date').innerText = new Date().toLocaleDateString('vi-VN');
         document.getElementById('code-result').innerText = "MẬT MÃ NĂNG LỰC: " + resultCode;
 
-        // VẼ BIỂU ĐỒ MẠNG NHỆN (RADAR CHART)
+        // 5. VẼ BIỂU ĐỒ MẠNG NHỆN
         const ctx = document.getElementById('radarChart').getContext('2d');
-        if (radarChartInstance) radarChartInstance.destroy();
+        if (radarChartInstance) {
+            radarChartInstance.destroy();
+        }
         
         radarChartInstance = new Chart(ctx, {
             type: 'radar',
@@ -254,71 +285,146 @@
                     backgroundColor: 'rgba(52, 152, 219, 0.2)',
                     borderColor: 'rgba(52, 152, 219, 1)',
                     pointBackgroundColor: 'rgba(231, 76, 60, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(231, 76, 60, 1)',
                     borderWidth: 2
                 }]
             },
             options: {
-                animation: false, // Tắt animation để html2pdf chụp được ngay lập tức
+                animation: false, // Tắt hiệu ứng để tải PDF không bị lỗi canvas trống
                 scales: {
                     r: {
-                        angleLines: { display: true },
+                        angleLines: { display: true, color: 'rgba(0, 0, 0, 0.1)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        pointLabels: { font: { size: 12, weight: 'bold' }, color: '#2c3e50' },
                         suggestedMin: 0,
-                        suggestedMax: 5 // Cập nhật theo thang điểm thực tế
+                        suggestedMax: 5
                     }
+                },
+                plugins: {
+                    legend: { display: false }
                 }
             }
         });
 
-        // MÔ PHỎNG GỌI API GENERATIVE AI (Dành cho IT tích hợp Backend)
+        // 6. Tích hợp Động cơ sinh Prompt mô phỏng API Generative AI
         setTimeout(() => {
-            const aiReportHtml = generateMockAIResponse(top3, sName);
+            const aiReportHtml = generateAIReport(top3, sName);
             document.getElementById('ai-generated-report').innerHTML = aiReportHtml;
             
+            // Ẩn thông báo chờ, hiện kết quả
             document.getElementById('ai-loading').style.display = 'none';
             document.querySelector('.submit-btn').disabled = false;
             document.getElementById('result-container').style.display = 'block';
             document.getElementById('download-btn').style.display = 'block';
+            
+            // Cuộn mượt mà xuống phần biểu đồ
             document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
-        }, 1500); // Giả lập độ trễ API 1.5 giây
+        }, 1200); // Giả lập độ trễ truy xuất AI (1.2 giây)
     }
 
-    /* * HÀM MÔ PHỎNG AI (MOCK AI)
-     * Kính gửi Đội ngũ IT: Tại đây, hãy thay thế bằng HTTP POST Request gọi đến API của OpenAI/Gemini.
-     * Dữ liệu gửi đi (Prompt) cần bao gồm: Điểm 7 nhóm, dữ liệu ASK, G-factor và yêu cầu trả về theo định dạng JSON.
-     */
-    function generateMockAIResponse(top3, studentName) {
-        // Cơ sở dữ liệu ngành nghề trích xuất chuẩn xác từ Thông tư 09/2022/TT-BGDĐT
-        const majorDb = {
-            "R": "Công nghệ kỹ thuật ô tô (7510205), Kỹ thuật cơ khí (7520103), Kỹ thuật xây dựng (7580201), Nông nghiệp (7620101)",
-            "I": "Khoa học máy tính (7480101), Trí tuệ nhân tạo (7480107), Y khoa (7720101), Khoa học dữ liệu (7460108)",
-            "A": "Kiến trúc (7580101), Thiết kế đồ họa (7210403), Truyền thông đa phương tiện (7320104), Đạo diễn điện ảnh, truyền hình (7210235)",
-            "S": "Khoa học giáo dục (71401), Tâm lý học (7310401), Công tác xã hội (77601), Điều dưỡng (7720301)",
-            "E": "Quản trị kinh doanh (7340101), Kinh tế quốc tế (7310106), Luật kinh tế (7380107), Quan hệ công chúng (7320108)",
-            "C": "Kế toán (7340301), Kiểm toán (7340302), Hệ thống thông tin quản lý (7340405), Quản lý tài nguyên và môi trường (7850101)",
-            "D": "Trinh sát an ninh (7860101), Điều tra hình sự (7860104), Kỹ thuật Công an nhân dân (7860107), Chỉ huy tham mưu Lục quân (7860201)"
+    /* ĐỘNG CƠ XỬ LÝ GENERATIVE AI (Dựa trên Thông tư 09/2022/TT-BGDĐT) */
+    function generateAIReport(top3, studentName) {
+        // Cơ sở dữ liệu ngành nghề tham chiếu chính xác 100% mã ngành từ TT 09/2022/TT-BGDĐT
+        const majorDatabase = {
+            "R": "Công nghệ kỹ thuật ô tô (7510205); Kỹ thuật cơ khí (7520103); Kỹ thuật xây dựng (7580201); Nông nghiệp (7620101)",
+            "I": "Khoa học máy tính (7480101); Trí tuệ nhân tạo (7480107); Y khoa (7720101); Khoa học dữ liệu (7460108)",
+            "A": "Kiến trúc (7580101); Thiết kế đồ họa (7210403); Truyền thông đa phương tiện (7320104); Đạo diễn điện ảnh, truyền hình (7210235)",
+            "S": "Khoa học giáo dục (71401); Tâm lý học (7310401); Công tác xã hội (77601); Điều dưỡng (7720301)",
+            "E": "Quản trị kinh doanh (7340101); Kinh tế quốc tế (7310106); Luật kinh tế (7380107); Quan hệ công chúng (7320108)",
+            "C": "Kế toán (7340301); Kiểm toán (7340302); Hệ thống thông tin quản lý (7340405); Quản lý tài nguyên và môi trường (7850101)",
+            "D": "Trinh sát an ninh (7860101); Điều tra hình sự (7860104); Kỹ thuật Công an nhân dân (7860107); Chỉ huy tham mưu Lục quân (7860201)"
         };
 
-        const traits = {
-            "R": "Tư duy thực tế, khéo léo thao tác, làm việc tốt với máy móc và công cụ.",
-            "I": "Tư duy logic, phân tích dữ liệu chuyên sâu và khả năng nghiên cứu độc lập.",
-            "A": "Sáng tạo đột phá, tư duy thẩm mỹ và linh hoạt trong giải quyết vấn đề.",
-            "S": "Trí tuệ cảm xúc (EQ) cao, thấu cảm và có năng lực sư phạm, hỗ trợ cộng đồng.",
-            "E": "Năng lực lãnh đạo, tầm nhìn chiến lược và khả năng ra quyết định rủi ro.",
-            "C": "Tư duy hệ thống, tuân thủ quy trình, xử lý số liệu chính xác tuyệt đối.",
-            "D": "Kỷ luật thép, bản lĩnh vững vàng, năng lực phản ứng nhanh trong tình huống khẩn cấp."
+        const coreTraits = {
+            "R": "Tư duy thực tế, khéo léo thao tác vật lý, làm việc xuất sắc với máy móc và công cụ.",
+            "I": "Tư duy logic đa chiều, khả năng phân tích dữ liệu chuyên sâu và nghiên cứu độc lập.",
+            "A": "Năng lực sáng tạo đột phá, tư duy thẩm mỹ và linh hoạt trong giải quyết vấn đề bằng trực giác.",
+            "S": "Trí tuệ cảm xúc (EQ) dồi dào, thấu cảm sâu sắc và có năng lực sư phạm, hỗ trợ cộng đồng.",
+            "E": "Năng lực lãnh đạo, tầm nhìn chiến lược, khả năng thương thuyết và ra quyết định trong môi trường cạnh tranh.",
+            "C": "Tư duy hệ thống chặt chẽ, tuân thủ nghiêm ngặt quy trình và khả năng xử lý số liệu chính xác tuyệt đối.",
+            "D": "Kỷ luật thép, bản lĩnh vững vàng, trung thành và có năng lực phản ứng cực nhanh trong các tình huống khẩn cấp."
         };
 
-        let majorsList = `<ul>`;
-        top3.forEach(t => { majorsList += `<li><strong>Nhóm ${t.category}:</strong> ${majorDb[t.category]}</li>`; });
-        majorsList += `</ul>`;
+        const workEnvs = {
+            "R": "các công xưởng, phòng thí nghiệm, công trường hoặc môi trường làm việc ngoài trời năng động.",
+            "I": "các viện nghiên cứu chiến lược, trung tâm R&D, phòng lab công nghệ cao hoặc trường đại học.",
+            "A": "các studio thiết kế, không gian văn hóa nghệ thuật, tòa soạn hoặc công ty truyền thông đa phương tiện.",
+            "S": "các cơ sở giáo dục, bệnh viện, tổ chức phi chính phủ (NGO) hoặc trung tâm tham vấn tâm lý.",
+            "E": "các tập đoàn đa quốc gia, hệ sinh thái khởi nghiệp, hoặc các cơ quan hành chính nhà nước cấp chiến lược.",
+            "C": "các trung tâm lưu trữ dữ liệu lớn, ngân hàng, cơ quan thuế, hải quan hoặc phòng kế toán kiểm toán.",
+            "D": "các cơ quan thực thi pháp luật, lực lượng vũ trang nhân dân, cơ quan tình báo hoặc đơn vị an ninh mạng quốc gia."
+        };
 
-        let traitsText = top3.map(t => traits[t.category]).join(" Kết hợp cùng ");
+        let majorsHtml = `<ul>`;
+        top3.forEach(t => { 
+            majorsHtml += `<li><strong>Nhóm ${t.category}:</strong> ${majorDatabase[t.category]}</li>`; 
+        });
+        majorsHtml += `</ul>`;
+
+        // Tổng hợp nhận xét AI cá nhân hóa
+        let trait1 = coreTraits[top3[0].category].replace('.', '');
+        let trait2 = coreTraits[top3[1].category].replace('.', '').toLowerCase();
+        let env1 = workEnvs[top3[0].category];
 
         return `
             <div class="ai-report-box">
                 <h4>🎯 1. Chân dung năng lực cốt lõi</h4>
-                <p>Qua phân tích mô hình đa trí tuệ và ASK, bạn <strong>${studentName}</strong> thể hiện rõ nét tổ hợp năng lực: ${traitsText}. Bạn có khả năng chuyển hóa ý tưởng thành hành động thực tiễn với thái độ vô cùng chuyên nghiệp.</p>
+                <p>Thông qua việc phân tích chéo các dữ liệu từ mô hình Đa trí tuệ (Howard Gardner) và khung năng lực ASK, AI nhận diện bạn <strong>${studentName}</strong> đang sở hữu một tổ hợp năng lực đặc biệt. Bạn nổi bật với <strong>${trait1}</strong>, đồng thời kết hợp linh hoạt với <strong>${trait2}</strong>. Sự giao thoa này cho thấy bạn không chỉ có kiến thức (Knowledge) nền tảng vững vàng mà còn có thái độ (Attitude) giải quyết vấn đề vượt trội.</p>
             </div>
+            
             <div class="ai-report-box">
                 <h4>🏢 2. Môi trường làm việc lý tưởng</h4>
-                <p>Hệ thống AI nhận định bạn sẽ phát huy tối đa tiềm năng tại
+                <p>Với chỉ số G-Factor (Tư duy nhạy bén) và nhóm tính cách hiện tại, bạn sẽ phát huy tối đa tiềm năng và đạt trạng thái "Flow" (đam mê và tập trung cao độ) khi được gắn bó với ${env1} Ở đó, các năng lực bẩm sinh của bạn sẽ được kích hoạt trọn vẹn.</p>
+            </div>
+            
+            <div class="ai-report-box">
+                <h4>🎓 3. Nhóm ngành đào tạo tương thích (Theo Thông tư 09/2022/TT-BGDĐT)</h4>
+                <p>Để định hướng lộ trình vào Đại học/Học viện chính xác nhất, hệ thống đã đối chiếu cấu trúc năng lực của bạn với <strong>Danh mục thống kê ngành đào tạo của giáo dục đại học quốc gia</strong> do Bộ trưởng Bộ GD&ĐT ban hành. Dưới đây là các ngành học cấp IV tiềm năng nhất:</p>
+                ${majorsHtml}
+            </div>
+            
+            <div class="ai-report-box">
+                <h4>📈 4. Tầm nhìn thị trường lao động (2026 - 2030)</h4>
+                <p>Theo dữ liệu dự báo nhân lực, kỷ nguyên Trí tuệ nhân tạo đang loại bỏ dần các công việc có tính lặp lại (routine tasks). Tuy nhiên, bộ mật mã năng lực của bạn chứa đựng những "điểm chạm nhân bản" và khả năng ra quyết định phức tạp - những kỹ năng mà AI không thể thay thế. Nếu tiếp tục trau dồi các kỹ năng cốt lõi thuộc nhóm <strong>${top3[0].category}</strong> và <strong>${top3[1].category}</strong>, bạn chắc chắn sẽ thuộc nhóm nhân sự chất lượng cao, có năng lực cạnh tranh toàn cầu trong 5-10 năm tới.</p>
+            </div>
+        `;
+    }
+
+    // Hàm xuất PDF
+    function downloadPDF() {
+        const element = document.getElementById('pdf-content');
+        const sName = document.getElementById('student-name').value.trim() || "Hoc_Sinh";
+        
+        // Loại bỏ dấu tiếng Việt cho tên file chuẩn
+        const removeAccents = (str) => { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); };
+        const safeName = removeAccents(sName).replace(/\s+/g, '_');
+        const fileName = `Bao_Cao_Huong_Nghiep_${safeName}.pdf`;
+
+        const btn = document.getElementById('download-btn');
+        const originalText = btn.innerText;
+        btn.innerText = "⏳ Hệ thống đang xử lý và đóng gói file in...";
+        btn.disabled = true;
+
+        const opt = {
+            margin:       10, 
+            filename:     fileName,
+            image:        { type: 'jpeg', quality: 1 }, 
+            html2canvas:  { scale: 2, useCORS: true, scrollY: 0, backgroundColor: '#ffffff' },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }).catch(err => {
+            alert("Đã xảy ra lỗi trong quá trình tạo PDF. Vui lòng thử lại.");
+            btn.innerText = originalText;
+            btn.disabled = false;
+        });
+    }
+</script>
+
+</body>
+</html>
