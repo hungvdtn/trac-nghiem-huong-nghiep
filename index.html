@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc Nghiệm Hướng Nghiệp RIASEC</title>
+    <title>Trắc Nghiệm Hướng Nghiệp RIASEC - TS. Vũ Xuân Hùng</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
             padding: 20px;
             margin: 0;
@@ -20,9 +27,9 @@
             background: #fff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        h1, h2, h3 {
+        h1, h2, h3, h4 {
             color: #2c3e50;
             text-align: center;
         }
@@ -31,17 +38,55 @@
             color: #7f8c8d;
             margin-bottom: 30px;
             font-style: italic;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
         }
+        /* Style cho phần thông tin học sinh */
+        .student-info-form {
+            background-color: #eaf2f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #d4e6f1;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2980b9;
+        }
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Cần thiết để padding không làm tăng chiều rộng */
+        }
+        .form-group input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
         .question-block {
             margin-bottom: 25px;
             padding: 15px;
             background: #fdfdfd;
-            border-left: 4px solid #3498db;
+            border-left: 4px solid var(--primary-color);
             border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .question-block:hover {
+            background-color: #f9f9f9;
+            transform: translateX(5px);
         }
         .question-text {
             font-weight: bold;
             margin-bottom: 10px;
+            font-size: 1.1em;
         }
         .options-group {
             display: flex;
@@ -62,19 +107,29 @@
             font-size: 0.9em;
             flex: 1;
             text-align: center;
-            transition: background 0.2s;
+            transition: background 0.2s, color 0.2s;
+            border: 1px solid transparent;
         }
         .option-label:hover {
             background: #dcdde1;
         }
         input[type="radio"] {
             margin-right: 5px;
+            cursor: pointer;
         }
-        .submit-btn {
+        /* Style khi option được chọn */
+        input[type="radio"]:checked + span {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        input[type="radio"]:checked input[type="radio"] {
+             border: 2px solid var(--primary-color);
+        }
+
+        .btn {
             display: block;
             width: 100%;
             padding: 15px;
-            background: #2ecc71;
             color: white;
             border: none;
             border-radius: 5px;
@@ -82,104 +137,147 @@
             font-weight: bold;
             cursor: pointer;
             margin-top: 20px;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.1s;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .submit-btn {
+            background: var(--secondary-color);
         }
         .submit-btn:hover {
             background: #27ae60;
         }
-        /* Nút tải PDF */
         .pdf-btn {
-            display: none; /* Ẩn đi cho đến khi có kết quả */
-            width: 100%;
-            padding: 15px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
+            background: var(--accent-color);
+            display: none; /* Ẩn cho đến khi có kết quả */
         }
         .pdf-btn:hover {
             background: #c0392b;
         }
+
         #result-container {
             display: none;
             margin-top: 40px;
             padding-top: 20px;
             border-top: 2px dashed #bdc3c7;
         }
-        /* Khu vực sẽ được in ra PDF */
+
+        /* --- Style dành riêng cho vùng in PDF --- */
         #pdf-content {
-            padding: 20px;
+            padding: 30px;
             background: #fff;
+            color: #000; /* Đảm bảo chữ đen khi in */
         }
+        .pdf-header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .pdf-header h2 { margin: 0; font-size: 1.6em; }
+        .pdf-header p { margin: 5px 0 0; font-size: 0.9em; color: #555; }
+
+        .pdf-student-meta {
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            border: 1px solid #eee;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .pdf-student-meta div { margin-bottom: 5px; }
+        .pdf-student-meta strong { color: #2980b9; }
+
         .result-card {
-            background: #e8f8f5;
+            background: #f4fdfb; /* Màu nhạt hơn để in đẹp */
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 8px;
             border-left: 5px solid #1abc9c;
+            page-break-inside: avoid; /* Tránh cắt đôi card khi qua trang mới */
         }
         .result-card h4 {
             margin-top: 0;
             color: #16a085;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
         .insight-box {
-            background: #fff3e0;
+            background: #fffdf9;
             padding: 15px;
             border-radius: 5px;
             border-left: 4px solid #ff9800;
             margin-top: 20px;
-        }
-        .pdf-header {
-            text-align: center;
-            border-bottom: 2px solid #2c3e50;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            page-break-inside: avoid;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Hệ thống Trắc nghiệm Hướng nghiệp</h1>
-    <div class="header-desc">
-        Phát triển và chuẩn hóa chuyên môn bởi TS. Vũ Xuân Hùng<br>
-        Mô hình Holland RIASEC dành cho học sinh THPT
+    <div class="main-header">
+        <h1>Hệ thống Trắc nghiệm Hướng nghiệp</h1>
+        <div class="header-desc">
+            Phát triển và chuẩn hóa chuyên môn bởi TS. Vũ Xuân Hùng<br>
+            Mô hình Holland RIASEC dành cho học sinh THPT
+        </div>
+    </div>
+
+    <div class="student-info-form">
+        <h3>Thông Tin Học Sinh</h3>
+        <p style="text-align:center; color: #7f8c8d; margin-top:-10px; font-size:0.9em;">(Vui lòng điền đầy đủ để in vào báo cáo PDF)</p>
+        <div class="form-group">
+            <label for="student-name">Họ và Tên:</label>
+            <input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A" required>
+        </div>
+        <div class="form-group">
+            <label for="student-class">Lớp:</label>
+            <input type="text" id="student-class" placeholder="Ví dụ: 12A1" required>
+        </div>
     </div>
 
     <form id="quiz-form">
-        <div id="questions-container"></div>
-        <button type="button" class="submit-btn" onclick="calculateResult()">Nộp Bài & Xem Kết Quả</button>
+        <div id="questions-container">
+            </div>
+        <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp Bài & Xem Kết Quả</button>
     </form>
 
     <div id="result-container">
-        <div id="pdf-content">
+        <button type="button" id="download-btn" class="btn pdf-btn" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF (Bản in)</button>
+        <div style="height: 30px;"></div> <div id="pdf-content">
             <div class="pdf-header">
                 <h2>BÁO CÁO PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
                 <p>Mô hình Holland RIASEC chuẩn hóa theo thị trường lao động Việt Nam</p>
             </div>
+
+            <div class="pdf-student-meta">
+                <div><strong>Họ và Tên học sinh:</strong> <span id="pdf-render-name"></span></div>
+                <div><strong>Lớp:</strong> <span id="pdf-render-class"></span></div>
+                <div><strong>Ngày thực hiện:</strong> <span id="pdf-render-date"></span></div>
+            </div>
             
-            <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center;"></h3>
-            <p style="text-align: center;">Dưới đây là phân tích chi tiết về 3 nhóm năng lực nổi trội nhất của bạn:</p>
+            <h3 id="code-result" style="color: #e74c3c; font-size: 2em; text-align: center; margin-bottom: 10px;"></h3>
+            <p style="text-align: center; margin-bottom: 25px;">Dựa trên câu trả lời của bạn, dưới đây là phân tích chi tiết về 3 nhóm năng lực nổi trội nhất:</p>
             
-            <div id="detailed-results"></div>
+            <div id="detailed-results">
+                </div>
             
             <div class="insight-box">
-                <h4>Tầm nhìn thị trường (2026 - 2030)</h4>
+                <h4>Tầm nhìn thị trường lao động (2026 - 2030)</h4>
                 <p id="insight-text"></p>
             </div>
+
+            <div style="margin-top: 30px; text-align: center; font-size: 0.8em; color: #7f8c8d; border-top: 1px solid #eee; padding-top: 10px;">
+                Báo cáo được tạo tự động bởi Hệ thống trắc nghiệm hướng nghiệp TS. Vũ Xuân Hùng.
+            </div>
         </div>
-        
-        <button type="button" id="download-btn" class="pdf-btn" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF</button>
-    </div>
+        </div>
 </div>
 
 <script>
-    // Dữ liệu JSON được nhúng trực tiếp
+    // Dữ liệu JSON được nhúng trực tiếp (Giữ nguyên 10 câu demo)
     const quizData = {
       "scale": [
         { "value": 1, "label": "Hoàn toàn không đúng" },
@@ -205,30 +303,42 @@
         "I": { "trait_name": "Nghiên cứu - Khám phá (Investigative)", "core_competency": "Tư duy logic, phân tích, phản biện xuất sắc. Năng lực tự học cao.", "recommended_majors": "Khoa học máy tính, Trí tuệ nhân tạo (AI), Y khoa, Dược học." },
         "A": { "trait_name": "Nghệ thuật - Sáng tạo (Artistic)", "core_competency": "Tư duy đột phá, trí tưởng tượng phong phú, khả năng cảm thụ thẩm mỹ.", "recommended_majors": "Thiết kế đồ họa, Kiến trúc, Báo chí - Truyền thông, Đạo diễn." },
         "S": { "trait_name": "Xã hội - Hỗ trợ (Social)", "core_competency": "Trí tuệ cảm xúc (EQ) cao, kỹ năng giao tiếp xuất sắc, thấu cảm.", "recommended_majors": "Sư phạm, Tâm lý học, Công tác xã hội, Quản trị nhân lực." },
-        "E": { "trait_name": "Quản lý - Thương mại (Enterprising)", "core_competency": "Năng lực lãnh đạo, tầm nhìn chiến lược, đàm phán và thuyết phục.", "recommended_majors": "Quản trị kinh doanh, Tài chính - Ngân hàng, Marketing, Luật." },
+        "E": { "trait_name": "Quản lý - Thương mại (Enterprising)", "core_competency": "Năng lực lãnh đạo, tầm nhìn chiến lược, đàm phán và thuyết phục.", "recommended_majors": "Quản trị kinh doanh, Tài chính - Ngân hàng, Marketing, Luật Kinh tế." },
         "C": { "trait_name": "Nghiệp vụ - Tổ chức (Conventional)", "core_competency": "Tư duy hệ thống, kỷ luật cao, xử lý dữ liệu chính xác và tuân thủ quy trình.", "recommended_majors": "Kế toán, Kiểm toán, Quản lý hệ thống thông tin, Logistics." }
       },
-      "labor_market_insight": "Thị trường lao động Việt Nam đang chuyển dịch mạnh mẽ theo hướng số hóa. Các nhóm ngành đòi hỏi sự kết hợp liên ngành sẽ dẫn dắt thị trường. Những năng lực cốt lõi không thể bị thay thế bởi AI bao gồm: Trí tuệ cảm xúc, Tư duy sáng tạo giải pháp, và Năng lực lãnh đạo chiến lược."
+      "labor_market_insight": "Thị trường lao động Việt Nam đang chuyển dịch mạnh mẽ theo hướng số hóa. Các nhóm ngành đòi hỏi sự kết hợp liên ngành (Ví dụ: Công nghệ + Giáo dục, Kinh tế + Dữ liệu) sẽ dẫn dắt thị trường. Những năng lực cốt lõi khó bị thay thế bởi AI bao gồm: Trí tuệ cảm xúc (S), Tư duy sáng tạo giải pháp (A), và Năng lực lãnh đạo chiến lược (E)."
     };
 
-    // Render câu hỏi ra màn hình
+    // Khởi tạo: Render câu hỏi ra màn hình
     const container = document.getElementById('questions-container');
     quizData.questions.forEach((q, index) => {
         let questionHtml = `<div class="question-block">
                                 <div class="question-text">${q.text}</div>
                                 <div class="options-group">`;
         quizData.scale.forEach(s => {
+            // Dùng nhãn <span> bao quanh text để dễ style khi được chọn
             questionHtml += `<label class="option-label">
-                                <input type="radio" name="q${index}" value="${s.value}" data-category="${q.category}">
-                                ${s.label}
+                                <input type="radio" name="q${index}" value="${s.value}" data-category="${q.category}" required>
+                                <span>${s.label}</span>
                              </label>`;
         });
         questionHtml += `</div></div>`;
         container.innerHTML += questionHtml;
     });
 
-    // Hàm tính điểm và xuất kết quả
+    // Hàm cộng điểm và xuất kết quả ra màn hình
     function calculateResult() {
+        // 1. Kiểm tra thông tin học sinh (MỚI)
+        const sName = document.getElementById('student-name').value.trim();
+        const sClass = document.getElementById('student-class').value.trim();
+
+        if (!sName || !sClass) {
+            alert("Vui lòng nhập Họ tên và Lớp của bạn ở phần đầu trang!");
+            document.getElementById('student-name').focus();
+            return;
+        }
+
+        // 2. Kiểm tra và tính điểm trắc nghiệm
         let scores = { "R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0 };
         let allAnswered = true;
 
@@ -246,16 +356,28 @@
             return;
         }
 
-        // Sắp xếp điểm số để lấy top 3
+        // 3. Xử lý logic tìm Top 3
         let sortedScores = Object.keys(scores).map(key => ({ category: key, score: scores[key] }));
         sortedScores.sort((a, b) => b.score - a.score);
         let top3 = sortedScores.slice(0, 3);
         let resultCode = top3.map(t => t.category).join(" - ");
 
-        // Hiển thị kết quả vào khối in PDF
+        // 4. Điền dữ liệu vào vùng hiển thị/in PDF (ĐÃ SỬA ĐỂ ĐẢM BẢO ĐIỀN CHẮC CHẮN)
+        
+        // Điền thông tin học sinh
+        document.getElementById('pdf-render-name').innerText = sName;
+        document.getElementById('pdf-render-class').innerText = sClass;
+        // Điền ngày hiện tại (định dạng VN)
+        const now = new Date();
+        document.getElementById('pdf-render-date').innerText = now.toLocaleDateString('vi-VN');
+
+        // Điền mã kết quả
         document.getElementById('code-result').innerText = "MẬT MÃ CỦA BẠN: " + resultCode;
+        
+        // Điền nhận định thị trường
         document.getElementById('insight-text').innerText = quizData.labor_market_insight;
         
+        // Điền 3 card kết quả chi tiết
         let detailsHtml = "";
         top3.forEach(t => {
             let info = quizData.report_results_database[t.category];
@@ -267,29 +389,47 @@
         });
         document.getElementById('detailed-results').innerHTML = detailsHtml;
         
-        // Hiển thị khung kết quả và nút tải PDF
+        // 5. Hiển thị khung kết quả và nút tải (Dùng flex để căn giữa nút)
         document.getElementById('result-container').style.display = 'block';
         document.getElementById('download-btn').style.display = 'block';
         
-        // Cuộn màn hình xuống phần kết quả
+        // Cuộn màn hình xuống phần kết quả một cách mượt mà
         document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Hàm tạo và tải tệp PDF
+    // Hàm tạo và tải tệp PDF (ĐÃ CHỈNH SỬA ĐỂ SỬA LỖI TRANG TRẮNG)
     function downloadPDF() {
         const element = document.getElementById('pdf-content');
         
+        // Đảm bảo phần tử tồn tại và có nội dung trước khi in
+        if (!element || element.innerHTML.trim() === "") {
+            alert("Lỗi: Không tìm thấy nội dung để in. Vui lòng thử nộp bài lại.");
+            return;
+        }
+
+        // Lấy tên học sinh để đặt tên file
+        const sName = document.getElementById('student-name').value.trim() || "Hoc_Sinh";
+        const fileName = `Bao_Cao_RIASEC_${sName.replace(/\s+/g, '_')}.pdf`;
+
         // Cấu hình định dạng trang in PDF
         const opt = {
-            margin:       15, // Căn lề 15mm
-            filename:     'Bao_Cao_Huong_Nghiep_RIASEC.pdf',
+            margin:       10, // Căn lề 10mm (hơi hẹp hơn để chứa đủ nội dung)
+            filename:     fileName,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true }, // Tăng độ nét của chữ
+            html2canvas:  { 
+                scale: 2, // Tăng độ nét
+                useCORS: true, // Cho phép tải ảnh từ nguồn khác nếu có
+                logging: false, // Tắt log để tăng tốc
+                letterRendering: true // Giúp render chữ đẹp hơn
+            },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } // Giấy A4 dọc
         };
 
         // Kích hoạt thư viện để lưu file
-        html2pdf().set(opt).from(element).save();
+        // Thêm một chút delay (100ms) để chắc chắn trình duyệt đã render xong nội dung mới
+        setTimeout(() => {
+            html2pdf().set(opt).from(element).save();
+        }, 100);
     }
 </script>
 
