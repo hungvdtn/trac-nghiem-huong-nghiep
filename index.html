@@ -156,27 +156,97 @@
             { value: 5, label: "Hoàn toàn đúng" }
         ];
 
-        // Dữ liệu câu hỏi với ID duy nhất (q1 đến q14)
+        // Ngân hàng 84 câu hỏi đầy đủ
         const questions = [
-            // PHẦN 1: RIASEC + D
-            { part: 1, id: "q1", category: "R", text: "1. Tôi thích tự tay thao tác, lắp ráp, hoặc sửa chữa các thiết bị điện tử, máy móc.", hint: "Nhớ lại lúc bạn tự sửa xe đạp, nối dây điện hoặc tháo lắp đồ dùng gia đình." },
-            { part: 1, id: "q2", category: "I", text: "2. Tôi luôn muốn tìm hiểu nguyên lý hoạt động sâu xa của mọi sự vật, hiện tượng.", hint: "Bạn có hay đọc tài liệu khoa học, khám phá vũ trụ, giải mã các hiện tượng vật lý, hóa học không?" },
-            { part: 1, id: "q3", category: "A", text: "3. Tôi đam mê các hình thức biểu đạt nghệ thuật (âm nhạc, hội họa, thiết kế, văn học).", hint: "Bạn có thích trang trí, vẽ tranh, chụp ảnh, hoặc viết lách sáng tạo mang đậm dấu ấn cá nhân?" },
-            { part: 1, id: "q4", category: "S", text: "4. Tôi tìm thấy niềm vui và ý nghĩa khi được lắng nghe, thấu hiểu và giúp đỡ người khác.", hint: "Bạn có thường là người tư vấn, gỡ rối tâm lý cho bạn bè, hoặc thích các hoạt động thiện nguyện không?" },
-            { part: 1, id: "q5", category: "E", text: "5. Tôi tự tin thuyết phục và dẫn dắt người khác để đạt được mục tiêu chung.", hint: "Bạn có thích làm lớp trưởng, trưởng nhóm dự án, phát biểu trước đám đông hay kinh doanh buôn bán?" },
-            { part: 1, id: "q6", category: "C", text: "6. Tôi làm việc hiệu quả nhất với các con số, dữ liệu và quy trình hành chính rõ ràng.", hint: "Bạn là người cẩn thận, ngăn nắp, thích lập bảng biểu thống kê chi tiêu hoặc sắp xếp tài liệu khoa học?" },
-            { part: 1, id: "q7", category: "D", text: "7. Tôi sẵn sàng tuân thủ kỷ luật thép và có mong muốn bảo vệ an ninh, trật tự xã hội.", hint: "Bạn có ngưỡng mộ môi trường quân đội, công an, sự rèn luyện thể chất cường độ cao và tính tổ chức nghiêm ngặt?" },
+            // --- PHẦN 1: RIASEC + D (35 Câu) ---
+            { part: 1, id: "q1", category: "R", text: "1. Tôi thích tự tay thao tác, lắp ráp, hoặc sửa chữa các thiết bị điện tử, máy móc, vật dụng gia đình.", hint: "Nhớ lại lúc bạn tự sửa xe đạp, nối dây điện hoặc tháo lắp đồ dùng gia đình." },
+            { part: 1, id: "q2", category: "R", text: "2. Tôi thích các hoạt động ngoài trời, làm việc với thiên nhiên, cây cối, động vật hơn là ngồi trong văn phòng.", hint: "Bạn có thích làm vườn, chăm sóc thú cưng hay tham gia các hoạt động thể chất ngoài trời?" },
+            { part: 1, id: "q3", category: "R", text: "3. Tôi có khả năng tập trung cao độ khi làm các công việc thủ công, chế tạo mô hình hoặc thiết kế kỹ thuật.", hint: "Hãy nghĩ về những môn học thực hành, chế tạo robot hoặc làm đồ thủ công mỹ nghệ." },
+            { part: 1, id: "q4", category: "R", text: "4. Tôi dễ dàng nắm bắt cách thức vận hành của một hệ thống cơ khí, kỹ thuật mới khi quan sát thực tế.", hint: "Bạn có thường nhanh chóng hiểu được cách một chiếc máy mới hoạt động chỉ qua vài lần quan sát?" },
+            { part: 1, id: "q5", category: "R", text: "5. Tôi đánh giá cao các công việc mang lại kết quả thực tiễn, có thể nhìn thấy, chạm vào hoặc đo lường cụ thể ngay lập tức.", hint: "Bạn thích tạo ra những sản phẩm thực tế cầm nắm được hơn là những ý tưởng lý thuyết trên giấy." },
+            { part: 1, id: "q6", category: "I", text: "6. Tôi luôn muốn tìm hiểu nguyên lý hoạt động sâu xa của mọi sự vật, hiện tượng và thường đặt câu hỏi 'Tại sao?'.", hint: "Bạn có hay đọc tài liệu khoa học, khám phá vũ trụ, giải mã các hiện tượng vật lý, hóa học không?" },
+            { part: 1, id: "q7", category: "I", text: "7. Tôi hứng thú với việc phân tích dữ liệu, giải quyết các bài toán logic phức tạp hoặc tham gia các thí nghiệm khoa học.", hint: "Hãy nhớ lại cảm giác của bạn khi giải thành công một bài toán khó hoặc làm thí nghiệm thành công." },
+            { part: 1, id: "q8", category: "I", text: "8. Tôi làm việc hiệu quả nhất khi được độc lập suy nghĩ, nghiên cứu chuyên sâu thay vì làm việc nhóm quá nhiều.", hint: "Bạn thích tự mình đào sâu tìm tòi kiến thức mới hay thích thảo luận nhóm hơn?" },
+            { part: 1, id: "q9", category: "I", text: "9. Tôi có thói quen thu thập và đối chiếu kỹ lưỡng các thông tin, số liệu khách quan trước khi đưa ra bất kỳ kết luận nào.", hint: "Bạn có thường kiểm tra nguồn gốc thông tin và tìm kiếm bằng chứng cụ thể trên internet không?" },
+            { part: 1, id: "q10", category: "I", text: "10. Tôi yêu thích các lĩnh vực đòi hỏi tư duy trừu tượng như công nghệ thông tin, công nghệ sinh học, vật lý học, toán học.", hint: "Đây là những môn học đòi hỏi khả năng tưởng tượng và suy luận các khái niệm không nhìn thấy bằng mắt thường." },
+            { part: 1, id: "q11", category: "A", text: "11. Tôi đam mê các hình thức biểu đạt nghệ thuật (âm nhạc, hội họa, thiết kế, văn học, điện ảnh).", hint: "Bạn có thích trang trí, vẽ tranh, chụp ảnh, hoặc viết lách sáng tạo mang đậm dấu ấn cá nhân?" },
+            { part: 1, id: "q12", category: "A", text: "12. Tôi luôn nỗ lực tìm kiếm những góc nhìn mới mẻ, các giải pháp độc đáo, khác biệt để giải quyết một vấn đề cũ.", hint: "Bạn có thường xuyên đưa ra những ý tưởng mà bạn bè cho là 'phá cách' hoặc 'độc lạ'?" },
+            { part: 1, id: "q13", category: "A", text: "13. Tôi cảm thấy ngột ngạt với các công việc mang tính lặp đi lặp lại, rập khuôn hoặc bị gò bó bởi những quy tắc cứng nhắc.", hint: "Bạn thích sự tự do sáng tạo hay thích làm theo một khuôn mẫu đã được định sẵn?" },
+            { part: 1, id: "q14", category: "A", text: "14. Tôi có năng lực diễn đạt cảm xúc, ý tưởng phức tạp của mình một cách tinh tế thông qua ngôn từ, hình ảnh hoặc âm thanh.", hint: "Bạn có thể hiện bản thân tốt qua việc làm thơ, viết blog, chơi nhạc cụ hay thiết kế đồ họa?" },
+            { part: 1, id: "q15", category: "A", text: "15. Tôi đặc biệt chú trọng đến yếu tố thẩm mỹ, sự hài hòa và cái đẹp trong mọi sản phẩm tôi tạo ra hoặc môi trường xung quanh.", hint: "Bạn có khắt khe về cách phối màu sắc, bố cục khi làm slide thuyết trình hay trang trí góc học tập?" },
+            { part: 1, id: "q16", category: "S", text: "16. Tôi tìm thấy niềm vui và ý nghĩa khi được lắng nghe, thấu hiểu và giúp đỡ người khác vượt qua khó khăn tâm lý, cá nhân.", hint: "Bạn có thường là người tư vấn, gỡ rối tâm lý cho bạn bè không?" },
+            { part: 1, id: "q17", category: "S", text: "17. Tôi có khả năng truyền đạt thông tin một cách mạch lạc, kiên nhẫn và rất thích việc hướng dẫn, giảng dạy cho người khác.", hint: "Nhớ lại những lúc bạn giảng bài lại cho bạn cùng lớp, bạn có thấy vui và họ có dễ hiểu không?" },
+            { part: 1, id: "q18", category: "S", text: "18. Tôi thường chủ động đóng vai trò là người kết nối, hòa giải khi có xung đột, bất đồng xảy ra trong tập thể.", hint: "Khi nhóm bạn có cãi vã, bạn có phải là người đứng ra làm dịu tình hình và tìm tiếng nói chung?" },
+            { part: 1, id: "q19", category: "S", text: "19. Tôi tích cực tham gia các hoạt động tình nguyện, công tác xã hội hoặc các dự án mang lại giá trị trực tiếp cho cộng đồng.", hint: "Bạn có nhiệt tình tham gia các chiến dịch tình nguyện, hiến máu hay giúp đỡ người yếu thế?" },
+            { part: 1, id: "q20", category: "S", text: "20. Tôi tin rằng sự đồng cảm, trí tuệ cảm xúc (EQ) và khả năng giao tiếp là nền tảng quan trọng nhất để tạo dựng một xã hội tốt đẹp.", hint: "Trong một tập thể, bạn đánh giá cao sự gắn kết tình cảm hay chỉ quan tâm đến năng lực chuyên môn cá nhân?" },
+            { part: 1, id: "q21", category: "E", text: "21. Tôi tự tin khi phát biểu trước đám đông và có năng lực thuyết phục, gây ảnh hưởng để người khác ủng hộ ý tưởng của mình.", hint: "Bạn có thích làm lớp trưởng, trưởng nhóm dự án, thuyết trình hay tham gia CLB hùng biện?" },
+            { part: 1, id: "q22", category: "E", text: "22. Tôi phát triển tốt trong môi trường có tính cạnh tranh cao và luôn tự đặt ra các mục tiêu đầy tham vọng để chinh phục.", hint: "Áp lực thành tích làm bạn chùn bước hay trở thành động lực để bạn phấn đấu mạnh mẽ hơn?" },
+            { part: 1, id: "q23", category: "E", text: "23. Tôi đặc biệt quan tâm đến các quy luật kinh tế, chiến lược kinh doanh, quản trị tài chính và cách thức tạo ra lợi nhuận.", hint: "Bạn có hay theo dõi các chương trình kinh doanh, khởi nghiệp hoặc có ý tưởng muốn tự kinh doanh buôn bán nhỏ?" },
+            { part: 1, id: "q24", category: "E", text: "24. Tôi có tư duy hành động, khả năng ra quyết định nhanh chóng, quyết đoán và sẵn sàng chấp nhận rủi ro có tính toán.", hint: "Khi đứng trước một cơ hội 50/50, bạn dám thử sức hay ưu tiên sự an toàn tuyệt đối?" },
+            { part: 1, id: "q25", category: "E", text: "25. Tôi luôn chủ động tìm kiếm các cơ hội mới để mở rộng mối quan hệ xã hội (networking) phục vụ cho định hướng tương lai.", hint: "Bạn có ngại làm quen với những người giỏi hơn mình trong các sự kiện giao lưu ngoại khóa không?" },
+            { part: 1, id: "q26", category: "C", text: "26. Tôi làm việc hiệu quả nhất với các con số, dữ liệu và quy trình hành chính rõ ràng, cụ thể.", hint: "Bạn là người cẩn thận, ngăn nắp, thích lập bảng biểu thống kê chi tiêu hoặc sắp xếp tài liệu khoa học?" },
+            { part: 1, id: "q27", category: "C", text: "27. Tôi phát huy thế mạnh tốt nhất ở các công việc đòi hỏi sự tỉ mỉ, độ chính xác tuyệt đối và sự chú ý đến từng chi tiết nhỏ.", hint: "Khi làm bài tập nhóm, bạn có thường là người rà soát lại lỗi chính tả, căn chỉnh format tài liệu trước khi nộp?" },
+            { part: 1, id: "q28", category: "C", text: "28. Tôi cảm thấy an tâm và làm việc năng suất nhất khi được giao một nhiệm vụ có hướng dẫn chi tiết, tiêu chuẩn đánh giá và mục tiêu cụ thể.", hint: "Bạn thích tự do bay bổng hay thích có một bản kế hoạch (checklist) rõ ràng để làm theo từng bước?" },
+            { part: 1, id: "q29", category: "C", text: "29. Tôi xử lý rất nhạy bén các công việc liên quan đến tính toán, kế toán, thống kê dữ liệu lớn hoặc thiết lập hệ thống bảng biểu.", hint: "Bạn có thấy thoải mái khi phải làm việc nhiều giờ với các môn tính toán số liệu chi tiết?" },
+            { part: 1, id: "q30", category: "C", text: "30. Tôi là người vô cùng cẩn trọng, kỷ luật cao, luôn có thói quen kiểm tra chéo nhiều lần kết quả công việc để triệt tiêu mọi rủi ro sai sót.", hint: "Trước khi nộp bài thi, bạn có thói quen dò lại từng đáp án nhiều lần dù thời gian còn dư dả?" },
+            { part: 1, id: "q31", category: "D", text: "31. Tôi sẵn sàng tuân thủ kỷ luật thép, tôn trọng tuyệt đối hệ thống chỉ huy và có tinh thần trách nhiệm cao với tổ chức.", hint: "Bạn có ngưỡng mộ môi trường quân đội, công an và tính tổ chức nghiêm ngặt, chuẩn chỉ, quân lệnh như sơn?" },
+            { part: 1, id: "q32", category: "D", text: "32. Tôi có khả năng duy trì sự bình tĩnh, tập trung và xử lý tình huống nhanh nhạy, quyết đoán trong các điều kiện áp lực cao hoặc khẩn cấp.", hint: "Khi gặp sự cố bất ngờ (tai nạn, hỏa hoạn, xung đột...), bạn thường hoảng hốt hay nhanh chóng tìm cách giải quyết?" },
+            { part: 1, id: "q33", category: "D", text: "33. Tôi luôn ý thức sâu sắc về việc bảo vệ trật tự an toàn xã hội, sự công bằng và tính thượng tôn pháp luật.", hint: "Bạn có cảm thấy bất bình và muốn can thiệp khi chứng kiến những hành vi vi phạm pháp luật, bắt nạt hay gian lận?" },
+            { part: 1, id: "q34", category: "D", text: "34. Tôi có ý thức rèn luyện thể chất, sức bền và khả năng chịu đựng gian khổ để đáp ứng các yêu cầu khắt khe của môi trường làm việc đặc thù.", hint: "Bạn có thường xuyên tập luyện võ thuật, thể thao cường độ cao và không ngại khó khăn về điều kiện sống?" },
+            { part: 1, id: "q35", category: "D", text: "35. Tôi sẵn sàng hy sinh lợi ích cá nhân, đặt nhiệm vụ bảo vệ an ninh quốc gia, trật tự xã hội và sự bình yên của nhân dân lên hàng đầu.", hint: "Nhớ lại những bộ phim hoặc câu chuyện về lực lượng vũ trang, bạn có thấy đồng cảm sâu sắc với sứ mệnh và lý tưởng của họ không?" },
             
-            // PHẦN 2: ASK & Đa trí tuệ
-            { part: 2, id: "q8", category: "MI_Lang", text: "8. (Đa trí tuệ) Tôi có vốn từ vựng phong phú và dễ dàng diễn đạt ý tưởng phức tạp thành lời nói hoặc văn bản.", hint: "Đánh giá Trí thông minh Ngôn ngữ (Howard Gardner)." },
-            { part: 2, id: "q9", category: "MI_Inter", text: "9. (Đa trí tuệ) Tôi rất nhạy bén trong việc đọc vị cảm xúc và ý định của người đối diện khi giao tiếp.", hint: "Đánh giá Trí thông minh Tương tác xã hội." },
-            { part: 2, id: "q10", category: "ASK_Att", text: "10. (ASK) Tôi luôn giữ thái độ tích cực, chủ động tìm giải pháp và không bỏ cuộc khi đối mặt với thất bại.", hint: "Đánh giá yếu tố Thái độ (Attitude) - Cốt lõi của sự thành công nghề nghiệp." },
-            { part: 2, id: "q11", category: "ASK_Skill", text: "11. (ASK) Tôi có kỹ năng thích ứng nhanh với các công nghệ, phần mềm mới (Kỹ năng số).", hint: "Đánh giá yếu tố Kỹ năng (Skill) trong thời đại chuyển đổi số." },
-            
-            // PHẦN 3: G-Factor
-            { part: 3, id: "q12", category: "G_Logic", text: "12. (G-Factor) Tôi có khả năng giải quyết nhanh chóng các bài toán tư duy logic, tìm ra quy luật của một dãy số hoặc chuỗi sự kiện.", hint: "Đo lường năng lực suy luận trừu tượng và logic toán học." },
-            { part: 3, id: "q13", category: "G_Space", text: "13. (G-Factor) Tôi dễ dàng hình dung, nhớ đường rất tốt và có thể xoay chuyển các vật thể 3D trong đầu mình.", hint: "Đo lường năng lực không gian hình học và trí nhớ thị giác." },
-            { part: 3, id: "q14", category: "G_Prob", text: "14. (G-Factor) Đứng trước một vấn đề phức tạp, tôi luôn biết cách chia nhỏ nó ra để xử lý từng bước một.", hint: "Đo lường kỹ năng phân tích và giải quyết vấn đề (Problem-solving)." }
+            // --- PHẦN 2: ASK & Đa trí tuệ (34 Câu) ---
+            { part: 2, id: "q36", category: "MI_Lang", text: "36. Tôi thích đọc sách, viết lách và có thể dễ dàng diễn đạt suy nghĩ của mình bằng từ ngữ.", hint: "Bạn có hay viết blog, nhật ký hoặc giỏi các môn Khoa học Xã hội không?" },
+            { part: 2, id: "q37", category: "MI_Lang", text: "37. Tôi thường ghi nhớ thông tin tốt hơn khi đọc hoặc nghe người khác kể chuyện.", hint: "Lời nói và câu chữ giúp bạn in sâu kiến thức hơn là hình ảnh?" },
+            { part: 2, id: "q38", category: "MI_Lang", text: "38. Tôi thích tham gia các cuộc tranh luận, hùng biện hoặc sử dụng từ ngữ để thuyết phục người khác.", hint: "Bạn có năng khiếu chơi chữ hoặc giải thích vấn đề rất rành mạch?" },
+            { part: 2, id: "q39", category: "MI_Logic", text: "39. Tôi thích làm việc với các con số, giải các bài toán khó và tìm ra quy luật của mọi thứ.", hint: "Bạn có đam mê môn Toán, Vật lý hoặc các bộ môn lập trình không?" },
+            { part: 2, id: "q40", category: "MI_Logic", text: "40. Khi đối mặt với một vấn đề, tôi thường phân tích nó theo các bước logic và hệ thống.", hint: "Bạn không thích đoán mò mà luôn tìm kiếm nguyên nhân - kết quả rõ ràng?" },
+            { part: 2, id: "q41", category: "MI_Logic", text: "41. Tôi thích các trò chơi đòi hỏi chiến thuật và tư duy suy luận.", hint: "Cờ vua, Sudoku hay các trò chơi giải mã có phải là sở thích của bạn?" },
+            { part: 2, id: "q42", category: "MI_Space", text: "42. Tôi có thể dễ dàng hình dung trong đầu các đồ vật ở không gian 3 chiều và định hướng tốt khi đi đường.", hint: "Bạn ít khi bị lạc đường và có thể đọc bản đồ rất nhanh?" },
+            { part: 2, id: "q43", category: "MI_Space", text: "43. Tôi thích vẽ, thiết kế, phác thảo hoặc diễn đạt ý tưởng của mình qua hình ảnh, sơ đồ.", hint: "Tập vở của bạn có thường xuất hiện các hình vẽ doodle hoặc sơ đồ tư duy (mindmap) không?" },
+            { part: 2, id: "q44", category: "MI_Space", text: "44. Tôi đặc biệt nhạy cảm với màu sắc, bố cục và không gian xung quanh.", hint: "Bạn có khắt khe khi sắp xếp đồ đạc trong phòng để trông đẹp mắt nhất?" },
+            { part: 2, id: "q45", category: "MI_Body", text: "45. Tôi thích học hỏi thông qua việc tự tay làm, thực hành và vận động cơ thể.", hint: "Bạn thấy ngồi yên một chỗ nghe giảng quá lâu là một cực hình?" },
+            { part: 2, id: "q46", category: "MI_Body", text: "46. Tôi có khả năng kiểm soát thăng bằng tốt và chơi thể thao, khiêu vũ hoặc diễn xuất tự nhiên.", hint: "Cơ thể bạn rất linh hoạt và dễ dàng bắt nhịp các môn thể chất?" },
+            { part: 2, id: "q47", category: "MI_Body", text: "47. Tôi thường sử dụng nhiều cử chỉ, điệu bộ cơ thể khi nói chuyện để minh họa cho ý tưởng.", hint: "'Khua tay múa chân' là thói quen của bạn khi kể một câu chuyện hấp dẫn?" },
+            { part: 2, id: "q48", category: "MI_Music", text: "48. Tôi có thể dễ dàng nhận ra đúng giai điệu, nhịp điệu và bắt tông khi hát hoặc nghe nhạc.", hint: "Bạn có thường xuyên nhịp chân hay gõ tay theo một bài hát không?" },
+            { part: 2, id: "q49", category: "MI_Music", text: "49. Tôi thường xuyên nghe nhạc khi làm việc, học tập và ghi nhớ thông tin qua các giai điệu.", hint: "Âm nhạc là chất xúc tác không thể thiếu để bạn tập trung?" },
+            { part: 2, id: "q50", category: "MI_Music", text: "50. Tôi có thể chơi được ít nhất một loại nhạc cụ hoặc rất nhạy cảm với các âm thanh từ môi trường.", "hint": "Bạn dễ dàng phát hiện ra một nốt nhạc bị đánh phô/lệch nhịp?" },
+            { part: 2, id: "q51", category: "MI_Inter", text: "51. Tôi rất nhạy bén trong việc nhận ra cảm xúc, tâm trạng và ý định của những người xung quanh.", "hint": "Bạn có biệt tài 'đọc vị' người khác chỉ qua nét mặt hoặc giọng nói?" },
+            { part: 2, id: "q52", category: "MI_Inter", text: "52. Tôi thích làm việc nhóm, dễ dàng kết bạn và thường là người đứng ra hòa giải các mâu thuẫn.", "hint": "Mọi người có thường tìm đến bạn để tâm sự và xin lời khuyên?" },
+            { part: 2, id: "q53", category: "MI_Inter", text: "53. Tôi học hỏi hiệu quả nhất khi được thảo luận, tương tác và trao đổi trực tiếp với người khác.", "hint": "Học nhóm mang lại cho bạn nhiều cảm hứng hơn là tự học một mình?" },
+            { part: 2, id: "q54", category: "MI_Intra", text: "54. Tôi hiểu rất rõ điểm mạnh, điểm yếu, cảm xúc của bản thân và luôn tự đặt mục tiêu cho mình.", "hint": "Bạn thường xuyên dành thời gian tự suy ngẫm và đánh giá lại các quyết định của mình?" },
+            { part: 2, id: "q55", category: "MI_Intra", text: "55. Tôi thích làm việc độc lập và cảm thấy thoải mái nhất khi có không gian riêng tư để suy nghĩ.", "hint": "Bạn không cần ai hối thúc mà vẫn có thể tự giác hoàn thành công việc?" },
+            { part: 2, id: "q56", category: "MI_Intra", text: "56. Tôi thường có các thói quen giúp kết nối sâu sắc với nội tâm (viết nhật ký, nghe podcast tâm lý...).", "hint": "Đời sống tinh thần phong phú là điều bạn luôn gìn giữ và nuôi dưỡng?" },
+            { part: 2, id: "q57", category: "MI_Nature", text: "57. Tôi yêu thích thiên nhiên, động vật, cây cỏ và quan tâm sâu sắc đến các vấn đề môi trường.", "hint": "Bạn có thích xem các chương trình thế giới động vật hay tham gia các chiến dịch xanh?" },
+            { part: 2, id: "q58", category: "MI_Nature", text: "58. Tôi có khả năng phân biệt, nhận diện tốt các loài cây, hoa, động vật hoặc các hiện tượng thời tiết.", "hint": "Bạn dễ dàng gọi tên các loại cây cối xung quanh hoặc dự báo sự thay đổi thời tiết?" },
+            { part: 2, id: "q59", category: "MI_Nature", text: "59. Tôi cảm thấy thư giãn và nạp lại năng lượng nhanh nhất khi được hòa mình vào không gian tự nhiên.", "hint": "Những chuyến cắm trại rừng núi, biển cả luôn hấp dẫn bạn hơn là ở thành phố ồn ào?" },
+            { part: 2, id: "q60", category: "ASK_Att", "text": "60. Khi đối mặt với khó khăn, thất bại, tôi luôn giữ thái độ tích cực và tìm cách đứng lên làm lại.", "hint": "Bạn coi thất bại là bài học kinh nghiệm hay là lý do để từ bỏ?" },
+            { part: 2, id: "q61", category: "ASK_Att", "text": "61. Tôi luôn chủ động nhận trách nhiệm về những sai sót của mình thay vì đổ lỗi cho hoàn cảnh hay người khác.", "hint": "Sự trung thực và dũng cảm nhận lỗi là ưu điểm của bạn?" },
+            { part: 2, id: "q62", category: "ASK_Att", "text": "62. Tôi tôn trọng sự khác biệt, luôn lắng nghe ý kiến trái chiều mà không tỏ ra phản cảm hay tức giận.", "hint": "Khi tranh luận, bạn giữ được cái đầu lạnh và thái độ hòa nhã?" },
+            { part: 2, id: "q63", category: "ASK_Att", "text": "63. Tôi có ý thức kỷ luật bản thân cao, luôn nỗ lực hoàn thành công việc đúng hạn (deadline) đã cam kết.", "hint": "'Nói là làm' có phải là phương châm sống của bạn?" },
+            { part: 2, id: "q64", category: "ASK_Att", "text": "64. Tôi luôn tò mò, khao khát học hỏi những kiến thức mới để liên tục hoàn thiện bản thân (Tư duy phát triển).", "hint": "Bạn không bao giờ tự mãn và luôn muốn mình giỏi hơn ngày hôm qua?" },
+            { part: 2, id: "q65", category: "ASK_Skill", "text": "65. Tôi có kỹ năng quản lý thời gian tốt, biết cách sắp xếp thứ tự ưu tiên cho các công việc quan trọng.", "hint": "Bạn có thường xuyên lập danh sách việc cần làm (To-do list) cho ngày mới?" },
+            { part: 2, id: "q66", category: "ASK_Skill", "text": "66. Tôi có khả năng thích ứng nhanh và thành thạo việc sử dụng các công cụ công nghệ, phần mềm mới (Kỹ năng số).", "hint": "Bạn là người thường xuyên cập nhật và hướng dẫn bạn bè dùng các ứng dụng mới?" },
+            { part: 2, id: "q67", category: "ASK_Skill", "text": "67. Tôi có kỹ năng làm việc nhóm xuất sắc, biết cách phối hợp và hỗ trợ đồng đội để đạt hiệu quả cao nhất.", "hint": "Trong làm việc nhóm, bạn không chỉ làm tốt phần mình mà còn thúc đẩy cả team tiến lên?" },
+            { part: 2, id: "q68", category: "ASK_Skill", "text": "68. Tôi có kỹ năng tìm kiếm, chọn lọc và tổng hợp thông tin từ nhiều nguồn một cách hiệu quả và chính xác.", "hint": "Kỹ năng 'Google' và tra cứu tài liệu của bạn rất chuyên nghiệp và có kiểm chứng?" },
+            { part: 2, id: "q69", category: "ASK_Skill", "text": "69. Tôi có khả năng trình bày, thuyết trình một vấn đề rõ ràng, rành mạch và thu hút sự chú ý của người nghe.", "hint": "Bạn tự tin khi đứng trước bục giảng để báo cáo bài tập lớn trước lớp?" },
+
+            // --- PHẦN 3: G-Factor (15 Câu) ---
+            { part: 3, id: "q70", category: "G_Logic", "text": "70. Tôi có thể nhanh chóng phát hiện ra quy luật của một dãy số hoặc một chuỗi sự kiện có vẻ không liên quan.", "hint": "Nhớ lại các bài toán tìm quy luật dãy số hoặc khả năng xâu chuỗi sự kiện của bạn." },
+            { part: 3, id: "q71", category: "G_Logic", "text": "71. Khi lập luận, tôi thường dễ dàng chỉ ra được những điểm mâu thuẫn hoặc lỗ hổng trong cách tư duy của người khác.", "hint": "Bạn có thường xuyên phát hiện ra khi ai đó nói chuyện thiếu logic hoặc trước sau bất nhất không?" },
+            { part: 3, id: "q72", category: "G_Logic", "text": "72. Tôi thích phân tích một vấn đề phức tạp thành các nguyên nhân cốt lõi (nguyên lý nguyên bản) để giải quyết triệt để thay vì chỉ xử lý phần ngọn.", "hint": "Thói quen đào sâu bản chất vấn đề (Tư duy First-Principles) của bạn thế nào?" },
+            { part: 3, id: "q73", category: "G_Logic", "text": "73. Tôi hiếm khi đưa ra quyết định dựa trên cảm tính mà luôn cần dữ liệu, xác suất hoặc bằng chứng rõ ràng.", "hint": "Bạn là người chuộng lý trí hơn cảm xúc khi phải đưa ra các lựa chọn quan trọng?" },
+            { part: 3, id: "q74", category: "G_Logic", "text": "74. Khi học một công thức mới, tôi quan tâm đến việc chứng minh tại sao nó đúng hơn là chỉ học thuộc lòng để áp dụng.", "hint": "Bạn không thích việc 'học vẹt' mà luôn muốn hiểu gốc rễ của công thức?" },
+            { part: 3, id: "q75", category: "G_Space", "text": "75. Tôi có thể dễ dàng tưởng tượng ra hình dáng của một vật thể 3D sẽ thay đổi như thế nào khi bị xoay hoặc cắt ngang.", "hint": "Thử tưởng tượng một khối rubik bị cắt lẹm một góc, bạn có hình dung được mặt cắt của nó không?" },
+            { part: 3, id: "q76", category: "G_Space", "text": "76. Khi xem một bản vẽ kỹ thuật hoặc sơ đồ mặt bằng (2D), tôi có thể lập tức hình dung ra không gian thực tế (3D) của nó.", "hint": "Khả năng đọc hiểu bản đồ hoặc bản vẽ thiết kế nhà cửa của bạn rất nhạy bén?" },
+            { part: 3, id: "q77", category: "G_Space", "text": "77. Tôi hiếm khi bị lạc đường và có thể nhớ rất rõ sơ đồ các lối đi dù chỉ mới đến một nơi lần đầu tiên.", "hint": "Trí nhớ về phương hướng và không gian địa lý của bạn có xuất sắc không?" },
+            { part: 3, id: "q78", category: "G_Space", "text": "78. Tôi rất giỏi trong việc sắp xếp đồ vật (như xếp hành lý vào vali, xếp đồ vào tủ) sao cho tận dụng tối đa không gian mà không bị chèn ép.", "hint": "Khả năng tối ưu hóa hình học không gian trong các hoạt động đời sống thực tế." },
+            { part: 3, id: "q79", category: "G_Space", "text": "79. Khi nhắm mắt lại, tôi có thể tái tạo lại một hình ảnh phức tạp với đầy đủ chi tiết và màu sắc trong tâm trí.", "hint": "Trí nhớ thị giác (Visual memory) của bạn sắc nét như một bức ảnh?" },
+            { part: 3, id: "q80", category: "G_Prob", "text": "80. Đứng trước một văn bản dài và phức tạp, tôi có thể nhanh chóng tóm tắt đúng ý chính mà không bị lạc vào các chi tiết phụ.", "hint": "Khả năng đọc hiểu, chắt lọc và xử lý thông tin ngôn ngữ tốc độ cao." },
+            { part: 3, id: "q81", category: "G_Prob", "text": "81. Khi đối mặt với một tình huống hoàn toàn mới và chưa từng có tiền lệ, tôi hiếm khi bị hoảng loạn mà nhanh chóng tìm ra cách xử lý tạm thời.", "hint": "Năng lực ứng biến và giữ bình tĩnh để xử lý khủng hoảng của bạn." },
+            { part: 3, id: "q82", category: "G_Prob", "text": "82. Tôi có khả năng dùng từ ngữ để giải thích một khái niệm trừu tượng, khó hiểu thành những ví dụ vô cùng đơn giản cho người khác hiểu.", "hint": "Năng lực chuyển hóa và sư phạm thông qua ngôn từ." },
+            { part: 3, id: "q83", category: "G_Prob", "text": "83. Tôi rất linh hoạt trong suy nghĩ, luôn tìm ra nhiều phương án dự phòng (Plan B, Plan C) thay vì chỉ bám vào một cách giải quyết duy nhất.", "hint": "Tư duy đa chiều và sự nhạy bén khi đối mặt với rào cản." },
+            { part: 3, id: "q84", category: "G_Prob", "text": "84. Khi đọc một câu hỏi trắc nghiệm mẹo (đánh lừa), tôi thường rất nhanh phát hiện ra từ khóa 'bẫy' ẩn chứa trong đó.", "hint": "Sự sắc bén trong phân tích ngữ nghĩa và tư duy phản biện khi đọc đề." }
         ];
 
         // Hàm render tự động đổ HTML vào các div tương ứng
@@ -219,16 +289,18 @@
             return;
         }
 
-        // 2. Thu thập điểm số
+        // 2. Thu thập điểm số (Đã bổ sung đầy đủ các biến đánh giá Đa trí tuệ mới)
         let scores = { 
             "R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0, "D": 0,
-            "MI_Lang": 0, "MI_Inter": 0, "ASK_Att": 0, "ASK_Skill": 0, 
+            "MI_Lang": 0, "MI_Logic": 0, "MI_Space": 0, "MI_Body": 0, 
+            "MI_Music": 0, "MI_Inter": 0, "MI_Intra": 0, "MI_Nature": 0,
+            "ASK_Att": 0, "ASK_Skill": 0, 
             "G_Logic": 0, "G_Space": 0, "G_Prob": 0 
         };
         let allAnswered = true;
 
-        // Quét 14 câu hỏi (từ q1 đến q14)
-        for (let i = 1; i <= 14; i++) {
+        // Quét 84 câu hỏi (từ q1 đến q84)
+        for (let i = 1; i <= 84; i++) {
             const selected = document.querySelector(`input[name="q${i}"]:checked`);
             if (selected) {
                 let cat = selected.dataset.category;
@@ -299,7 +371,7 @@
                         grid: { color: 'rgba(0, 0, 0, 0.1)' },
                         pointLabels: { font: { size: 12, weight: 'bold' }, color: '#2c3e50' },
                         suggestedMin: 0,
-                        suggestedMax: 5
+                        suggestedMax: 25 // Mỗi nhóm (RIASEC+D) có 5 câu, điểm tối đa là 5*5 = 25
                     }
                 },
                 plugins: {
@@ -363,7 +435,6 @@
         });
         majorsHtml += `</ul>`;
 
-        // Tổng hợp nhận xét AI cá nhân hóa
         let trait1 = coreTraits[top3[0].category].replace('.', '');
         let trait2 = coreTraits[top3[1].category].replace('.', '').toLowerCase();
         let env1 = workEnvs[top3[0].category];
