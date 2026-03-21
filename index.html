@@ -432,17 +432,20 @@
                 suggestedMajors: majorsExport
             };
 
-            // 3. DÁN ĐƯỜNG LINK WEB APP CỦA MÌNH VÀO DẤU NGOẶC KÉP BÊN DƯỚI
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGhiPtBcGYmdOgDO3lBTH_oWAfkXWXwm5fd4xX34RLXHS_z62wW_AfmDIr6b00zhDw/exec";
+            // 3. ĐIỀN ĐƯỜNG LINK GOOGLE SCRIPT CỦA TIẾN SĨ VÀO DƯỚI ĐÂY:
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyN02TMXkAD7DDXBQx2ZCOjsJGkqkgrQZ-E0dgoYiU0JDAoaprjVBSFD2Qh6bYJV4jP/exec";
 
-            // 4. Gửi dữ liệu ngầm định (không làm phiền màn hình của học sinh)
+            // 4. Gửi dữ liệu với chế độ no-cors (Cực kỳ quan trọng để không bị chặn)
             fetch(SCRIPT_URL, {
                 method: 'POST',
-                body: JSON.stringify(payload)
-                // Lưu ý: Không set Content-Type để tránh lỗi bảo mật CORS của trình duyệt
+                mode: 'no-cors', // <--- Lệnh vượt tường lửa
+                body: JSON.stringify(payload),
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8' // Ép định dạng chữ thường để Google dễ nhận
+                }
             })
-            .then(response => console.log("Đã đẩy dữ liệu thành công về Google Sheets!"))
-            .catch(error => console.error("Lỗi khi đẩy dữ liệu:", error));
+            .then(() => console.log("Đã phát tín hiệu gửi dữ liệu về Google Sheets!"))
+            .catch(error => console.error("Lỗi mạng:", error));
 
             // -- KẾT THÚC ĐOẠN MÃ GỬI DỮ LIỆU --
     function generateAIReport(top3, studentName) {
