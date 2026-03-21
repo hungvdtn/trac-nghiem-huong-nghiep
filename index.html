@@ -30,6 +30,7 @@
         .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #2980b9; }
         .form-group input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
         .form-group input[type="text"]:focus { border-color: var(--secondary-color); outline: none; box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); }
+        .form-group input[type="text"]:disabled { background-color: #e9ecef; cursor: not-allowed; }
 
         .question-block { margin-bottom: 25px; padding: 20px 15px; background: #fdfdfd; border-left: 5px solid var(--secondary-color); border-radius: 4px; transition: all 0.2s; }
         .question-block:hover { background-color: #f9f9f9; transform: translateX(3px); }
@@ -40,7 +41,12 @@
         .options-group { display: flex; flex-direction: column; gap: 10px; }
         .option-label { background: #f1f2f6; padding: 12px 15px; border-radius: 6px; cursor: pointer; font-size: 0.95em; text-align: left; display: flex; flex-direction: row; align-items: center; transition: background 0.2s; border: 1px solid transparent; }
         .option-label:hover { background: #eccc6; }
+        
+        /* CSS khi input bị khóa */
         input[type="radio"] { margin-right: 12px; margin-bottom: 0; cursor: pointer; transform: scale(1.2); flex-shrink: 0; }
+        input[type="radio"]:disabled { cursor: not-allowed; }
+        .option-label.disabled-label { cursor: not-allowed; opacity: 0.7; }
+        
         input[type="radio"]:checked + span { font-weight: bold; color: var(--secondary-color); }
 
         @media (min-width: 768px) {
@@ -52,6 +58,7 @@
         .btn { display: block; width: 100%; padding: 15px; color: white; border: none; border-radius: 5px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 30px; transition: background 0.3s; }
         .submit-btn { background: var(--success-color); }
         .submit-btn:hover { background: #27ae60; }
+        .submit-btn:disabled { background: #95a5a6; cursor: not-allowed; transform: none; }
         .pdf-btn { background: var(--accent-color); display: none; margin-top: 10px;}
         .pdf-btn:hover { background: #c0392b; }
         .pdf-btn:disabled { background: #95a5a6; cursor: not-allowed; }
@@ -65,7 +72,6 @@
         .pdf-student-meta div { margin-bottom: 8px; }
         .pdf-student-meta strong { color: #2980b9; display: inline-block; width: 180px;}
         
-        /* CSS FIX LỖI ĐIỆN THOẠI & PDF */
         .chart-container { width: 100%; max-width: 550px; margin: 0 auto 30px auto; min-height: 350px; position: relative; }
         
         .pdf-header, .pdf-student-meta, h3, h4, .ai-report-box, .result-card, .chart-container {
@@ -113,7 +119,7 @@
         <div class="section-desc">Khảo sát mức độ tự tin trong khả năng tư duy logic, xử lý không gian và ngôn ngữ.</div>
         <div id="part3-container"></div>
 
-        <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp bài & chờ AI phân tích</button>
+        <button type="button" id="submit-btn" class="btn submit-btn" onclick="calculateResult()">Nộp bài & chờ AI phân tích</button>
         <div id="ai-loading" class="loading-ai">⚙️ Trí tuệ nhân tạo đang tổng hợp, vẽ biểu đồ và phân tích dữ liệu...</div>
     </form>
 
@@ -136,11 +142,12 @@
                 <canvas id="radarChart"></canvas>
             </div>
             
-            <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center; margin-bottom: 5px;"></h3>
+            <div class="html2pdf__page-break" style="page-break-before: always; clear: both;"></div>
+            <div style="height: 20px;"></div> <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center; margin-bottom: 5px;"></h3>
             <div id="vietnamese-code-result" style="font-weight: bold; text-align: center; margin-bottom: 25px; color: #2c3e50; font-size: 1.1em;"></div>
             
             <div id="ai-generated-report">
-                </div>
+            </div>
             
             <div style="margin-top: 40px; text-align: center; font-size: 0.85em; color: #7f8c8d; border-top: 1px solid #ddd; padding-top: 15px;">
                 Báo cáo được trích xuất tự động từ Hệ thống hướng nghiệp TS. Vũ Xuân Hùng.<br>
@@ -150,7 +157,7 @@
 
         <div style="height: 20px;"></div>
         <button type="button" id="download-btn" class="btn pdf-btn" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF (Bản in)</button>
-        <div id="zalo-warning" class="zalo-warning">Lưu ý: Nếu bạn đang mở link trong Zalo/Messenger, hệ thống sẽ báo lỗi không tải được. Vui lòng bấm vào dấu 3 chấm (góc trên) và chọn <b>"Mở bằng Trình duyệt"</b> (Safari/Chrome) để tải PDF.</div>
+        <div id="zalo-warning" class="zalo-warning">Lưu ý: Nếu bạn đang mở link trong Zalo/Messenger, hệ thống bảo mật sẽ chặn tải file. Vui lòng bấm vào dấu 3 chấm (góc trên phải màn hình) và chọn <b>"Mở bằng Trình duyệt / Mở bằng Safari / Mở bằng Chrome"</b> để lưu PDF về máy.</div>
     </div>
 </div>
 
@@ -164,7 +171,7 @@
             { value: 5, label: "Hoàn toàn đúng" }
         ];
 
-        // Ngân hàng 85 câu hỏi (Đã thêm câu 85 vào phần G_Prob)
+        // Ngân hàng 85 câu hỏi
         const questions = [
             // --- PHẦN 1: RIASEC + D (35 Câu) ---
             { part: 1, id: "q1", category: "R", text: "1. Tôi thích tự tay thao tác, lắp ráp, hoặc sửa chữa các thiết bị điện tử, máy móc, vật dụng gia đình.", hint: "Nhớ lại lúc bạn tự sửa xe đạp, nối dây điện hoặc tháo lắp đồ dùng gia đình." },
@@ -239,7 +246,7 @@
             { part: 2, id: "q68", category: "ASK_Skill", text: "68. Tôi có kỹ năng tìm kiếm, chọn lọc và tổng hợp thông tin từ nhiều nguồn một cách hiệu quả và chính xác.", hint: "Kỹ năng 'Google' và tra cứu tài liệu của bạn rất chuyên nghiệp và có kiểm chứng?" },
             { part: 2, id: "q69", category: "ASK_Skill", text: "69. Tôi có khả năng trình bày, thuyết trình một vấn đề rõ ràng, rành mạch và thu hút sự chú ý của người nghe.", hint: "Bạn tự tin khi đứng trước bục giảng để báo cáo bài tập lớn trước lớp?" },
 
-            // --- PHẦN 3: G-Factor (16 Câu - Đã thêm câu 85) ---
+            // --- PHẦN 3: G-Factor (16 Câu) ---
             { part: 3, id: "q70", category: "G_Logic", text: "70. Tôi có thể nhanh chóng phát hiện ra quy luật của một dãy số hoặc một chuỗi sự kiện có vẻ không liên quan.", hint: "Nhớ lại các bài toán tìm quy luật dãy số hoặc khả năng xâu chuỗi sự kiện của bạn." },
             { part: 3, id: "q71", category: "G_Logic", text: "71. Khi lập luận, tôi thường dễ dàng chỉ ra được những điểm mâu thuẫn hoặc lỗ hổng trong cách tư duy của người khác.", hint: "Bạn có thường xuyên phát hiện ra khi ai đó nói chuyện thiếu logic hoặc trước sau bất nhất không?" },
             { part: 3, id: "q72", category: "G_Logic", text: "72. Tôi thích phân tích một vấn đề phức tạp thành các nguyên nhân cốt lõi (nguyên lý nguyên bản) để giải quyết triệt để thay vì chỉ xử lý phần ngọn.", hint: "Thói quen đào sâu bản chất vấn đề (Tư duy First-Principles) của bạn thế nào?" },
@@ -285,7 +292,6 @@
 
     let radarChartInstance = null;
 
-    // Từ điển tra cứu tên tiếng Việt của 7 Nhóm năng lực
     const traitNamesVN = {
         "R": "Kỹ thuật, Thực hành",
         "I": "Nghiên cứu, Khám phá",
@@ -315,7 +321,6 @@
         };
         let allAnswered = true;
 
-        // Quét đủ 85 câu
         for (let i = 1; i <= 85; i++) {
             const selected = document.querySelector(`input[name="q${i}"]:checked`);
             if (selected) {
@@ -331,8 +336,19 @@
             return;
         }
 
+        // --- KHÓA TOÀN BỘ LỰA CHỌN SAU KHI NỘP BÀI ---
+        const allInputs = document.querySelectorAll('input');
+        allInputs.forEach(input => {
+            input.disabled = true;
+            // Thêm class để làm mờ giao diện nút bấm
+            if(input.type === 'radio') {
+                input.parentElement.classList.add('disabled-label');
+            }
+        });
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').innerText = "Đã nộp bài thành công";
+
         document.getElementById('ai-loading').style.display = 'block';
-        document.querySelector('.submit-btn').disabled = true;
 
         let riasecD_Scores = [
             { category: "R", score: scores["R"] },
@@ -352,7 +368,6 @@
         document.getElementById('pdf-render-class').innerText = sClass;
         document.getElementById('pdf-render-date').innerText = new Date().toLocaleDateString('vi-VN');
         
-        // In Mã năng lực và dòng dịch nghĩa tiếng Việt
         document.getElementById('code-result').innerText = "MẬT MÃ NĂNG LỰC: " + resultCode;
         document.getElementById('vietnamese-code-result').innerText = `(Bạn có 3 năng lực nổi trội về: ${traitNamesVN[top3[0].category]} – ${traitNamesVN[top3[1].category]} – ${traitNamesVN[top3[2].category]})`;
 
@@ -379,14 +394,14 @@
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // Sửa lỗi đè chữ trên điện thoại
+                maintainAspectRatio: false,
                 animation: false, 
                 scales: {
                     r: {
                         angleLines: { display: true, color: 'rgba(0, 0, 0, 0.1)' },
                         grid: { color: 'rgba(0, 0, 0, 0.1)' },
                         pointLabels: { 
-                            font: { size: window.innerWidth < 600 ? 10 : 12, weight: 'bold' }, // Chữ nhỏ hơn trên mobile
+                            font: { size: window.innerWidth < 600 ? 10 : 12, weight: 'bold' },
                             color: '#2c3e50' 
                         },
                         suggestedMin: 0,
@@ -404,26 +419,21 @@
             document.getElementById('ai-generated-report').innerHTML = aiReportHtml;
             
             document.getElementById('ai-loading').style.display = 'none';
-            document.querySelector('.submit-btn').disabled = false;
             document.getElementById('result-container').style.display = 'block';
             document.getElementById('download-btn').style.display = 'block';
             
-            // Hiển thị cảnh báo Zalo nếu mở trên điện thoại
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (isMobile) {
+            const isZaloFB = /Zalo|FBAN|FBAV|Messenger/i.test(navigator.userAgent);
+            if (isMobile && isZaloFB) {
                 document.getElementById('zalo-warning').style.display = 'block';
             }
             
             document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
-        }, 1200); 
-    }
-// -- BẮT ĐẦU ĐOẠN MÃ GỬI DỮ LIỆU LÊN GOOGLE SHEETS --
-            
-            // 1. Tổng hợp dữ liệu ngành học để lưu
+
+            // -- BẮT ĐẦU ĐOẠN MÃ GỬI DỮ LIỆU LÊN GOOGLE SHEETS --
             let majorsExport = `Top 1 (${traitNamesVN[top3[0].category]}): ${majorDatabase[top3[0].category]} | ` +
                                `Top 2 (${traitNamesVN[top3[1].category]}): ${majorDatabase[top3[1].category]}`;
 
-            // 2. Đóng gói dữ liệu
             const payload = {
                 name: sName,
                 className: sClass,
@@ -432,34 +442,36 @@
                 suggestedMajors: majorsExport
             };
 
-            // 3. ĐIỀN ĐƯỜNG LINK GOOGLE SCRIPT CỦA TIẾN SĨ VÀO DƯỚI ĐÂY:
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyN02TMXkAD7DDXBQx2ZCOjsJGkqkgrQZ-E0dgoYiU0JDAoaprjVBSFD2Qh6bYJV4jP/exec";
+            // Link Google Script của Tiến sĩ
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGhiPtBcGYmdOgDO3lBTH_oWAfkXWXwm5fd4xX34RLXHS_z62wW_AfmDIr6b00zhDw/exec";
 
-            // 4. Gửi dữ liệu với chế độ no-cors (Cực kỳ quan trọng để không bị chặn)
+            // Gửi dữ liệu với chế độ no-cors để tránh bị trình duyệt chặn
             fetch(SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors', // <--- Lệnh vượt tường lửa
+                mode: 'no-cors',
                 body: JSON.stringify(payload),
                 headers: {
-                    'Content-Type': 'text/plain;charset=utf-8' // Ép định dạng chữ thường để Google dễ nhận
+                    'Content-Type': 'text/plain;charset=utf-8'
                 }
             })
             .then(() => console.log("Đã phát tín hiệu gửi dữ liệu về Google Sheets!"))
             .catch(error => console.error("Lỗi mạng:", error));
-
             // -- KẾT THÚC ĐOẠN MÃ GỬI DỮ LIỆU --
-    function generateAIReport(top3, studentName) {
-        // ĐÃ CẬP NHẬT CHUẨN XÁC DỮ LIỆU TỪ FILE "7_nhomnganhnghe.docx"
-        const majorDatabase = {
-            "R": "Kỹ thuật xây dựng (7580201); Kỹ thuật cơ khí (7520103); Công nghệ kỹ thuật ô tô (7510205); Khoa học máy tính (7480101); Kỹ thuật điện (7520201); Nông nghiệp (7620101); Công nghệ thực phẩm (7540101); Khai thác vận tải (7840101); Thú y (7640101); Kỹ thuật mỏ (7520601).<br><i>* Ngành giao thoa/thiên hướng Kỹ thuật:</i> Kỹ thuật máy tính (7480106); Bảo hộ lao động (7850201); Công nghệ kỹ thuật kiến trúc (7510101).",
-            "I": "Y khoa (7720101); Dược học (7720201); Răng - Hàm - Mặt (7720501); Công nghệ sinh học (7420201); Hóa học (7440112); Vật lý học (7440102); Khoa học dữ liệu (7460108); Trí tuệ nhân tạo (7480107); Tâm lý học (7310401); Xã hội học (7310301).<br><i>* Ngành giao thoa/thiên hướng Nghiên cứu:</i> Kinh tế số (7310109); Toán kinh tế (7310108).",
-            "A": "Hội họa (7210103); Thiết kế đồ họa (7210403); Thiết kế thời trang (7210404); Thanh nhạc (7210205); Đạo diễn điện ảnh, truyền hình (7210235); Truyền thông đa phương tiện (7320104); Tiếng Việt và văn hóa Việt Nam (7220101); Kiến trúc (7580101); Diễn viên kịch, điện ảnh - truyền hình (7210234); Nhiếp ảnh (7210301).<br><i>* Ngành giao thoa/thiên hướng Nghệ thuật:</i> Sáng tác văn học (7220110); Thiết kế nội thất (7580108).",
-            "S": "Giáo dục Tiểu học (7140202); Giáo dục Mầm non (7140201); Sư phạm Toán học (7140209); Sư phạm Ngữ văn (7140217); Sư phạm Tiếng Anh (7140231); Công tác xã hội (7760101); Điều dưỡng (7720301); Y tế công cộng (7720701); Tâm lý học giáo dục (7310403); Giáo dục Đặc biệt (7140203).<br><i>* Ngành giao thoa/thiên hướng Xã hội:</i> Hỗ trợ giáo dục người khuyết tật (7760103); Quản trị nhân lực (7340404).",
-            "E": "Quản trị kinh doanh (7340101); Marketing (7340115); Kinh doanh quốc tế (7340120); Luật (7380101); Luật kinh tế (7380107); Quan hệ công chúng (7320108); Quản trị nhân lực (7340404); Quản lý nhà nước (7310205); Quản trị khách sạn (7810201); Quản trị dịch vụ du lịch và lữ hành (7810103).<br><i>* Ngành giao thoa/thiên hướng Quản lý:</i> Quản lý công (7340403).",
-            "C": "Kế toán (7340301); Kiểm toán (7340302); Tài chính - Ngân hàng (7340201); Thống kê kinh tế (7310107); Hệ thống thông tin quản lý (7340405); Quản trị văn phòng (7340406); Thông tin - Thư viện (7320201); Lưu trữ học (7320303); Thương mại điện tử (7340122); Bảo hiểm (7340204).<br><i>* Ngành giao thoa/thiên hướng Nghiệp vụ:</i> Thống kê (7460201).",
-            "D": "Trinh sát an ninh (7860101); Trinh sát cảnh sát (7860102); Điều tra hình sự (7860104); Kỹ thuật Công an nhân dân (7860107); Quản lý nhà nước về an ninh trật tự (7860109); Phòng cháy chữa cháy và cứu nạn cứu hộ (7860113); Chỉ huy tham mưu Lục quân (7860201); Biên phòng (7860214); Tình báo quân sự (7860217); Kỹ thuật hình sự (7860108)."
-        };
 
+        }, 1200); 
+    }
+
+    const majorDatabase = {
+        "R": "Kỹ thuật xây dựng (7580201); Kỹ thuật cơ khí (7520103); Công nghệ kỹ thuật ô tô (7510205); Khoa học máy tính (7480101); Kỹ thuật điện (7520201); Nông nghiệp (7620101); Công nghệ thực phẩm (7540101); Khai thác vận tải (7840101); Thú y (7640101); Kỹ thuật mỏ (7520601).<br><i>* Ngành giao thoa/thiên hướng Kỹ thuật:</i> Kỹ thuật máy tính (7480106); Bảo hộ lao động (7850201); Công nghệ kỹ thuật kiến trúc (7510101).",
+        "I": "Y khoa (7720101); Dược học (7720201); Răng - Hàm - Mặt (7720501); Công nghệ sinh học (7420201); Hóa học (7440112); Vật lý học (7440102); Khoa học dữ liệu (7460108); Trí tuệ nhân tạo (7480107); Tâm lý học (7310401); Xã hội học (7310301).<br><i>* Ngành giao thoa/thiên hướng Nghiên cứu:</i> Kinh tế số (7310109); Toán kinh tế (7310108).",
+        "A": "Hội họa (7210103); Thiết kế đồ họa (7210403); Thiết kế thời trang (7210404); Thanh nhạc (7210205); Đạo diễn điện ảnh, truyền hình (7210235); Truyền thông đa phương tiện (7320104); Tiếng Việt và văn hóa Việt Nam (7220101); Kiến trúc (7580101); Diễn viên kịch, điện ảnh - truyền hình (7210234); Nhiếp ảnh (7210301).<br><i>* Ngành giao thoa/thiên hướng Nghệ thuật:</i> Sáng tác văn học (7220110); Thiết kế nội thất (7580108).",
+        "S": "Giáo dục Tiểu học (7140202); Giáo dục Mầm non (7140201); Sư phạm Toán học (7140209); Sư phạm Ngữ văn (7140217); Sư phạm Tiếng Anh (7140231); Công tác xã hội (7760101); Điều dưỡng (7720301); Y tế công cộng (7720701); Tâm lý học giáo dục (7310403); Giáo dục Đặc biệt (7140203).<br><i>* Ngành giao thoa/thiên hướng Xã hội:</i> Hỗ trợ giáo dục người khuyết tật (7760103); Quản trị nhân lực (7340404).",
+        "E": "Quản trị kinh doanh (7340101); Marketing (7340115); Kinh doanh quốc tế (7340120); Luật (7380101); Luật kinh tế (7380107); Quan hệ công chúng (7320108); Quản trị nhân lực (7340404); Quản lý nhà nước (7310205); Quản trị khách sạn (7810201); Quản trị dịch vụ du lịch và lữ hành (7810103).<br><i>* Ngành giao thoa/thiên hướng Quản lý:</i> Quản lý công (7340403).",
+        "C": "Kế toán (7340301); Kiểm toán (7340302); Tài chính - Ngân hàng (7340201); Thống kê kinh tế (7310107); Hệ thống thông tin quản lý (7340405); Quản trị văn phòng (7340406); Thông tin - Thư viện (7320201); Lưu trữ học (7320303); Thương mại điện tử (7340122); Bảo hiểm (7340204).<br><i>* Ngành giao thoa/thiên hướng Nghiệp vụ:</i> Thống kê (7460201).",
+        "D": "Trinh sát an ninh (7860101); Trinh sát cảnh sát (7860102); Điều tra hình sự (7860104); Kỹ thuật Công an nhân dân (7860107); Quản lý nhà nước về an ninh trật tự (7860109); Phòng cháy chữa cháy và cứu nạn cứu hộ (7860113); Chỉ huy tham mưu Lục quân (7860201); Biên phòng (7860214); Tình báo quân sự (7860217); Kỹ thuật hình sự (7860108)."
+    };
+
+    function generateAIReport(top3, studentName) {
         const coreTraits = {
             "R": "Tư duy thực tế, khéo léo thao tác vật lý, làm việc xuất sắc với máy móc và công cụ.",
             "I": "Tư duy logic đa chiều, khả năng phân tích dữ liệu chuyên sâu và nghiên cứu độc lập.",
