@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc Nghiệm Hướng Nghiệp Đa Chiều - TS. Vũ Xuân Hùng</title>
+    <title>Trắc nghiệm Hướng nghiệp đa chiều - TS. Vũ Xuân Hùng</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -85,7 +85,7 @@
 
 <div class="container">
     <div class="main-header">
-        <h1>Hệ Thống Đánh Giá Năng Lực & Hướng Nghiệp Đa Chiều</h1>
+        <h1>Hệ thống Đánh giá năng lực & Hướng Nghiệp đa chiều</h1>
         <div class="header-desc">
             Phát triển chuyên môn: TS. Vũ Xuân Hùng<br>
             Tích hợp mô hình: RIASEC + Đa trí tuệ (Gardner) + ASK<br>
@@ -94,7 +94,7 @@
     </div>
 
     <div class="student-info-form">
-        <h3>Thông Tin Khai Báo</h3>
+        <h3>Thông tin cá nhân</h3>
         <p style="text-align:center; color: #7f8c8d; margin-top:-10px; font-size:0.9em;">(Vui lòng điền đầy đủ để hệ thống cấp báo cáo PDF)</p>
         <div class="form-group"><label>Họ và Tên:</label><input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A" required></div>
         <div class="form-group"><label>Lớp / Trường:</label><input type="text" id="student-class" placeholder="Ví dụ: 12A1 - THPT Chuyên" required></div>
@@ -120,17 +120,18 @@
     <div id="result-container">
         <div id="pdf-content">
             <div class="pdf-header">
-                <h2>BÁO CÁO PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
+                <h2>BÁO CÁO</h2>
+                <h2>PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
                 <p>Tích hợp AI phân tích - Chuẩn hóa theo Thông tư 09/2022/TT-BGDĐT</p>
             </div>
 
             <div class="pdf-student-meta">
-                <div><strong>Họ và Tên học sinh:</strong> <span id="pdf-render-name"></span></div>
+                <div><strong>Họ và tên học sinh:</strong> <span id="pdf-render-name"></span></div>
                 <div><strong>Lớp / Trường:</strong> <span id="pdf-render-class"></span></div>
                 <div><strong>Ngày đánh giá:</strong> <span id="pdf-render-date"></span></div>
             </div>
 
-            <h3 style="margin-top: 30px;">BIỂU ĐỒ MẠNG NHỆN NĂNG LỰC CỐT LÕI (7 TRỤ CỘT)</h3>
+            <h3 style="margin-top: 30px;">BIỂU ĐỒ NĂNG LỰC CỐT LÕI (7 TRỤ CỘT)</h3>
             <div class="chart-container">
                 <canvas id="radarChart"></canvas>
             </div>
