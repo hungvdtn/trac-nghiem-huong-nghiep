@@ -416,7 +416,34 @@
             document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
         }, 1200); 
     }
+// -- BẮT ĐẦU ĐOẠN MÃ GỬI DỮ LIỆU LÊN GOOGLE SHEETS --
+            
+            // 1. Tổng hợp dữ liệu ngành học để lưu
+            let majorsExport = `Top 1 (${traitNamesVN[top3[0].category]}): ${majorDatabase[top3[0].category]} | ` +
+                               `Top 2 (${traitNamesVN[top3[1].category]}): ${majorDatabase[top3[1].category]}`;
 
+            // 2. Đóng gói dữ liệu
+            const payload = {
+                name: sName,
+                className: sClass,
+                scores: scores,
+                resultCode: resultCode,
+                suggestedMajors: majorsExport
+            };
+
+            // 3. Tiến sĩ DÁN ĐƯỜNG LINK WEB APP CỦA MÌNH VÀO DẤU NGOẶC KÉP BÊN DƯỚI
+            const SCRIPT_URL = "THAY_LINK_GOOGLE_APPS_SCRIPT_CỦA_TIẾN_SĨ_VÀO_ĐÂY";
+
+            // 4. Gửi dữ liệu ngầm định (không làm phiền màn hình của học sinh)
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+                // Lưu ý: Không set Content-Type để tránh lỗi bảo mật CORS của trình duyệt
+            })
+            .then(response => console.log("Đã đẩy dữ liệu thành công về Google Sheets!"))
+            .catch(error => console.error("Lỗi khi đẩy dữ liệu:", error));
+
+            // -- KẾT THÚC ĐOẠN MÃ GỬI DỮ LIỆU --
     function generateAIReport(top3, studentName) {
         // ĐÃ CẬP NHẬT CHUẨN XÁC DỮ LIỆU TỪ FILE "7_nhomnganhnghe.docx"
         const majorDatabase = {
