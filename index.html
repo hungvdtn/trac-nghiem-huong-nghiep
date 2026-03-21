@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm Hướng nghiệp đa chiều - TS. Vũ Xuân Hùng</title>
+    <title>Trắc Nghiệm Hướng Nghiệp Đa Chiều - TS. Vũ Xuân Hùng</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -37,7 +37,6 @@
         .ai-hint { font-size: 0.85em; color: #e67e22; margin-bottom: 15px; font-style: italic; }
         .ai-hint::before { content: '💡 Gợi ý: '; font-weight: bold; }
 
-        /* Responsive CSS cho các nút chọn */
         .options-group { display: flex; flex-direction: column; gap: 10px; }
         .option-label { background: #f1f2f6; padding: 12px 15px; border-radius: 6px; cursor: pointer; font-size: 0.95em; text-align: left; display: flex; flex-direction: row; align-items: center; transition: background 0.2s; border: 1px solid transparent; }
         .option-label:hover { background: #eccc6; }
@@ -56,8 +55,9 @@
         .pdf-btn { background: var(--accent-color); display: none; margin-top: 10px;}
         .pdf-btn:hover { background: #c0392b; }
         .pdf-btn:disabled { background: #95a5a6; cursor: not-allowed; }
+        
+        .zalo-warning { text-align: center; color: #e74c3c; font-size: 0.9em; margin-top: 10px; display: none; font-style: italic;}
 
-        /* Khu vực hiển thị kết quả và in PDF */
         #result-container { display: none; margin-top: 40px; padding-top: 20px; }
         #pdf-content { padding: 30px; background-color: #ffffff; color: #000000; width: 100%; box-sizing: border-box; }
         .pdf-header { text-align: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 15px; margin-bottom: 25px; }
@@ -65,9 +65,15 @@
         .pdf-student-meta div { margin-bottom: 8px; }
         .pdf-student-meta strong { color: #2980b9; display: inline-block; width: 180px;}
         
-        .chart-container { width: 90%; max-width: 550px; margin: 0 auto 30px auto; }
+        /* CSS FIX LỖI ĐIỆN THOẠI & PDF */
+        .chart-container { width: 100%; max-width: 550px; margin: 0 auto 30px auto; min-height: 350px; position: relative; }
         
-        .ai-report-box { background-color: #f4fdfb; padding: 20px; border-radius: 8px; border-left: 5px solid var(--success-color); margin-bottom: 20px; page-break-inside: avoid; }
+        .pdf-header, .pdf-student-meta, h3, h4, .ai-report-box, .result-card, .chart-container {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
+
+        .ai-report-box { background-color: #f4fdfb; padding: 20px; border-radius: 8px; border-left: 5px solid var(--success-color); margin-bottom: 20px; }
         .ai-report-box h4 { color: #16a085; text-align: left; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; margin-bottom: 15px;}
         .ai-report-box ul { padding-left: 20px; margin-top: 0; }
         .ai-report-box li { margin-bottom: 8px; }
@@ -79,7 +85,7 @@
 
 <div class="container">
     <div class="main-header">
-        <h1>HỆ THỐNG ĐÁNH GIÁ NĂNG LỰC VÀ HƯỚNG NGHIỆP ĐA CHIỀU</h1>
+        <h1>Hệ Thống Đánh Giá Năng Lực & Hướng Nghiệp Đa Chiều</h1>
         <div class="header-desc">
             Phát triển chuyên môn: TS. Vũ Xuân Hùng<br>
             Tích hợp mô hình: RIASEC + Đa trí tuệ (Gardner) + ASK<br>
@@ -88,34 +94,33 @@
     </div>
 
     <div class="student-info-form">
-        <h3>Thông tin cá nhân</h3>
+        <h3>Thông Tin Khai Báo</h3>
         <p style="text-align:center; color: #7f8c8d; margin-top:-10px; font-size:0.9em;">(Vui lòng điền đầy đủ để hệ thống cấp báo cáo PDF)</p>
         <div class="form-group"><label>Họ và Tên:</label><input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A" required></div>
         <div class="form-group"><label>Lớp / Trường:</label><input type="text" id="student-class" placeholder="Ví dụ: 12A1 - THPT Chuyên" required></div>
     </div>
 
     <form id="quiz-form">
-        <div class="section-title">Phần 1: Khám phá Sở Thích</div>
+        <div class="section-title">Phần 1: Khám Phá Sở Thích</div>
         <div class="section-desc">Đánh giá môi trường làm việc, sở thích nghề nghiệp (Cơ sở phân tích 7 nhóm RIASEC & An ninh Quốc phòng).</div>
         <div id="part1-container"></div>
 
-        <div class="section-title">Phần 2: Tự đánh giá Năng Lực</div>
+        <div class="section-title">Phần 2: Tự Đánh Giá Năng Lực</div>
         <div class="section-desc">Đánh giá thái độ, kỹ năng mềm và các loại hình Đa trí tuệ nổi trội (Mô hình ASK & Howard Gardner).</div>
         <div id="part2-container"></div>
 
-        <div class="section-title">Phần 3: Bài Test Tư duy (G-Factor)</div>
+        <div class="section-title">Phần 3: Bài Test Tư Duy (G-Factor)</div>
         <div class="section-desc">Khảo sát mức độ tự tin trong khả năng tư duy logic, xử lý không gian và ngôn ngữ.</div>
         <div id="part3-container"></div>
 
-        <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp bài và chờ AI phân tích</button>
+        <button type="button" class="btn submit-btn" onclick="calculateResult()">Nộp Bài & Chờ AI Phân Tích</button>
         <div id="ai-loading" class="loading-ai">⚙️ Trí tuệ nhân tạo đang tổng hợp, vẽ biểu đồ và phân tích dữ liệu...</div>
     </form>
 
     <div id="result-container">
         <div id="pdf-content">
             <div class="pdf-header">
-                <h2>BÁO CÁO</h2>
-                <h2>PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
+                <h2>BÁO CÁO PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
                 <p>Tích hợp AI phân tích - Chuẩn hóa theo Thông tư 09/2022/TT-BGDĐT</p>
             </div>
 
@@ -125,12 +130,13 @@
                 <div><strong>Ngày đánh giá:</strong> <span id="pdf-render-date"></span></div>
             </div>
 
-            <h3 style="margin-top: 30px;">BIỂU ĐỒ NĂNG LỰC CỐT LÕI (7 TRỤ CỘT)</h3>
+            <h3 style="margin-top: 30px;">BIỂU ĐỒ MẠNG NHỆN NĂNG LỰC CỐT LÕI (7 TRỤ CỘT)</h3>
             <div class="chart-container">
                 <canvas id="radarChart"></canvas>
             </div>
             
-            <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center; margin-bottom: 25px;"></h3>
+            <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center; margin-bottom: 5px;"></h3>
+            <div id="vietnamese-code-result" style="font-weight: bold; text-align: center; margin-bottom: 25px; color: #2c3e50; font-size: 1.1em;"></div>
             
             <div id="ai-generated-report">
                 </div>
@@ -143,21 +149,21 @@
 
         <div style="height: 20px;"></div>
         <button type="button" id="download-btn" class="btn pdf-btn" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF (Bản in)</button>
+        <div id="zalo-warning" class="zalo-warning">Lưu ý: Nếu bạn đang mở link trong Zalo/Messenger, hệ thống sẽ báo lỗi không tải được. Vui lòng bấm vào dấu 3 chấm (góc trên) và chọn <b>"Mở bằng Trình duyệt"</b> (Safari/Chrome) để tải PDF.</div>
     </div>
 </div>
 
 <script>
-    // Đảm bảo DOM đã tải xong mới chạy mã khởi tạo
     document.addEventListener("DOMContentLoaded", function() {
         const scale = [
             { value: 1, label: "Hoàn toàn không đúng" },
             { value: 2, label: "Không đúng" },
-            { value: 3, label: "Gần đúng/Phân vân" },
+            { value: 3, label: "Phân vân" },
             { value: 4, label: "Đúng với tôi" },
             { value: 5, label: "Hoàn toàn đúng" }
         ];
 
-        // Ngân hàng 84 câu hỏi đầy đủ
+        // Ngân hàng 85 câu hỏi (Đã thêm câu 85 vào phần G_Prob)
         const questions = [
             // --- PHẦN 1: RIASEC + D (35 Câu) ---
             { part: 1, id: "q1", category: "R", text: "1. Tôi thích tự tay thao tác, lắp ráp, hoặc sửa chữa các thiết bị điện tử, máy móc, vật dụng gia đình.", hint: "Nhớ lại lúc bạn tự sửa xe đạp, nối dây điện hoặc tháo lắp đồ dùng gia đình." },
@@ -211,46 +217,46 @@
             { part: 2, id: "q47", category: "MI_Body", text: "47. Tôi thường sử dụng nhiều cử chỉ, điệu bộ cơ thể khi nói chuyện để minh họa cho ý tưởng.", hint: "'Khua tay múa chân' là thói quen của bạn khi kể một câu chuyện hấp dẫn?" },
             { part: 2, id: "q48", category: "MI_Music", text: "48. Tôi có thể dễ dàng nhận ra đúng giai điệu, nhịp điệu và bắt tông khi hát hoặc nghe nhạc.", hint: "Bạn có thường xuyên nhịp chân hay gõ tay theo một bài hát không?" },
             { part: 2, id: "q49", category: "MI_Music", text: "49. Tôi thường xuyên nghe nhạc khi làm việc, học tập và ghi nhớ thông tin qua các giai điệu.", hint: "Âm nhạc là chất xúc tác không thể thiếu để bạn tập trung?" },
-            { part: 2, id: "q50", category: "MI_Music", text: "50. Tôi có thể chơi được ít nhất một loại nhạc cụ hoặc rất nhạy cảm với các âm thanh từ môi trường.", "hint": "Bạn dễ dàng phát hiện ra một nốt nhạc bị đánh phô/lệch nhịp?" },
-            { part: 2, id: "q51", category: "MI_Inter", text: "51. Tôi rất nhạy bén trong việc nhận ra cảm xúc, tâm trạng và ý định của những người xung quanh.", "hint": "Bạn có biệt tài 'đọc vị' người khác chỉ qua nét mặt hoặc giọng nói?" },
-            { part: 2, id: "q52", category: "MI_Inter", text: "52. Tôi thích làm việc nhóm, dễ dàng kết bạn và thường là người đứng ra hòa giải các mâu thuẫn.", "hint": "Mọi người có thường tìm đến bạn để tâm sự và xin lời khuyên?" },
-            { part: 2, id: "q53", category: "MI_Inter", text: "53. Tôi học hỏi hiệu quả nhất khi được thảo luận, tương tác và trao đổi trực tiếp với người khác.", "hint": "Học nhóm mang lại cho bạn nhiều cảm hứng hơn là tự học một mình?" },
-            { part: 2, id: "q54", category: "MI_Intra", text: "54. Tôi hiểu rất rõ điểm mạnh, điểm yếu, cảm xúc của bản thân và luôn tự đặt mục tiêu cho mình.", "hint": "Bạn thường xuyên dành thời gian tự suy ngẫm và đánh giá lại các quyết định của mình?" },
-            { part: 2, id: "q55", category: "MI_Intra", text: "55. Tôi thích làm việc độc lập và cảm thấy thoải mái nhất khi có không gian riêng tư để suy nghĩ.", "hint": "Bạn không cần ai hối thúc mà vẫn có thể tự giác hoàn thành công việc?" },
-            { part: 2, id: "q56", category: "MI_Intra", text: "56. Tôi thường có các thói quen giúp kết nối sâu sắc với nội tâm (viết nhật ký, nghe podcast tâm lý...).", "hint": "Đời sống tinh thần phong phú là điều bạn luôn gìn giữ và nuôi dưỡng?" },
-            { part: 2, id: "q57", category: "MI_Nature", text: "57. Tôi yêu thích thiên nhiên, động vật, cây cỏ và quan tâm sâu sắc đến các vấn đề môi trường.", "hint": "Bạn có thích xem các chương trình thế giới động vật hay tham gia các chiến dịch xanh?" },
-            { part: 2, id: "q58", category: "MI_Nature", text: "58. Tôi có khả năng phân biệt, nhận diện tốt các loài cây, hoa, động vật hoặc các hiện tượng thời tiết.", "hint": "Bạn dễ dàng gọi tên các loại cây cối xung quanh hoặc dự báo sự thay đổi thời tiết?" },
-            { part: 2, id: "q59", category: "MI_Nature", text: "59. Tôi cảm thấy thư giãn và nạp lại năng lượng nhanh nhất khi được hòa mình vào không gian tự nhiên.", "hint": "Những chuyến cắm trại rừng núi, biển cả luôn hấp dẫn bạn hơn là ở thành phố ồn ào?" },
-            { part: 2, id: "q60", category: "ASK_Att", "text": "60. Khi đối mặt với khó khăn, thất bại, tôi luôn giữ thái độ tích cực và tìm cách đứng lên làm lại.", "hint": "Bạn coi thất bại là bài học kinh nghiệm hay là lý do để từ bỏ?" },
-            { part: 2, id: "q61", category: "ASK_Att", "text": "61. Tôi luôn chủ động nhận trách nhiệm về những sai sót của mình thay vì đổ lỗi cho hoàn cảnh hay người khác.", "hint": "Sự trung thực và dũng cảm nhận lỗi là ưu điểm của bạn?" },
-            { part: 2, id: "q62", category: "ASK_Att", "text": "62. Tôi tôn trọng sự khác biệt, luôn lắng nghe ý kiến trái chiều mà không tỏ ra phản cảm hay tức giận.", "hint": "Khi tranh luận, bạn giữ được cái đầu lạnh và thái độ hòa nhã?" },
-            { part: 2, id: "q63", category: "ASK_Att", "text": "63. Tôi có ý thức kỷ luật bản thân cao, luôn nỗ lực hoàn thành công việc đúng hạn (deadline) đã cam kết.", "hint": "'Nói là làm' có phải là phương châm sống của bạn?" },
-            { part: 2, id: "q64", category: "ASK_Att", "text": "64. Tôi luôn tò mò, khao khát học hỏi những kiến thức mới để liên tục hoàn thiện bản thân (Tư duy phát triển).", "hint": "Bạn không bao giờ tự mãn và luôn muốn mình giỏi hơn ngày hôm qua?" },
-            { part: 2, id: "q65", category: "ASK_Skill", "text": "65. Tôi có kỹ năng quản lý thời gian tốt, biết cách sắp xếp thứ tự ưu tiên cho các công việc quan trọng.", "hint": "Bạn có thường xuyên lập danh sách việc cần làm (To-do list) cho ngày mới?" },
-            { part: 2, id: "q66", category: "ASK_Skill", "text": "66. Tôi có khả năng thích ứng nhanh và thành thạo việc sử dụng các công cụ công nghệ, phần mềm mới (Kỹ năng số).", "hint": "Bạn là người thường xuyên cập nhật và hướng dẫn bạn bè dùng các ứng dụng mới?" },
-            { part: 2, id: "q67", category: "ASK_Skill", "text": "67. Tôi có kỹ năng làm việc nhóm xuất sắc, biết cách phối hợp và hỗ trợ đồng đội để đạt hiệu quả cao nhất.", "hint": "Trong làm việc nhóm, bạn không chỉ làm tốt phần mình mà còn thúc đẩy cả team tiến lên?" },
-            { part: 2, id: "q68", category: "ASK_Skill", "text": "68. Tôi có kỹ năng tìm kiếm, chọn lọc và tổng hợp thông tin từ nhiều nguồn một cách hiệu quả và chính xác.", "hint": "Kỹ năng 'Google' và tra cứu tài liệu của bạn rất chuyên nghiệp và có kiểm chứng?" },
-            { part: 2, id: "q69", category: "ASK_Skill", "text": "69. Tôi có khả năng trình bày, thuyết trình một vấn đề rõ ràng, rành mạch và thu hút sự chú ý của người nghe.", "hint": "Bạn tự tin khi đứng trước bục giảng để báo cáo bài tập lớn trước lớp?" },
+            { part: 2, id: "q50", category: "MI_Music", text: "50. Tôi có thể chơi được ít nhất một loại nhạc cụ hoặc rất nhạy cảm với các âm thanh từ môi trường.", hint: "Bạn dễ dàng phát hiện ra một nốt nhạc bị đánh phô/lệch nhịp?" },
+            { part: 2, id: "q51", category: "MI_Inter", text: "51. Tôi rất nhạy bén trong việc nhận ra cảm xúc, tâm trạng và ý định của những người xung quanh.", hint: "Bạn có biệt tài 'đọc vị' người khác chỉ qua nét mặt hoặc giọng nói?" },
+            { part: 2, id: "q52", category: "MI_Inter", text: "52. Tôi thích làm việc nhóm, dễ dàng kết bạn và thường là người đứng ra hòa giải các mâu thuẫn.", hint: "Mọi người có thường tìm đến bạn để tâm sự và xin lời khuyên?" },
+            { part: 2, id: "q53", category: "MI_Inter", text: "53. Tôi học hỏi hiệu quả nhất khi được thảo luận, tương tác và trao đổi trực tiếp với người khác.", hint: "Học nhóm mang lại cho bạn nhiều cảm hứng hơn là tự học một mình?" },
+            { part: 2, id: "q54", category: "MI_Intra", text: "54. Tôi hiểu rất rõ điểm mạnh, điểm yếu, cảm xúc của bản thân và luôn tự đặt mục tiêu cho mình.", hint: "Bạn thường xuyên dành thời gian tự suy ngẫm và đánh giá lại các quyết định của mình?" },
+            { part: 2, id: "q55", category: "MI_Intra", text: "55. Tôi thích làm việc độc lập và cảm thấy thoải mái nhất khi có không gian riêng tư để suy nghĩ.", hint: "Bạn không cần ai hối thúc mà vẫn có thể tự giác hoàn thành công việc?" },
+            { part: 2, id: "q56", category: "MI_Intra", text: "56. Tôi thường có các thói quen giúp kết nối sâu sắc với nội tâm (viết nhật ký, nghe podcast tâm lý...).", hint: "Đời sống tinh thần phong phú là điều bạn luôn gìn giữ và nuôi dưỡng?" },
+            { part: 2, id: "q57", category: "MI_Nature", text: "57. Tôi yêu thích thiên nhiên, động vật, cây cỏ và quan tâm sâu sắc đến các vấn đề môi trường.", hint: "Bạn có thích xem các chương trình thế giới động vật hay tham gia các chiến dịch xanh?" },
+            { part: 2, id: "q58", category: "MI_Nature", text: "58. Tôi có khả năng phân biệt, nhận diện tốt các loài cây, hoa, động vật hoặc các hiện tượng thời tiết.", hint: "Bạn dễ dàng gọi tên các loại cây cối xung quanh hoặc dự báo sự thay đổi thời tiết?" },
+            { part: 2, id: "q59", category: "MI_Nature", text: "59. Tôi cảm thấy thư giãn và nạp lại năng lượng nhanh nhất khi được hòa mình vào không gian tự nhiên.", hint: "Những chuyến cắm trại rừng núi, biển cả luôn hấp dẫn bạn hơn là ở thành phố ồn ào?" },
+            { part: 2, id: "q60", category: "ASK_Att", text: "60. Khi đối mặt với khó khăn, thất bại, tôi luôn giữ thái độ tích cực và tìm cách đứng lên làm lại.", hint: "Bạn coi thất bại là bài học kinh nghiệm hay là lý do để từ bỏ?" },
+            { part: 2, id: "q61", category: "ASK_Att", text: "61. Tôi luôn chủ động nhận trách nhiệm về những sai sót của mình thay vì đổ lỗi cho hoàn cảnh hay người khác.", hint: "Sự trung thực và dũng cảm nhận lỗi là ưu điểm của bạn?" },
+            { part: 2, id: "q62", category: "ASK_Att", text: "62. Tôi tôn trọng sự khác biệt, luôn lắng nghe ý kiến trái chiều mà không tỏ ra phản cảm hay tức giận.", hint: "Khi tranh luận, bạn giữ được cái đầu lạnh và thái độ hòa nhã?" },
+            { part: 2, id: "q63", category: "ASK_Att", text: "63. Tôi có ý thức kỷ luật bản thân cao, luôn nỗ lực hoàn thành công việc đúng hạn (deadline) đã cam kết.", hint: "'Nói là làm' có phải là phương châm sống của bạn?" },
+            { part: 2, id: "q64", category: "ASK_Att", text: "64. Tôi luôn tò mò, khao khát học hỏi những kiến thức mới để liên tục hoàn thiện bản thân (Tư duy phát triển).", hint: "Bạn không bao giờ tự mãn và luôn muốn mình giỏi hơn ngày hôm qua?" },
+            { part: 2, id: "q65", category: "ASK_Skill", text: "65. Tôi có kỹ năng quản lý thời gian tốt, biết cách sắp xếp thứ tự ưu tiên cho các công việc quan trọng.", hint: "Bạn có thường xuyên lập danh sách việc cần làm (To-do list) cho ngày mới?" },
+            { part: 2, id: "q66", category: "ASK_Skill", text: "66. Tôi có khả năng thích ứng nhanh và thành thạo việc sử dụng các công cụ công nghệ, phần mềm mới (Kỹ năng số).", hint: "Bạn là người thường xuyên cập nhật và hướng dẫn bạn bè dùng các ứng dụng mới?" },
+            { part: 2, id: "q67", category: "ASK_Skill", text: "67. Tôi có kỹ năng làm việc nhóm xuất sắc, biết cách phối hợp và hỗ trợ đồng đội để đạt hiệu quả cao nhất.", hint: "Trong làm việc nhóm, bạn không chỉ làm tốt phần mình mà còn thúc đẩy cả team tiến lên?" },
+            { part: 2, id: "q68", category: "ASK_Skill", text: "68. Tôi có kỹ năng tìm kiếm, chọn lọc và tổng hợp thông tin từ nhiều nguồn một cách hiệu quả và chính xác.", hint: "Kỹ năng 'Google' và tra cứu tài liệu của bạn rất chuyên nghiệp và có kiểm chứng?" },
+            { part: 2, id: "q69", category: "ASK_Skill", text: "69. Tôi có khả năng trình bày, thuyết trình một vấn đề rõ ràng, rành mạch và thu hút sự chú ý của người nghe.", hint: "Bạn tự tin khi đứng trước bục giảng để báo cáo bài tập lớn trước lớp?" },
 
-            // --- PHẦN 3: G-Factor (15 Câu) ---
-            { part: 3, id: "q70", category: "G_Logic", "text": "70. Tôi có thể nhanh chóng phát hiện ra quy luật của một dãy số hoặc một chuỗi sự kiện có vẻ không liên quan.", "hint": "Nhớ lại các bài toán tìm quy luật dãy số hoặc khả năng xâu chuỗi sự kiện của bạn." },
-            { part: 3, id: "q71", category: "G_Logic", "text": "71. Khi lập luận, tôi thường dễ dàng chỉ ra được những điểm mâu thuẫn hoặc lỗ hổng trong cách tư duy của người khác.", "hint": "Bạn có thường xuyên phát hiện ra khi ai đó nói chuyện thiếu logic hoặc trước sau bất nhất không?" },
-            { part: 3, id: "q72", category: "G_Logic", "text": "72. Tôi thích phân tích một vấn đề phức tạp thành các nguyên nhân cốt lõi (nguyên lý nguyên bản) để giải quyết triệt để thay vì chỉ xử lý phần ngọn.", "hint": "Thói quen đào sâu bản chất vấn đề (Tư duy First-Principles) của bạn thế nào?" },
-            { part: 3, id: "q73", category: "G_Logic", "text": "73. Tôi hiếm khi đưa ra quyết định dựa trên cảm tính mà luôn cần dữ liệu, xác suất hoặc bằng chứng rõ ràng.", "hint": "Bạn là người chuộng lý trí hơn cảm xúc khi phải đưa ra các lựa chọn quan trọng?" },
-            { part: 3, id: "q74", category: "G_Logic", "text": "74. Khi học một công thức mới, tôi quan tâm đến việc chứng minh tại sao nó đúng hơn là chỉ học thuộc lòng để áp dụng.", "hint": "Bạn không thích việc 'học vẹt' mà luôn muốn hiểu gốc rễ của công thức?" },
-            { part: 3, id: "q75", category: "G_Space", "text": "75. Tôi có thể dễ dàng tưởng tượng ra hình dáng của một vật thể 3D sẽ thay đổi như thế nào khi bị xoay hoặc cắt ngang.", "hint": "Thử tưởng tượng một khối rubik bị cắt lẹm một góc, bạn có hình dung được mặt cắt của nó không?" },
-            { part: 3, id: "q76", category: "G_Space", "text": "76. Khi xem một bản vẽ kỹ thuật hoặc sơ đồ mặt bằng (2D), tôi có thể lập tức hình dung ra không gian thực tế (3D) của nó.", "hint": "Khả năng đọc hiểu bản đồ hoặc bản vẽ thiết kế nhà cửa của bạn rất nhạy bén?" },
-            { part: 3, id: "q77", category: "G_Space", "text": "77. Tôi hiếm khi bị lạc đường và có thể nhớ rất rõ sơ đồ các lối đi dù chỉ mới đến một nơi lần đầu tiên.", "hint": "Trí nhớ về phương hướng và không gian địa lý của bạn có xuất sắc không?" },
-            { part: 3, id: "q78", category: "G_Space", "text": "78. Tôi rất giỏi trong việc sắp xếp đồ vật (như xếp hành lý vào vali, xếp đồ vào tủ) sao cho tận dụng tối đa không gian mà không bị chèn ép.", "hint": "Khả năng tối ưu hóa hình học không gian trong các hoạt động đời sống thực tế." },
-            { part: 3, id: "q79", category: "G_Space", "text": "79. Khi nhắm mắt lại, tôi có thể tái tạo lại một hình ảnh phức tạp với đầy đủ chi tiết và màu sắc trong tâm trí.", "hint": "Trí nhớ thị giác (Visual memory) của bạn sắc nét như một bức ảnh?" },
-            { part: 3, id: "q80", category: "G_Prob", "text": "80. Đứng trước một văn bản dài và phức tạp, tôi có thể nhanh chóng tóm tắt đúng ý chính mà không bị lạc vào các chi tiết phụ.", "hint": "Khả năng đọc hiểu, chắt lọc và xử lý thông tin ngôn ngữ tốc độ cao." },
-            { part: 3, id: "q81", category: "G_Prob", "text": "81. Khi đối mặt với một tình huống hoàn toàn mới và chưa từng có tiền lệ, tôi hiếm khi bị hoảng loạn mà nhanh chóng tìm ra cách xử lý tạm thời.", "hint": "Năng lực ứng biến và giữ bình tĩnh để xử lý khủng hoảng của bạn." },
-            { part: 3, id: "q82", category: "G_Prob", "text": "82. Tôi có khả năng dùng từ ngữ để giải thích một khái niệm trừu tượng, khó hiểu thành những ví dụ vô cùng đơn giản cho người khác hiểu.", "hint": "Năng lực chuyển hóa và sư phạm thông qua ngôn từ." },
-            { part: 3, id: "q83", category: "G_Prob", "text": "83. Tôi rất linh hoạt trong suy nghĩ, luôn tìm ra nhiều phương án dự phòng (Plan B, Plan C) thay vì chỉ bám vào một cách giải quyết duy nhất.", "hint": "Tư duy đa chiều và sự nhạy bén khi đối mặt với rào cản." },
-            { part: 3, id: "q84", category: "G_Prob", "text": "84. Khi đọc một câu hỏi trắc nghiệm mẹo (đánh lừa), tôi thường rất nhanh phát hiện ra từ khóa 'bẫy' ẩn chứa trong đó.", "hint": "Sự sắc bén trong phân tích ngữ nghĩa và tư duy phản biện khi đọc đề." }
+            // --- PHẦN 3: G-Factor (16 Câu - Đã thêm câu 85) ---
+            { part: 3, id: "q70", category: "G_Logic", text: "70. Tôi có thể nhanh chóng phát hiện ra quy luật của một dãy số hoặc một chuỗi sự kiện có vẻ không liên quan.", hint: "Nhớ lại các bài toán tìm quy luật dãy số hoặc khả năng xâu chuỗi sự kiện của bạn." },
+            { part: 3, id: "q71", category: "G_Logic", text: "71. Khi lập luận, tôi thường dễ dàng chỉ ra được những điểm mâu thuẫn hoặc lỗ hổng trong cách tư duy của người khác.", hint: "Bạn có thường xuyên phát hiện ra khi ai đó nói chuyện thiếu logic hoặc trước sau bất nhất không?" },
+            { part: 3, id: "q72", category: "G_Logic", text: "72. Tôi thích phân tích một vấn đề phức tạp thành các nguyên nhân cốt lõi (nguyên lý nguyên bản) để giải quyết triệt để thay vì chỉ xử lý phần ngọn.", hint: "Thói quen đào sâu bản chất vấn đề (Tư duy First-Principles) của bạn thế nào?" },
+            { part: 3, id: "q73", category: "G_Logic", text: "73. Tôi hiếm khi đưa ra quyết định dựa trên cảm tính mà luôn cần dữ liệu, xác suất hoặc bằng chứng rõ ràng.", hint: "Bạn là người chuộng lý trí hơn cảm xúc khi phải đưa ra các lựa chọn quan trọng?" },
+            { part: 3, id: "q74", category: "G_Logic", text: "74. Khi học một công thức mới, tôi quan tâm đến việc chứng minh tại sao nó đúng hơn là chỉ học thuộc lòng để áp dụng.", hint: "Bạn không thích việc 'học vẹt' mà luôn muốn hiểu gốc rễ của công thức?" },
+            { part: 3, id: "q75", category: "G_Space", text: "75. Tôi có thể dễ dàng tưởng tượng ra hình dáng của một vật thể 3D sẽ thay đổi như thế nào khi bị xoay hoặc cắt ngang.", hint: "Thử tưởng tượng một khối rubik bị cắt lẹm một góc, bạn có hình dung được mặt cắt của nó không?" },
+            { part: 3, id: "q76", category: "G_Space", text: "76. Khi xem một bản vẽ kỹ thuật hoặc sơ đồ mặt bằng (2D), tôi có thể lập tức hình dung ra không gian thực tế (3D) của nó.", hint: "Khả năng đọc hiểu bản đồ hoặc bản vẽ thiết kế nhà cửa của bạn rất nhạy bén?" },
+            { part: 3, id: "q77", category: "G_Space", text: "77. Tôi hiếm khi bị lạc đường và có thể nhớ rất rõ sơ đồ các lối đi dù chỉ mới đến một nơi lần đầu tiên.", hint: "Trí nhớ về phương hướng và không gian địa lý của bạn có xuất sắc không?" },
+            { part: 3, id: "q78", category: "G_Space", text: "78. Tôi rất giỏi trong việc sắp xếp đồ vật (như xếp hành lý vào vali, xếp đồ vào tủ) sao cho tận dụng tối đa không gian mà không bị chèn ép.", hint: "Khả năng tối ưu hóa hình học không gian trong các hoạt động đời sống thực tế." },
+            { part: 3, id: "q79", category: "G_Space", text: "79. Khi nhắm mắt lại, tôi có thể tái tạo lại một hình ảnh phức tạp với đầy đủ chi tiết và màu sắc trong tâm trí.", hint: "Trí nhớ thị giác (Visual memory) của bạn sắc nét như một bức ảnh?" },
+            { part: 3, id: "q80", category: "G_Prob", text: "80. Đứng trước một văn bản dài và phức tạp, tôi có thể nhanh chóng tóm tắt đúng ý chính mà không bị lạc vào các chi tiết phụ.", hint: "Khả năng đọc hiểu, chắt lọc và xử lý thông tin ngôn ngữ tốc độ cao." },
+            { part: 3, id: "q81", category: "G_Prob", text: "81. Khi đối mặt với một tình huống hoàn toàn mới và chưa từng có tiền lệ, tôi hiếm khi bị hoảng loạn mà nhanh chóng tìm ra cách xử lý tạm thời.", hint: "Năng lực ứng biến và giữ bình tĩnh để xử lý khủng hoảng của bạn." },
+            { part: 3, id: "q82", category: "G_Prob", text: "82. Tôi có khả năng dùng từ ngữ để giải thích một khái niệm trừu tượng, khó hiểu thành những ví dụ vô cùng đơn giản cho người khác hiểu.", hint: "Năng lực chuyển hóa và sư phạm thông qua ngôn từ." },
+            { part: 3, id: "q83", category: "G_Prob", text: "83. Tôi rất linh hoạt trong suy nghĩ, luôn tìm ra nhiều phương án dự phòng (Plan B, Plan C) thay vì chỉ bám vào một cách giải quyết duy nhất.", hint: "Tư duy đa chiều và sự nhạy bén khi đối mặt với rào cản." },
+            { part: 3, id: "q84", category: "G_Prob", text: "84. Khi đọc một câu hỏi trắc nghiệm mẹo (đánh lừa), tôi thường rất nhanh phát hiện ra từ khóa 'bẫy' ẩn chứa trong đó.", hint: "Sự sắc bén trong phân tích ngữ nghĩa và tư duy phản biện khi đọc đề." },
+            { part: 3, id: "q85", category: "G_Prob", text: "85. Khi gặp một từ mới hoặc khái niệm lạ, tôi thường có thể đoán được ý nghĩa của nó dựa vào ngữ cảnh xung quanh.", hint: "Đo lường sự nhạy bén ngôn ngữ và khả năng suy luận ngữ cảnh." }
         ];
 
-        // Hàm render tự động đổ HTML vào các div tương ứng
         function renderQuestions() {
             [1, 2, 3].forEach(partNum => {
                 const container = document.getElementById(`part${partNum}-container`);
@@ -273,14 +279,23 @@
             });
         }
         
-        // Gọi hàm render
         renderQuestions();
     });
 
-    let radarChartInstance = null; // Biến toàn cục lưu trữ biểu đồ để có thể xóa/vẽ lại
+    let radarChartInstance = null;
+
+    // Từ điển tra cứu tên tiếng Việt của 7 Nhóm năng lực
+    const traitNamesVN = {
+        "R": "Kỹ thuật, Thực hành",
+        "I": "Nghiên cứu, Khám phá",
+        "A": "Nghệ thuật, Sáng tạo",
+        "S": "Xã hội, Phục vụ",
+        "E": "Quản lý, Kinh doanh",
+        "C": "Nghiệp vụ, Tổ chức",
+        "D": "Đặc thù, Kỷ luật (An ninh, Quốc phòng)"
+    };
 
     function calculateResult() {
-        // 1. Kiểm tra thông tin người dùng
         const sName = document.getElementById('student-name').value.trim();
         const sClass = document.getElementById('student-class').value.trim();
 
@@ -290,7 +305,6 @@
             return;
         }
 
-        // 2. Thu thập điểm số (Đã bổ sung đầy đủ các biến đánh giá Đa trí tuệ mới)
         let scores = { 
             "R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0, "D": 0,
             "MI_Lang": 0, "MI_Logic": 0, "MI_Space": 0, "MI_Body": 0, 
@@ -300,8 +314,8 @@
         };
         let allAnswered = true;
 
-        // Quét 84 câu hỏi (từ q1 đến q84)
-        for (let i = 1; i <= 84; i++) {
+        // Quét đủ 85 câu
+        for (let i = 1; i <= 85; i++) {
             const selected = document.querySelector(`input[name="q${i}"]:checked`);
             if (selected) {
                 let cat = selected.dataset.category;
@@ -316,11 +330,9 @@
             return;
         }
 
-        // 3. Xử lý giao diện chờ AI
         document.getElementById('ai-loading').style.display = 'block';
         document.querySelector('.submit-btn').disabled = true;
 
-        // 4. Phân tích kết quả RIASEC+D
         let riasecD_Scores = [
             { category: "R", score: scores["R"] },
             { category: "I", score: scores["I"] },
@@ -331,18 +343,18 @@
             { category: "D", score: scores["D"] }
         ];
         
-        // Sắp xếp lấy Top 3 nổi trội nhất
         riasecD_Scores.sort((a, b) => b.score - a.score);
         let top3 = riasecD_Scores.slice(0, 3);
         let resultCode = top3.map(t => t.category).join(" - ");
 
-        // Cập nhật thông tin in
         document.getElementById('pdf-render-name').innerText = sName;
         document.getElementById('pdf-render-class').innerText = sClass;
         document.getElementById('pdf-render-date').innerText = new Date().toLocaleDateString('vi-VN');
+        
+        // In Mã năng lực và dòng dịch nghĩa tiếng Việt
         document.getElementById('code-result').innerText = "MẬT MÃ NĂNG LỰC: " + resultCode;
+        document.getElementById('vietnamese-code-result').innerText = `(Bạn có 3 năng lực nổi trội về: ${traitNamesVN[top3[0].category]} – ${traitNamesVN[top3[1].category]} – ${traitNamesVN[top3[2].category]})`;
 
-        // 5. VẼ BIỂU ĐỒ MẠNG NHỆN
         const ctx = document.getElementById('radarChart').getContext('2d');
         if (radarChartInstance) {
             radarChartInstance.destroy();
@@ -351,7 +363,7 @@
         radarChartInstance = new Chart(ctx, {
             type: 'radar',
             data: {
-                labels: ['Kỹ thuật (R)', 'Nghiên cứu (I)', 'Nghệ thuật (A)', 'Xã hội (S)', 'Quản lý (E)', 'Nghiệp vụ (C)', 'An ninh, Quốc phòng (D)'],
+                labels: ['R (Kỹ thuật)', 'I (Nghiên cứu)', 'A (Nghệ thuật)', 'S (Xã hội)', 'E (Quản lý)', 'C (Nghiệp vụ)', 'D (Quốc phòng)'],
                 datasets: [{
                     label: 'Điểm năng lực cá nhân',
                     data: [scores.R, scores.I, scores.A, scores.S, scores.E, scores.C, scores.D],
@@ -365,14 +377,19 @@
                 }]
             },
             options: {
-                animation: false, // Tắt hiệu ứng để tải PDF không bị lỗi canvas trống
+                responsive: true,
+                maintainAspectRatio: false, // Sửa lỗi đè chữ trên điện thoại
+                animation: false, 
                 scales: {
                     r: {
                         angleLines: { display: true, color: 'rgba(0, 0, 0, 0.1)' },
                         grid: { color: 'rgba(0, 0, 0, 0.1)' },
-                        pointLabels: { font: { size: 12, weight: 'bold' }, color: '#2c3e50' },
+                        pointLabels: { 
+                            font: { size: window.innerWidth < 600 ? 10 : 12, weight: 'bold' }, // Chữ nhỏ hơn trên mobile
+                            color: '#2c3e50' 
+                        },
                         suggestedMin: 0,
-                        suggestedMax: 25 // Mỗi nhóm (RIASEC+D) có 5 câu, điểm tối đa là 5*5 = 25
+                        suggestedMax: 25 
                     }
                 },
                 plugins: {
@@ -381,33 +398,35 @@
             }
         });
 
-        // 6. Tích hợp Động cơ sinh Prompt mô phỏng API Generative AI
         setTimeout(() => {
             const aiReportHtml = generateAIReport(top3, sName);
             document.getElementById('ai-generated-report').innerHTML = aiReportHtml;
             
-            // Ẩn thông báo chờ, hiện kết quả
             document.getElementById('ai-loading').style.display = 'none';
             document.querySelector('.submit-btn').disabled = false;
             document.getElementById('result-container').style.display = 'block';
             document.getElementById('download-btn').style.display = 'block';
             
-            // Cuộn mượt mà xuống phần biểu đồ
+            // Hiển thị cảnh báo Zalo nếu mở trên điện thoại
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                document.getElementById('zalo-warning').style.display = 'block';
+            }
+            
             document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
-        }, 1200); // Giả lập độ trễ truy xuất AI (1.2 giây)
+        }, 1200); 
     }
 
-    /* ĐỘNG CƠ XỬ LÝ GENERATIVE AI (Dựa trên Thông tư 09/2022/TT-BGDĐT) */
     function generateAIReport(top3, studentName) {
-        // Cơ sở dữ liệu ngành nghề tham chiếu chính xác 100% mã ngành từ TT 09/2022/TT-BGDĐT
+        // ĐÃ CẬP NHẬT CHUẨN XÁC DỮ LIỆU TỪ FILE "7_nhomnganhnghe.docx"
         const majorDatabase = {
-            "R": "Công nghệ kỹ thuật ô tô (7510205); Kỹ thuật cơ khí (7520103); Kỹ thuật xây dựng (7580201); Nông nghiệp (7620101)",
-            "I": "Khoa học máy tính (7480101); Trí tuệ nhân tạo (7480107); Y khoa (7720101); Khoa học dữ liệu (7460108)",
-            "A": "Kiến trúc (7580101); Thiết kế đồ họa (7210403); Truyền thông đa phương tiện (7320104); Đạo diễn điện ảnh, truyền hình (7210235)",
-            "S": "Khoa học giáo dục (71401); Tâm lý học (7310401); Công tác xã hội (77601); Điều dưỡng (7720301)",
-            "E": "Quản trị kinh doanh (7340101); Kinh tế quốc tế (7310106); Luật kinh tế (7380107); Quan hệ công chúng (7320108)",
-            "C": "Kế toán (7340301); Kiểm toán (7340302); Hệ thống thông tin quản lý (7340405); Quản lý tài nguyên và môi trường (7850101)",
-            "D": "Trinh sát an ninh (7860101); Điều tra hình sự (7860104); Kỹ thuật Công an nhân dân (7860107); Chỉ huy tham mưu Lục quân (7860201)"
+            "R": "Kỹ thuật xây dựng (7580201); Kỹ thuật cơ khí (7520103); Công nghệ kỹ thuật ô tô (7510205); Khoa học máy tính (7480101); Kỹ thuật điện (7520201); Nông nghiệp (7620101); Công nghệ thực phẩm (7540101); Khai thác vận tải (7840101); Thú y (7640101); Kỹ thuật mỏ (7520601).<br><i>* Ngành giao thoa/thiên hướng Kỹ thuật:</i> Kỹ thuật máy tính (7480106); Bảo hộ lao động (7850201); Công nghệ kỹ thuật kiến trúc (7510101).",
+            "I": "Y khoa (7720101); Dược học (7720201); Răng - Hàm - Mặt (7720501); Công nghệ sinh học (7420201); Hóa học (7440112); Vật lý học (7440102); Khoa học dữ liệu (7460108); Trí tuệ nhân tạo (7480107); Tâm lý học (7310401); Xã hội học (7310301).<br><i>* Ngành giao thoa/thiên hướng Nghiên cứu:</i> Kinh tế số (7310109); Toán kinh tế (7310108).",
+            "A": "Hội họa (7210103); Thiết kế đồ họa (7210403); Thiết kế thời trang (7210404); Thanh nhạc (7210205); Đạo diễn điện ảnh, truyền hình (7210235); Truyền thông đa phương tiện (7320104); Tiếng Việt và văn hóa Việt Nam (7220101); Kiến trúc (7580101); Diễn viên kịch, điện ảnh - truyền hình (7210234); Nhiếp ảnh (7210301).<br><i>* Ngành giao thoa/thiên hướng Nghệ thuật:</i> Sáng tác văn học (7220110); Thiết kế nội thất (7580108).",
+            "S": "Giáo dục Tiểu học (7140202); Giáo dục Mầm non (7140201); Sư phạm Toán học (7140209); Sư phạm Ngữ văn (7140217); Sư phạm Tiếng Anh (7140231); Công tác xã hội (7760101); Điều dưỡng (7720301); Y tế công cộng (7720701); Tâm lý học giáo dục (7310403); Giáo dục Đặc biệt (7140203).<br><i>* Ngành giao thoa/thiên hướng Xã hội:</i> Hỗ trợ giáo dục người khuyết tật (7760103); Quản trị nhân lực (7340404).",
+            "E": "Quản trị kinh doanh (7340101); Marketing (7340115); Kinh doanh quốc tế (7340120); Luật (7380101); Luật kinh tế (7380107); Quan hệ công chúng (7320108); Quản trị nhân lực (7340404); Quản lý nhà nước (7310205); Quản trị khách sạn (7810201); Quản trị dịch vụ du lịch và lữ hành (7810103).<br><i>* Ngành giao thoa/thiên hướng Quản lý:</i> Quản lý công (7340403).",
+            "C": "Kế toán (7340301); Kiểm toán (7340302); Tài chính - Ngân hàng (7340201); Thống kê kinh tế (7310107); Hệ thống thông tin quản lý (7340405); Quản trị văn phòng (7340406); Thông tin - Thư viện (7320201); Lưu trữ học (7320303); Thương mại điện tử (7340122); Bảo hiểm (7340204).<br><i>* Ngành giao thoa/thiên hướng Nghiệp vụ:</i> Thống kê (7460201).",
+            "D": "Trinh sát an ninh (7860101); Trinh sát cảnh sát (7860102); Điều tra hình sự (7860104); Kỹ thuật Công an nhân dân (7860107); Quản lý nhà nước về an ninh trật tự (7860109); Phòng cháy chữa cháy và cứu nạn cứu hộ (7860113); Chỉ huy tham mưu Lục quân (7860201); Biên phòng (7860214); Tình báo quân sự (7860217); Kỹ thuật hình sự (7860108)."
         };
 
         const coreTraits = {
@@ -430,9 +449,9 @@
             "D": "các cơ quan thực thi pháp luật, lực lượng vũ trang nhân dân, cơ quan tình báo hoặc đơn vị an ninh mạng quốc gia."
         };
 
-        let majorsHtml = `<ul>`;
+        let majorsHtml = `<ul style="line-height: 1.8;">`;
         top3.forEach(t => { 
-            majorsHtml += `<li><strong>Nhóm ${t.category}:</strong> ${majorDatabase[t.category]}</li>`; 
+            majorsHtml += `<li style="margin-bottom: 12px;"><strong>Nhóm ${traitNamesVN[t.category]}:</strong><br> ${majorDatabase[t.category]}</li>`; 
         });
         majorsHtml += `</ul>`;
 
@@ -443,7 +462,7 @@
         return `
             <div class="ai-report-box">
                 <h4>🎯 1. Chân dung năng lực cốt lõi</h4>
-                <p>Thông qua việc phân tích chéo các dữ liệu từ mô hình Đa trí tuệ (Howard Gardner) và khung năng lực ASK, AI nhận diện bạn <strong>${studentName}</strong> đang sở hữu một tổ hợp năng lực đặc biệt. Bạn nổi bật với <strong>${trait1}</strong>, đồng thời kết hợp linh hoạt với <strong>${trait2}</strong>. Sự giao thoa này cho thấy bạn không chỉ có kiến thức (Knowledge) nền tảng vững vàng mà còn có thái độ (Attitude) giải quyết vấn đề vượt trội.</p>
+                <p>Thông qua việc phân tích chéo các dữ liệu từ mô hình Đa trí tuệ (Howard Gardner) và khung năng lực ASK, hệ thống nhận diện bạn <strong>${studentName}</strong> đang sở hữu một tổ hợp năng lực đặc biệt. Bạn nổi bật với <strong>${trait1}</strong>, đồng thời kết hợp linh hoạt với <strong>${trait2}</strong>. Sự giao thoa này cho thấy bạn không chỉ có kiến thức (Knowledge) nền tảng vững vàng mà còn có thái độ (Attitude) giải quyết vấn đề vượt trội.</p>
             </div>
             
             <div class="ai-report-box">
@@ -452,24 +471,22 @@
             </div>
             
             <div class="ai-report-box">
-                <h4>🎓 3. Nhóm ngành đào tạo tương thích (Theo Thông tư 09/2022/TT-BGDĐT)</h4>
+                <h4>🎓 3. Nhóm ngành đào tạo tương thích (Thông tư 09/2022/TT-BGDĐT)</h4>
                 <p>Để định hướng lộ trình vào Đại học/Học viện chính xác nhất, hệ thống đã đối chiếu cấu trúc năng lực của bạn với <strong>Danh mục thống kê ngành đào tạo của giáo dục đại học quốc gia</strong> do Bộ trưởng Bộ GD&ĐT ban hành. Dưới đây là các ngành học cấp IV tiềm năng nhất:</p>
                 ${majorsHtml}
             </div>
             
             <div class="ai-report-box">
                 <h4>📈 4. Tầm nhìn thị trường lao động (2026 - 2030)</h4>
-                <p>Theo dữ liệu dự báo nhân lực, kỷ nguyên Trí tuệ nhân tạo đang loại bỏ dần các công việc có tính lặp lại (routine tasks). Tuy nhiên, bộ mật mã năng lực của bạn chứa đựng những "điểm chạm nhân bản" và khả năng ra quyết định phức tạp - những kỹ năng mà AI không thể thay thế. Nếu tiếp tục trau dồi các kỹ năng cốt lõi thuộc nhóm <strong>${top3[0].category}</strong> và <strong>${top3[1].category}</strong>, bạn chắc chắn sẽ thuộc nhóm nhân sự chất lượng cao, có năng lực cạnh tranh toàn cầu trong 5-10 năm tới.</p>
+                <p>Theo dữ liệu dự báo nhân lực, kỷ nguyên Trí tuệ nhân tạo đang loại bỏ dần các công việc có tính lặp lại (routine tasks). Tuy nhiên, bộ mật mã năng lực của bạn chứa đựng những "điểm chạm nhân bản" và khả năng ra quyết định phức tạp - những kỹ năng mà AI không thể thay thế. Nếu tiếp tục trau dồi các kỹ năng cốt lõi thuộc nhóm <strong>${traitNamesVN[top3[0].category]}</strong>, bạn chắc chắn sẽ thuộc nhóm nhân sự chất lượng cao, có năng lực cạnh tranh toàn cầu trong 5-10 năm tới.</p>
             </div>
         `;
     }
 
-    // Hàm xuất PDF
     function downloadPDF() {
         const element = document.getElementById('pdf-content');
         const sName = document.getElementById('student-name').value.trim() || "Hoc_Sinh";
         
-        // Loại bỏ dấu tiếng Việt cho tên file chuẩn
         const removeAccents = (str) => { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); };
         const safeName = removeAccents(sName).replace(/\s+/g, '_');
         const fileName = `Bao_Cao_Huong_Nghiep_${safeName}.pdf`;
