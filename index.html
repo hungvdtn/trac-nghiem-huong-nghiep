@@ -3,88 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trắc nghiệm Hướng nghiệp đa chiều - TS. Vũ Xuân Hùng</title>
+    <title>Trắc nghiệm Hướng nghiệp Đa chiều - TS. Vũ Xuân Hùng</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
+            --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --header-bg: #1e3799;
+            --brand-blue: #000099; /* Xanh dương theo yêu cầu */
+            --brand-blue-hover: #000066;
+            --active-choice-bg: #000099;
+            
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --text-color: #2c3e50;
+            --hint-color: #7f8c8d;
+            --choice-base-bg: #f1f2f6;
+            --choice-border-color: #dfe4ea;
             --success-color: #2ecc71;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding: 20px; margin: 0; }
-        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1, h2, h3, h4 { color: var(--primary-color); text-align: center; }
-        .header-desc { text-align: center; color: #7f8c8d; margin-bottom: 30px; font-style: italic; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-        
-        .section-title { background-color: var(--primary-color); color: white; padding: 12px 15px; border-radius: 5px; margin-top: 35px; font-size: 1.15em; font-weight: bold; text-transform: uppercase; }
-        .section-desc { font-size: 0.95em; color: #555; margin-top: 10px; margin-bottom: 20px; font-style: italic; padding-left: 5px;}
 
-        .student-info-form { background-color: #eaf2f8; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #d4e6f1; }
+        body { 
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--background-color); 
+            color: var(--text-color); 
+            line-height: 1.6; 
+            padding: 0; 
+            margin: 0; 
+            transition: all 0.3s ease;
+        }
+
+        .container { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            background: none; 
+            padding: 0; 
+        }
+
+        .main-header { 
+            background: var(--primary-gradient);
+            color: white;
+            text-align: center;
+            padding: 50px 30px;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .main-header h1 { margin: 0; font-size: 2.2em; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .header-desc { text-align: center; color: rgba(255,255,255,0.9); margin-top: 15px; font-style: italic; border-bottom: none;}
+
+        /* Thanh tiến trình Progress Bar (Đã sửa lại hiển thị ngay dưới Header) */
+        #progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #dcdde1;
+            margin-bottom: 25px; /* Tạo khoảng cách với Form nhập tên */
+        }
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--success-color); /* Màu xanh lá cây dễ nhìn */
+            transition: width 0.3s ease;
+        }
+
+        .student-info-form { 
+            background-color: var(--card-background);
+            padding: 30px; 
+            border-radius: 12px;
+            margin-bottom: 30px; 
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .student-info-form h3 { color: var(--brand-blue); border-bottom: 2px solid #eee; padding-bottom: 10px; text-align: left; margin-top: 0;}
+        
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #2980b9; }
-        .form-group input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .form-group input[type="text"]:focus { border-color: var(--secondary-color); outline: none; box-shadow: 0 0 5px rgba(52, 152, 219, 0.3); }
-        .form-group input[type="text"]:disabled { background-color: #e9ecef; cursor: not-allowed; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: var(--text-color); }
+        .form-group input[type="text"] { 
+            width: 100%; padding: 12px 15px; 
+            border: 2px solid #eee; border-radius: 8px; 
+            box-sizing: border-box; font-size: 1em;
+            transition: all 0.2s;
+        }
+        .form-group input[type="text"]:focus { 
+            border-color: var(--brand-blue); outline: none; 
+            box-shadow: 0 0 8px rgba(0, 0, 153, 0.1); 
+        }
+        .form-group input[type="text"]:disabled { background-color: #f1f2f6; cursor: not-allowed; }
 
-        .question-block { margin-bottom: 25px; padding: 20px 15px; background: #fdfdfd; border-left: 5px solid var(--secondary-color); border-radius: 4px; transition: all 0.2s; }
-        .question-block:hover { background-color: #f9f9f9; transform: translateX(3px); }
-        .question-text { font-weight: bold; margin-bottom: 5px; font-size: 1.1em; color: var(--primary-color); }
-        .ai-hint { font-size: 0.85em; color: #e67e22; margin-bottom: 15px; font-style: italic; }
-        .ai-hint::before { content: '💡 Gợi ý: '; font-weight: bold; }
+        .section-title { 
+            background: none;
+            color: var(--brand-blue); 
+            padding: 0; margin-top: 40px; 
+            font-size: 1.4em; font-weight: bold; 
+            text-transform: uppercase; text-align: left;
+            border-left: 5px solid var(--brand-blue);
+            padding-left: 15px;
+        }
+        .section-desc { font-size: 0.95em; color: var(--hint-color); margin-top: 10px; margin-bottom: 25px; font-style: italic; padding-left: 15px;}
 
-        .options-group { display: flex; flex-direction: column; gap: 10px; }
-        .option-label { background: #f1f2f6; padding: 12px 15px; border-radius: 6px; cursor: pointer; font-size: 0.95em; text-align: left; display: flex; flex-direction: row; align-items: center; transition: background 0.2s; border: 1px solid transparent; }
-        .option-label:hover { background: #eccc6; }
+        .question-block { 
+            margin-bottom: 30px; 
+            padding: 25px; 
+            background: var(--card-background); 
+            border-left: none;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            transition: all 0.2s; 
+        }
+        .question-block:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.07); }
         
-        /* CSS khi input bị khóa */
-        input[type="radio"] { margin-right: 12px; margin-bottom: 0; cursor: pointer; transform: scale(1.2); flex-shrink: 0; }
-        input[type="radio"]:disabled { cursor: not-allowed; }
+        .question-text { font-weight: bold; margin-bottom: 5px; font-size: 1.15em; color: var(--text-color); }
+        .ai-hint { font-size: 0.9em; color: var(--hint-color); margin-bottom: 20px; font-style: italic; }
+        .ai-hint::before { content: '💡 Gợi ý: '; font-weight: bold; color: var(--success-color); }
+
+        .options-group { display: flex; flex-direction: column; gap: 15px; }
+        
+        .option-label { 
+            background: var(--choice-base-bg); 
+            color: var(--text-color);
+            padding: 15px 20px; 
+            border-radius: 30px; 
+            cursor: pointer; 
+            font-size: 0.95em; 
+            text-align: left; 
+            display: flex; flex-direction: row; align-items: center; 
+            transition: all 0.3s; 
+            border: 1px solid var(--choice-border-color); 
+        }
+        .option-label:hover { 
+            background-color: #e4e7ed; 
+            border-color: var(--choice-border-color);
+        }
+        
+        input[type="radio"] { opacity: 0; position: absolute; width: 0; height: 0; }
+        
+        input[type="radio"]:checked + .option-text {
+            color: white;
+            font-weight: bold;
+        }
+        input[type="radio"]:checked + .option-text::before {
+            content: "\2713"; 
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        input[type="radio"]:checked ~ .label-wrapper {
+             background-color: var(--active-choice-bg);
+             color: white;
+        }
+        
+        /* Ẩn / khóa khi submit */
+        input[type="radio"]:disabled ~ .label-wrapper { cursor: not-allowed; }
         .option-label.disabled-label { cursor: not-allowed; opacity: 0.7; }
-        
-        input[type="radio"]:checked + span { font-weight: bold; color: var(--secondary-color); }
 
-        @media (min-width: 768px) {
-            .options-group { flex-direction: row; justify-content: space-between; gap: 10px; }
-            .option-label { flex: 1; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; padding: 15px 5px; }
-            input[type="radio"] { margin-right: 0; margin-bottom: 10px; transform: scale(1.3); }
+        @media (max-width: 767px) {
+            .options-group { flex-direction: column; }
+            .option-label { padding: 12px 18px; }
         }
 
-        .btn { display: block; width: 100%; padding: 15px; color: white; border: none; border-radius: 5px; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 30px; transition: background 0.3s; }
-        .submit-btn { background: #000099; }
-        .submit-btn:hover { background: #000066; }
-        .submit-btn:disabled { background: #95a5a6; cursor: not-allowed; transform: none; }
-        .pdf-btn { background: var(--accent-color); display: none; margin-top: 10px;}
+        .submit-btn { 
+            background: var(--brand-blue); /* #000099 */
+            color: white;
+            border: none;
+            display: block;
+            width: 100%;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px; 
+            padding: 18px; 
+            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 153, 0.2); 
+            transition: all 0.2s;
+        }
+        .submit-btn:hover { background: var(--brand-blue-hover); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 153, 0.3); }
+        .submit-btn:disabled { background: #95a5a6; cursor: not-allowed; box-shadow: none; transform: none; }
+        
+        .pdf-btn { 
+            background: var(--accent-color); 
+            display: none; margin-top: 10px; border-radius: 8px;
+            color: white; border: none; display: block; width: 100%; padding: 18px; font-size: 1.2em; font-weight: bold; cursor: pointer;
+        }
         .pdf-btn:hover { background: #c0392b; }
         .pdf-btn:disabled { background: #95a5a6; cursor: not-allowed; }
         
         .zalo-warning { text-align: center; color: #e74c3c; font-size: 0.9em; margin-top: 10px; display: none; font-style: italic;}
 
         #result-container { display: none; margin-top: 40px; padding-top: 20px; }
-        #pdf-content { padding: 30px; background-color: #ffffff; color: #000000; width: 100%; box-sizing: border-box; }
-        .pdf-header { text-align: center; border-bottom: 3px solid var(--primary-color); padding-bottom: 15px; margin-bottom: 25px; }
+        #pdf-content { padding: 30px; background-color: var(--card-background); color: var(--text-color); width: 100%; box-sizing: border-box; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .pdf-header { text-align: center; border-bottom: 3px solid var(--brand-blue); padding-bottom: 15px; margin-bottom: 25px; color: var(--brand-blue); }
         .pdf-student-meta { margin-bottom: 25px; font-size: 1.1em; border: 1px solid #ddd; padding: 15px; border-radius: 5px; background-color: #fafafa; }
         .pdf-student-meta div { margin-bottom: 8px; }
-        .pdf-student-meta strong { color: #2980b9; display: inline-block; width: 180px;}
+        .pdf-student-meta strong { color: var(--brand-blue); display: inline-block; width: 180px;}
         
         .chart-container { width: 100%; max-width: 550px; margin: 0 auto 30px auto; min-height: 350px; position: relative; }
         
-        .pdf-header, .pdf-student-meta, h3, h4, .ai-report-box, .result-card, .chart-container {
+        .pdf-header, .pdf-student-meta, h3, h4, .ai-report-box, .chart-container {
             page-break-inside: avoid !important;
             break-inside: avoid !important;
         }
+        
+        @media (max-width: 600px) {
+            .html2pdf__page-break {
+                margin-top: -100px;
+                position: relative;
+                top: -50px;
+            }
+        }
 
-        .ai-report-box { background-color: #f4fdfb; padding: 20px; border-radius: 8px; border-left: 5px solid var(--success-color); margin-bottom: 20px; }
+        .ai-report-box { background-color: #f4fdfb; padding: 25px; border-radius: 8px; border-left: 5px solid var(--success-color); margin-bottom: 20px; }
         .ai-report-box h4 { color: #16a085; text-align: left; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 0; margin-bottom: 15px;}
         .ai-report-box ul { padding-left: 20px; margin-top: 0; }
-        .ai-report-box li { margin-bottom: 8px; }
+        .ai-report-box li { margin-bottom: 12px; line-height: 1.7; }
         
-        .loading-ai { text-align: center; font-style: italic; color: #e67e22; font-weight: bold; display: none; margin: 20px 0; font-size: 1.1em;}
+        .loading-ai { text-align: center; font-style: italic; color: #e67e22; font-weight: bold; display: none; margin: 30px 0; font-size: 1.1em;}
     </style>
 </head>
 <body>
@@ -94,16 +227,17 @@
         <h1>Hệ thống Đánh giá năng lực & Hướng nghiệp đa chiều</h1>
         <div class="header-desc">
             Phát triển chuyên môn: TS. Vũ Xuân Hùng<br>
-            Tích hợp mô hình: RIASEC + Đa trí tuệ (Gardner) + ASK<br>
-            Căn cứ Danh mục đào tạo theo Thông tư 09/2022/TT-BGDĐT
+            Căn cứ Thông tư 09/2022/TT-BGDĐT & Thông tư 26/2020/TT-BLĐTBXH
         </div>
     </div>
 
+    <div id="progress-container"><div id="progress-bar"></div></div>
+
     <div class="student-info-form">
         <h3>Thông tin cá nhân</h3>
-        <p style="text-align:center; color: #7f8c8d; margin-top:-10px; font-size:0.9em;">(Vui lòng điền đầy đủ để hệ thống cấp báo cáo PDF)</p>
+        <p style="text-align:left; color: #7f8c8d; margin-top:-10px; font-size:0.9em; font-style:italic;">(Vui lòng điền đầy đủ Họ và Tên, Lớp/Trường để hệ thống cấp báo cáo PDF)</p>
         <div class="form-group"><label>Họ và Tên:</label><input type="text" id="student-name" placeholder="Ví dụ: Nguyễn Văn A" required></div>
-        <div class="form-group"><label>Lớp / Trường:</label><input type="text" id="student-class" placeholder="Ví dụ: 12A1 - THPT Chuyên Chu Văn An, Hà Nội" required></div>
+        <div class="form-group"><label>Lớp / Trường:</label><input type="text" id="student-class" placeholder="Ví dụ: 12A1 - THPT Chuyên" required></div>
     </div>
 
     <form id="quiz-form">
@@ -120,7 +254,7 @@
         <div id="part3-container"></div>
 
         <button type="button" id="submit-btn" class="btn submit-btn" onclick="calculateResult()">Nộp bài & chờ AI phân tích</button>
-        <div id="ai-loading" class="loading-ai">⚙️ Trí tuệ nhân tạo đang tổng hợp, vẽ biểu đồ và phân tích dữ liệu...</div>
+        <div id="ai-loading" class="loading-ai">⌛⚙️ Đang đóng gói dữ liệu và gửi đến Trí tuệ nhân tạo (AI) xử lý... Vui lòng đợi trong giây lát!</div>
     </form>
 
     <div id="result-container">
@@ -128,7 +262,7 @@
             <div class="pdf-header">
                 <h2>BÁO CÁO</h2>
                 <h2>PHÂN TÍCH NĂNG LỰC & ĐỊNH HƯỚNG NGHỀ NGHIỆP</h2>
-                <p>Tích hợp AI phân tích - Chuẩn hóa theo Thông tư 09/2022/TT-BGDĐT</p>
+                <p>Chuẩn hóa theo Thông tư 09/2022/TT-BGDĐT & Thông tư 26/2020/TT-BLĐTBXH</p>
             </div>
 
             <div class="pdf-student-meta">
@@ -143,11 +277,12 @@
             </div>
             
             <div class="html2pdf__page-break" style="page-break-before: always; clear: both;"></div>
-            <div style="height: 20px;"></div> <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center; margin-bottom: 5px;"></h3>
+            <div style="height: 20px;"></div>
+
+            <h3 id="code-result" style="color: #e74c3c; font-size: 1.8em; text-align: center; margin-bottom: 5px;"></h3>
             <div id="vietnamese-code-result" style="font-weight: bold; text-align: center; margin-bottom: 25px; color: #2c3e50; font-size: 1.1em;"></div>
             
-            <div id="ai-generated-report">
-            </div>
+            <div id="ai-generated-report"></div>
             
             <div style="margin-top: 40px; text-align: center; font-size: 0.85em; color: #7f8c8d; border-top: 1px solid #ddd; padding-top: 15px;">
                 Báo cáo được trích xuất tự động từ Hệ thống hướng nghiệp TS. Vũ Xuân Hùng.<br>
@@ -156,13 +291,18 @@
         </div>
 
         <div style="height: 20px;"></div>
-        <button type="button" id="download-btn" class="btn pdf-btn" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF (Bản in)</button>
-        <div id="zalo-warning" class="zalo-warning">Lưu ý: Nếu bạn đang mở link trong Zalo/Messenger, hệ thống bảo mật sẽ chặn tải file. Vui lòng bấm vào dấu 3 chấm (góc trên phải màn hình) và chọn <b>"Mở bằng Trình duyệt / Mở bằng Safari / Mở bằng Chrome"</b> để lưu PDF về máy.</div>
+        <button type="button" id="download-btn" class="btn pdf-btn" style="display: none;" onclick="downloadPDF()">📥 Tải xuống Báo cáo PDF (Bản in)</button>
+        <div id="zalo-warning" class="zalo-warning">Lưu ý quan trọng: Nếu bạn đang mở link trong Zalo/Messenger, hệ thống bảo mật của Zalo sẽ chặn tải file về điện thoại. Vui lòng bấm vào dấu 3 chấm (góc trên phải màn hình) và chọn <b>"Mở bằng Trình duyệt / Mở bằng Safari / Mở bằng Chrome"</b> để lưu PDF về máy.</div>
     </div>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        const fontLink = document.createElement('link');
+        fontLink.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap';
+        fontLink.rel = 'stylesheet';
+        document.head.appendChild(fontLink);
+
         const scale = [
             { value: 1, label: "Hoàn toàn không đúng" },
             { value: 2, label: "Không đúng" },
@@ -171,9 +311,7 @@
             { value: 5, label: "Hoàn toàn đúng" }
         ];
 
-        // Ngân hàng 85 câu hỏi
         const questions = [
-            // --- PHẦN 1: RIASEC + D (35 Câu) ---
             { part: 1, id: "q1", category: "R", text: "1. Tôi thích tự tay thao tác, lắp ráp, hoặc sửa chữa các thiết bị điện tử, máy móc, vật dụng gia đình.", hint: "Nhớ lại lúc bạn tự sửa xe đạp, nối dây điện hoặc tháo lắp đồ dùng gia đình." },
             { part: 1, id: "q2", category: "R", text: "2. Tôi thích các hoạt động ngoài trời, làm việc với thiên nhiên, cây cối, động vật hơn là ngồi trong văn phòng.", hint: "Bạn có thích làm vườn, chăm sóc thú cưng hay tham gia các hoạt động thể chất ngoài trời?" },
             { part: 1, id: "q3", category: "R", text: "3. Tôi có khả năng tập trung cao độ khi làm các công việc thủ công, chế tạo mô hình hoặc thiết kế kỹ thuật.", hint: "Hãy nghĩ về những môn học thực hành, chế tạo robot hoặc làm đồ thủ công mỹ nghệ." },
@@ -210,7 +348,6 @@
             { part: 1, id: "q34", category: "D", text: "34. Tôi có ý thức rèn luyện thể chất, sức bền và khả năng chịu đựng gian khổ để đáp ứng các yêu cầu khắt khe của môi trường làm việc đặc thù.", hint: "Bạn có thường xuyên tập luyện võ thuật, thể thao cường độ cao và không ngại khó khăn về điều kiện sống?" },
             { part: 1, id: "q35", category: "D", text: "35. Tôi sẵn sàng hy sinh lợi ích cá nhân, đặt nhiệm vụ bảo vệ an ninh quốc gia, trật tự xã hội và sự bình yên của nhân dân lên hàng đầu.", hint: "Nhớ lại những bộ phim hoặc câu chuyện về lực lượng vũ trang, bạn có thấy đồng cảm sâu sắc với sứ mệnh và lý tưởng của họ không?" },
             
-            // --- PHẦN 2: ASK & Đa trí tuệ (34 Câu) ---
             { part: 2, id: "q36", category: "MI_Lang", text: "36. Tôi thích đọc sách, viết lách và có thể dễ dàng diễn đạt suy nghĩ của mình bằng từ ngữ.", hint: "Bạn có hay viết blog, nhật ký hoặc giỏi các môn Khoa học Xã hội không?" },
             { part: 2, id: "q37", category: "MI_Lang", text: "37. Tôi thường ghi nhớ thông tin tốt hơn khi đọc hoặc nghe người khác kể chuyện.", hint: "Lời nói và câu chữ giúp bạn in sâu kiến thức hơn là hình ảnh?" },
             { part: 2, id: "q38", category: "MI_Lang", text: "38. Tôi thích tham gia các cuộc tranh luận, hùng biện hoặc sử dụng từ ngữ để thuyết phục người khác.", hint: "Bạn có năng khiếu chơi chữ hoặc giải thích vấn đề rất rành mạch?" },
@@ -246,7 +383,6 @@
             { part: 2, id: "q68", category: "ASK_Skill", text: "68. Tôi có kỹ năng tìm kiếm, chọn lọc và tổng hợp thông tin từ nhiều nguồn một cách hiệu quả và chính xác.", hint: "Kỹ năng 'Google' và tra cứu tài liệu của bạn rất chuyên nghiệp và có kiểm chứng?" },
             { part: 2, id: "q69", category: "ASK_Skill", text: "69. Tôi có khả năng trình bày, thuyết trình một vấn đề rõ ràng, rành mạch và thu hút sự chú ý của người nghe.", hint: "Bạn tự tin khi đứng trước bục giảng để báo cáo bài tập lớn trước lớp?" },
 
-            // --- PHẦN 3: G-Factor (16 Câu) ---
             { part: 3, id: "q70", category: "G_Logic", text: "70. Tôi có thể nhanh chóng phát hiện ra quy luật của một dãy số hoặc một chuỗi sự kiện có vẻ không liên quan.", hint: "Nhớ lại các bài toán tìm quy luật dãy số hoặc khả năng xâu chuỗi sự kiện của bạn." },
             { part: 3, id: "q71", category: "G_Logic", text: "71. Khi lập luận, tôi thường dễ dàng chỉ ra được những điểm mâu thuẫn hoặc lỗ hổng trong cách tư duy của người khác.", hint: "Bạn có thường xuyên phát hiện ra khi ai đó nói chuyện thiếu logic hoặc trước sau bất nhất không?" },
             { part: 3, id: "q72", category: "G_Logic", text: "72. Tôi thích phân tích một vấn đề phức tạp thành các nguyên nhân cốt lõi (nguyên lý nguyên bản) để giải quyết triệt để thay vì chỉ xử lý phần ngọn.", hint: "Thói quen đào sâu bản chất vấn đề (Tư duy First-Principles) của bạn thế nào?" },
@@ -265,22 +401,34 @@
             { part: 3, id: "q85", category: "G_Prob", text: "85. Khi gặp một từ mới hoặc khái niệm lạ, tôi thường có thể đoán được ý nghĩa của nó dựa vào ngữ cảnh xung quanh.", hint: "Đo lường sự nhạy bén ngôn ngữ và khả năng suy luận ngữ cảnh." }
         ];
 
+        // Lắng nghe thay đổi để cập nhật thanh tiến trình
+        window.updateProgress = function() {
+            const checkedRadios = document.querySelectorAll('input[type="radio"]:checked');
+            const answeredQuestions = checkedRadios.length;
+            const progressPercent = (answeredQuestions / 85) * 100;
+            document.getElementById('progress-bar').style.width = progressPercent + '%';
+        }
+
         function renderQuestions() {
             [1, 2, 3].forEach(partNum => {
                 const container = document.getElementById(`part${partNum}-container`);
                 const partQuestions = questions.filter(q => q.part === partNum);
                 
                 partQuestions.forEach(q => {
-                    let html = `<div class="question-block">
+                    let html = `<div class="question-block" id="block-${q.id}">
                                     <div class="question-text">${q.text}</div>
                                     <div class="ai-hint">${q.hint}</div>
                                     <div class="options-group">`;
+                    
                     scale.forEach(s => {
-                        html += `<label class="option-label">
-                                    <input type="radio" name="${q.id}" value="${s.value}" data-category="${q.category}">
-                                    <span>${s.label}</span>
-                                 </label>`;
+                        html += `
+                            <label class="option-label" for="${q.id}-${s.value}">
+                                <input type="radio" name="${q.id}" id="${q.id}-${s.value}" value="${s.value}" data-category="${q.category}" onchange="updateProgress()">
+                                <span class="label-wrapper">${s.value}</span>
+                                <span class="option-text">${s.label}</span>
+                            </label>`;
                     });
+                    
                     html += `</div></div>`;
                     container.innerHTML += html;
                 });
@@ -307,7 +455,7 @@
         const sClass = document.getElementById('student-class').value.trim();
 
         if (!sName || !sClass) {
-            alert("Vui lòng khai báo đầy đủ Họ tên và Lớp/Trường ở đầu trang!");
+            alert("Vui lòng khai báo Họ và Tên, Lớp/Trường để hệ thống cấp báo cáo!");
             document.getElementById('student-name').focus();
             return;
         }
@@ -328,25 +476,26 @@
                 scores[cat] += parseInt(selected.value);
             } else {
                 allAnswered = false;
+                document.getElementById(`block-q${i}`).style.border = "2px solid #e74c3c";
             }
         }
 
         if (!allAnswered) {
-            alert("Vui lòng trả lời đầy đủ tất cả các câu hỏi (bao gồm Phần 1, 2 và 3) trước khi nộp bài!");
+            alert("Bạn vẫn còn một số câu hỏi chưa hoàn thành. Vui lòng kiểm tra lại các ô màu đỏ!");
+            document.querySelector('.question-block[style*="border"]').scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
         }
 
-        // --- KHÓA TOÀN BỘ LỰA CHỌN SAU KHI NỘP BÀI ---
         const allInputs = document.querySelectorAll('input');
         allInputs.forEach(input => {
             input.disabled = true;
-            // Thêm class để làm mờ giao diện nút bấm
             if(input.type === 'radio') {
                 input.parentElement.classList.add('disabled-label');
             }
         });
-        document.getElementById('submit-btn').disabled = true;
-        document.getElementById('submit-btn').innerText = "Đã nộp bài thành công";
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "✓ Bài làm đã được nộp thành công";
 
         document.getElementById('ai-loading').style.display = 'block';
 
@@ -376,6 +525,7 @@
             radarChartInstance.destroy();
         }
         
+        Chart.defaults.font.family = "'Montserrat', 'Segoe UI', sans-serif";
         radarChartInstance = new Chart(ctx, {
             type: 'radar',
             data: {
@@ -383,12 +533,12 @@
                 datasets: [{
                     label: 'Điểm năng lực cá nhân',
                     data: [scores.R, scores.I, scores.A, scores.S, scores.E, scores.C, scores.D],
-                    backgroundColor: 'rgba(52, 152, 219, 0.2)',
-                    borderColor: 'rgba(52, 152, 219, 1)',
-                    pointBackgroundColor: 'rgba(231, 76, 60, 1)',
+                    backgroundColor: 'rgba(0, 0, 153, 0.2)', 
+                    borderColor: '#000099', 
+                    pointBackgroundColor: '#e74c3c', 
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(231, 76, 60, 1)',
+                    pointHoverBorderColor: '#e74c3c',
                     borderWidth: 2
                 }]
             },
@@ -398,10 +548,10 @@
                 animation: false, 
                 scales: {
                     r: {
-                        angleLines: { display: true, color: 'rgba(0, 0, 0, 0.1)' },
-                        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+                        angleLines: { display: true, color: 'rgba(0, 0, 0, 0.05)' },
+                        grid: { color: 'rgba(0, 0, 0, 0.05)' },
                         pointLabels: { 
-                            font: { size: window.innerWidth < 600 ? 10 : 12, weight: 'bold' },
+                            font: { size: window.innerWidth < 600 ? 10 : 11, weight: 'bold' },
                             color: '#2c3e50' 
                         },
                         suggestedMin: 0,
@@ -428,9 +578,8 @@
                 document.getElementById('zalo-warning').style.display = 'block';
             }
             
-            document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('result-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            // -- BẮT ĐẦU ĐOẠN MÃ GỬI DỮ LIỆU LÊN GOOGLE SHEETS --
             let majorsExport = `Top 1 (${traitNamesVN[top3[0].category]}): ${majorDatabase[top3[0].category]} | ` +
                                `Top 2 (${traitNamesVN[top3[1].category]}): ${majorDatabase[top3[1].category]}`;
 
@@ -442,61 +591,78 @@
                 suggestedMajors: majorsExport
             };
 
-            // Link Google Script của Tiến sĩ
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxGhiPtBcGYmdOgDO3lBTH_oWAfkXWXwm5fd4xX34RLXHS_z62wW_AfmDIr6b00zhDw/exec";
 
-            // Gửi dữ liệu với chế độ no-cors để tránh bị trình duyệt chặn
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify(payload),
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8'
-                }
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
             })
-            .then(() => console.log("Đã phát tín hiệu gửi dữ liệu về Google Sheets!"))
-            .catch(error => console.error("Lỗi mạng:", error));
-            // -- KẾT THÚC ĐOẠN MÃ GỬI DỮ LIỆU --
+            .then(() => console.log("Data sent to Google Sheets successfully!"))
+            .catch(error => console.error("Error sending data:", error));
 
-        }, 1200); 
+        }, 1500); 
     }
 
+    // Cơ sở dữ liệu Ngành học ĐẠI HỌC (Thông tư 09/2022)
     const majorDatabase = {
-        "R": "Kỹ thuật xây dựng (7580201); Kỹ thuật cơ khí (7520103); Công nghệ kỹ thuật ô tô (7510205); Khoa học máy tính (7480101); Kỹ thuật điện (7520201); Nông nghiệp (7620101); Công nghệ thực phẩm (7540101); Khai thác vận tải (7840101); Thú y (7640101); Kỹ thuật mỏ (7520601).<br><i>* Ngành giao thoa/thiên hướng Kỹ thuật:</i> Kỹ thuật máy tính (7480106); Bảo hộ lao động (7850201); Công nghệ kỹ thuật kiến trúc (7510101).",
-        "I": "Y khoa (7720101); Dược học (7720201); Răng - Hàm - Mặt (7720501); Công nghệ sinh học (7420201); Hóa học (7440112); Vật lý học (7440102); Khoa học dữ liệu (7460108); Trí tuệ nhân tạo (7480107); Tâm lý học (7310401); Xã hội học (7310301).<br><i>* Ngành giao thoa/thiên hướng Nghiên cứu:</i> Kinh tế số (7310109); Toán kinh tế (7310108).",
-        "A": "Hội họa (7210103); Thiết kế đồ họa (7210403); Thiết kế thời trang (7210404); Thanh nhạc (7210205); Đạo diễn điện ảnh, truyền hình (7210235); Truyền thông đa phương tiện (7320104); Tiếng Việt và văn hóa Việt Nam (7220101); Kiến trúc (7580101); Diễn viên kịch, điện ảnh - truyền hình (7210234); Nhiếp ảnh (7210301).<br><i>* Ngành giao thoa/thiên hướng Nghệ thuật:</i> Sáng tác văn học (7220110); Thiết kế nội thất (7580108).",
-        "S": "Giáo dục Tiểu học (7140202); Giáo dục Mầm non (7140201); Sư phạm Toán học (7140209); Sư phạm Ngữ văn (7140217); Sư phạm Tiếng Anh (7140231); Công tác xã hội (7760101); Điều dưỡng (7720301); Y tế công cộng (7720701); Tâm lý học giáo dục (7310403); Giáo dục Đặc biệt (7140203).<br><i>* Ngành giao thoa/thiên hướng Xã hội:</i> Hỗ trợ giáo dục người khuyết tật (7760103); Quản trị nhân lực (7340404).",
-        "E": "Quản trị kinh doanh (7340101); Marketing (7340115); Kinh doanh quốc tế (7340120); Luật (7380101); Luật kinh tế (7380107); Quan hệ công chúng (7320108); Quản trị nhân lực (7340404); Quản lý nhà nước (7310205); Quản trị khách sạn (7810201); Quản trị dịch vụ du lịch và lữ hành (7810103).<br><i>* Ngành giao thoa/thiên hướng Quản lý:</i> Quản lý công (7340403).",
-        "C": "Kế toán (7340301); Kiểm toán (7340302); Tài chính - Ngân hàng (7340201); Thống kê kinh tế (7310107); Hệ thống thông tin quản lý (7340405); Quản trị văn phòng (7340406); Thông tin - Thư viện (7320201); Lưu trữ học (7320303); Thương mại điện tử (7340122); Bảo hiểm (7340204).<br><i>* Ngành giao thoa/thiên hướng Nghiệp vụ:</i> Thống kê (7460201).",
-        "D": "Trinh sát an ninh (7860101); Trinh sát cảnh sát (7860102); Điều tra hình sự (7860104); Kỹ thuật Công an nhân dân (7860107); Quản lý nhà nước về an ninh trật tự (7860109); Phòng cháy chữa cháy và cứu nạn cứu hộ (7860113); Chỉ huy tham mưu Lục quân (7860201); Biên phòng (7860214); Tình báo quân sự (7860217); Kỹ thuật hình sự (7860108)."
+        "R": "Kỹ thuật xây dựng (7580201); Kỹ thuật cơ khí (7520103); Công nghệ kỹ thuật ô tô (7510205); Khoa học máy tính (7480101); Kỹ thuật điện (7520201); Nông nghiệp (7620101); Công nghệ thực phẩm (7540101); Khai thác vận tải (7840101); Thú y (7640101); Kỹ thuật mỏ (7520601).<br><i>* Ngành giao thoa:</i> Kỹ thuật máy tính (7480106); Bảo hộ lao động (7850201).",
+        "I": "Y khoa (7720101); Dược học (7720201); Răng - Hàm - Mặt (7720501); Công nghệ sinh học (7420201); Hóa học (7440112); Vật lý học (7440102); Khoa học dữ liệu (7460108); Trí tuệ nhân tạo (7480107); Tâm lý học (7310401); Xã hội học (7310301).",
+        "A": "Hội họa (7210103); Thiết kế đồ họa (7210403); Thiết kế thời trang (7210404); Thanh nhạc (7210205); Đạo diễn điện ảnh (7210235); Truyền thông đa phương tiện (7320104); Kiến trúc (7580101); Nhiếp ảnh (7210301).",
+        "S": "Giáo dục Tiểu học (7140202); Giáo dục Mầm non (7140201); Sư phạm Toán (7140209); Sư phạm Ngữ văn (7140217); Công tác xã hội (7760101); Điều dưỡng (7720301); Y tế công cộng (7720701).",
+        "E": "Quản trị kinh doanh (7340101); Marketing (7340115); Kinh doanh quốc tế (7340120); Luật (7380101); Luật kinh tế (7380107); Quan hệ công chúng (7320108); Quản trị khách sạn (7810201).",
+        "C": "Kế toán (7340301); Kiểm toán (7340302); Tài chính - Ngân hàng (7340201); Thống kê kinh tế (7310107); Hệ thống thông tin quản lý (7340405); Quản trị văn phòng (7340406).",
+        "D": "Trinh sát an ninh (7860101); Trinh sát cảnh sát (7860102); Điều tra hình sự (7860104); Kỹ thuật Công an (7860107); Chỉ huy tham mưu Lục quân (7860201); Biên phòng (7860214); Tình báo quân sự (7860217)."
+    };
+
+    // Cơ sở dữ liệu Nghề nghiệp TRUNG CẤP, CAO ĐẲNG (Thông tư 26/2020)
+    const vocationalDatabase = {
+        "R": "Kỹ thuật xây dựng; Cắt gọt kim loại; Công nghệ ô tô; Điện công nghiệp; Điện tử công nghiệp; Bảo trì hệ thống thiết bị công nghiệp; Vận hành máy thi công nền; Lái xe ô tô; Chăn nuôi thú y; Trồng trọt và bảo vệ thực vật.",
+        "I": "Dược; Y sĩ; Kỹ thuật xét nghiệm y học; Lập trình máy tính; Quản trị mạng máy tính; Kỹ thuật phần mềm; Ứng dụng phần mềm; Kỹ thuật lắp ráp, sửa chữa máy tính; Kỹ thuật thiết bị y tế.",
+        "A": "Thiết kế đồ họa; May thời trang; Thiết kế thời trang; Nghệ thuật biểu diễn (Thanh nhạc, Múa, Kịch); Mỹ thuật ứng dụng; Điêu khắc; Thiết kế trang web; Quay phim; Nhiếp ảnh.",
+        "S": "Giáo dục mầm non; Điều dưỡng; Công tác xã hội; Hướng dẫn du lịch; Chăm sóc sắc đẹp; Phục hồi chức năng; Chăm sóc người già; Dịch vụ y tế.",
+        "E": "Quản trị doanh nghiệp vừa và nhỏ; Quản trị khách sạn; Quản lý nhà hàng và dịch vụ ăn uống; Bán hàng trong siêu thị; Marketing thương mại; Nghiệp vụ bán hàng; Logistics.",
+        "C": "Kế toán doanh nghiệp; Kế toán máy; Tài chính tín dụng; Hành chính văn phòng; Văn thư bảo mật; Lưu trữ học; Thư viện; Quản trị mạng máy tính.",
+        "D": "Quân sự cơ sở; Chỉ huy tham mưu; Trinh sát cảnh sát; Trinh sát an ninh; Kỹ thuật hình sự; Phòng cháy chữa cháy và cứu nạn cứu hộ; Kỹ thuật vũ khí; Sửa chữa khí tài."
     };
 
     function generateAIReport(top3, studentName) {
         const coreTraits = {
             "R": "Tư duy thực tế, khéo léo thao tác vật lý, làm việc xuất sắc với máy móc và công cụ.",
             "I": "Tư duy logic đa chiều, khả năng phân tích dữ liệu chuyên sâu và nghiên cứu độc lập.",
-            "A": "Năng lực sáng tạo đột phá, tư duy thẩm mỹ và linh hoạt trong giải quyết vấn đề bằng trực giác.",
-            "S": "Trí tuệ cảm xúc (EQ) dồi dào, thấu cảm sâu sắc và có năng lực sư phạm, hỗ trợ cộng đồng.",
-            "E": "Năng lực lãnh đạo, tầm nhìn chiến lược, khả năng thương thuyết và ra quyết định trong môi trường cạnh tranh.",
-            "C": "Tư duy hệ thống chặt chẽ, tuân thủ nghiêm ngặt quy trình và khả năng xử lý số liệu chính xác tuyệt đối.",
-            "D": "Kỷ luật thép, bản lĩnh vững vàng, trung thành và có năng lực phản ứng cực nhanh trong các tình huống khẩn cấp."
+            "A": "Năng lực sáng tạo đột phá, tư duy thẩm mỹ và linh hoạt trong giải quyết vấn đề.",
+            "S": "Trí tuệ cảm xúc cao, thấu cảm sâu sắc và có năng lực sư phạm, hỗ trợ cộng đồng.",
+            "E": "Năng lực lãnh đạo, tầm nhìn chiến lược, khả năng thương thuyết và ra quyết định nhanh.",
+            "C": "Tư duy hệ thống chặt chẽ, tuân thủ nghiêm ngặt quy trình và xử lý số liệu chính xác.",
+            "D": "Kỷ luật thép, bản lĩnh vững vàng, trung thành và phản ứng cực nhanh trong tình huống áp lực."
         };
 
         const workEnvs = {
-            "R": "các công xưởng, phòng thí nghiệm, công trường hoặc môi trường làm việc ngoài trời năng động.",
-            "I": "các viện nghiên cứu chiến lược, trung tâm R&D, phòng lab công nghệ cao hoặc trường đại học.",
-            "A": "các studio thiết kế, không gian văn hóa nghệ thuật, tòa soạn hoặc công ty truyền thông đa phương tiện.",
-            "S": "các cơ sở giáo dục, bệnh viện, tổ chức phi chính phủ (NGO) hoặc trung tâm tham vấn tâm lý.",
-            "E": "các tập đoàn đa quốc gia, hệ sinh thái khởi nghiệp, hoặc các cơ quan hành chính nhà nước cấp chiến lược.",
-            "C": "các trung tâm lưu trữ dữ liệu lớn, ngân hàng, cơ quan thuế, hải quan hoặc phòng kế toán kiểm toán.",
-            "D": "các cơ quan thực thi pháp luật, lực lượng vũ trang nhân dân, cơ quan tình báo hoặc đơn vị an ninh mạng quốc gia."
+            "R": "công xưởng, phòng thí nghiệm, công trường hoặc môi trường ngoài trời năng động.",
+            "I": "viện nghiên cứu chiến lược, trung tâm R&D, phòng lab công nghệ cao hoặc trường đại học.",
+            "A": "studio thiết kế, không gian văn hóa nghệ thuật, tòa soạn hoặc công ty truyền thông.",
+            "S": "cơ sở giáo dục, bệnh viện, tổ chức phi chính phủ (NGO) hoặc trung tâm tham vấn.",
+            "E": "tập đoàn đa quốc gia, hệ sinh thái khởi nghiệp, hoặc cơ quan hành chính nhà nước.",
+            "C": "trung tâm lưu trữ dữ liệu, ngân hàng, cơ quan thuế, hải quan hoặc phòng kế toán.",
+            "D": "cơ quan thực thi pháp luật, lực lượng vũ trang nhân dân, hoặc đơn vị an ninh mạng."
         };
 
-        let majorsHtml = `<ul style="line-height: 1.8;">`;
+        // Giao diện HTML của phần Đại học
+        let majorsHtml = `<ul style="line-height: 1.8; margin-bottom: 10px;">`;
         top3.forEach(t => { 
-            majorsHtml += `<li style="margin-bottom: 12px;"><strong>Nhóm ${traitNamesVN[t.category]}:</strong><br> ${majorDatabase[t.category]}</li>`; 
+            majorsHtml += `<li style="margin-bottom: 15px;"><strong>Nhóm ${traitNamesVN[t.category]}:</strong><br> ${majorDatabase[t.category]}</li>`; 
         });
         majorsHtml += `</ul>`;
+        majorsHtml += `<p style="font-style: italic; color: #2980b9;">Bạn có thể tìm các ngành nghề trên tại các trường đại học phù hợp với yều cầu, điều kiện và hoàn cảnh của bạn.</p>`;
+
+        // Giao diện HTML của phần Trung cấp/Cao đẳng
+        let vocationalHtml = `<ul style="line-height: 1.8; margin-bottom: 10px;">`;
+        top3.forEach(t => { 
+            vocationalHtml += `<li style="margin-bottom: 15px;"><strong>Nhóm ${traitNamesVN[t.category]}:</strong><br> ${vocationalDatabase[t.category]}</li>`; 
+        });
+        vocationalHtml += `</ul>`;
+        vocationalHtml += `<p style="font-style: italic; color: #2980b9;">Bạn có thể tìm các ngành nghề trên tại các trường trung cấp, cao đẳng có đào tạo, phù hợp với yều cầu, điều kiện và hoàn cảnh của bạn.</p>`;
 
         let trait1 = coreTraits[top3[0].category].replace('.', '');
         let trait2 = coreTraits[top3[1].category].replace('.', '').toLowerCase();
@@ -505,23 +671,29 @@
         return `
             <div class="ai-report-box">
                 <h4>🎯 1. Chân dung năng lực cốt lõi</h4>
-                <p>Thông qua việc phân tích chéo các dữ liệu từ mô hình Đa trí tuệ (Howard Gardner) và khung năng lực ASK, hệ thống nhận diện bạn <strong>${studentName}</strong> đang sở hữu một tổ hợp năng lực đặc biệt. Bạn nổi bật với <strong>${trait1}</strong>, đồng thời kết hợp linh hoạt với <strong>${trait2}</strong>. Sự giao thoa này cho thấy bạn không chỉ có kiến thức (Knowledge) nền tảng vững vàng mà còn có thái độ (Attitude) giải quyết vấn đề vượt trội.</p>
+                <p>Phân tích đa chiều cho thấy bạn <strong>${studentName}</strong> nổi bật với <strong>${trait1}</strong>, đồng thời kết hợp linh hoạt với <strong>${trait2}</strong>. Đây là cấu trúc năng lực rất quý giá trong thị trường lao động hiện đại.</p>
             </div>
             
             <div class="ai-report-box">
                 <h4>🏢 2. Môi trường làm việc lý tưởng</h4>
-                <p>Với chỉ số G-Factor (Tư duy nhạy bén) và nhóm tính cách hiện tại, bạn sẽ phát huy tối đa tiềm năng và đạt trạng thái "Flow" (đam mê và tập trung cao độ) khi được gắn bó với ${env1} Ở đó, các năng lực bẩm sinh của bạn sẽ được kích hoạt trọn vẹn.</p>
+                <p>Bạn sẽ phát huy tối đa tiềm năng, sự sáng tạo và cảm thấy hứng thú nhất khi được gắn bó với môi trường thuộc ${env1}</p>
             </div>
             
             <div class="ai-report-box">
                 <h4>🎓 3. Nhóm ngành đào tạo tương thích (Thông tư 09/2022/TT-BGDĐT)</h4>
-                <p>Để định hướng lộ trình vào Đại học/Học viện chính xác nhất, hệ thống đã đối chiếu cấu trúc năng lực của bạn với <strong>Danh mục thống kê ngành đào tạo của giáo dục đại học quốc gia</strong> do Bộ trưởng Bộ GD&ĐT ban hành. Dưới đây là các ngành học cấp IV tiềm năng nhất:</p>
+                <p>Dựa trên cấu trúc năng lực, AI gợi ý các nhóm ngành học đại học tối ưu nhất cho bạn:</p>
                 ${majorsHtml}
+            </div>
+
+            <div class="ai-report-box">
+                <h4>🛠️ 4. Nhóm nghề đào tạo tương thích (Thông tư 26/2020/TT-BLĐTBXH)</h4>
+                <p>Nếu bạn yêu thích học nghề thì dưới đây là các nghề bạn có thể theo học:</p>
+                ${vocationalHtml}
             </div>
             
             <div class="ai-report-box">
-                <h4>📈 4. Tầm nhìn thị trường lao động (2026 - 2030)</h4>
-                <p>Theo dữ liệu dự báo nhân lực, kỷ nguyên Trí tuệ nhân tạo đang loại bỏ dần các công việc có tính lặp lại (routine tasks). Tuy nhiên, bộ mật mã năng lực của bạn chứa đựng những "điểm chạm nhân bản" và khả năng ra quyết định phức tạp - những kỹ năng mà AI không thể thay thế. Nếu tiếp tục trau dồi các kỹ năng cốt lõi thuộc nhóm <strong>${traitNamesVN[top3[0].category]}</strong>, bạn chắc chắn sẽ thuộc nhóm nhân sự chất lượng cao, có năng lực cạnh tranh toàn cầu trong 5-10 năm tới.</p>
+                <h4>📈 5. Tầm nhìn thị trường lao động (2026 - 2030)</h4>
+                <p>Bộ mật mã năng lực của bạn chứa đựng những 'điểm chạm nhân bản' và khả năng ra quyết định phức tạp - những kỹ năng mà AI không thể thay thế. Nếu tiếp tục trau dồi các kỹ năng cốt lõi thuộc nhóm <strong>${traitNamesVN[top3[0].category]}</strong>, bạn sẽ thuộc nhóm nhân sự chất lượng cao, có năng lực cạnh tranh toàn cầu.</p>
             </div>
         `;
     }
@@ -536,14 +708,14 @@
 
         const btn = document.getElementById('download-btn');
         const originalText = btn.innerText;
-        btn.innerText = "⏳ Hệ thống đang xử lý và đóng gói file in...";
+        btn.innerText = "⏳ Đang tạo file in... Vui lòng đợi trong giây lát";
         btn.disabled = true;
 
         const opt = {
             margin:       10, 
             filename:     fileName,
-            image:        { type: 'jpeg', quality: 1 }, 
-            html2canvas:  { scale: 2, useCORS: true, scrollY: 0, backgroundColor: '#ffffff' },
+            image:        { type: 'jpeg', quality: 0.98 }, 
+            html2canvas:  { scale: 2, useCORS: true, scrollY: 0, backgroundColor: '#ffffff', logging: false },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
@@ -551,7 +723,7 @@
             btn.innerText = originalText;
             btn.disabled = false;
         }).catch(err => {
-            alert("Đã xảy ra lỗi trong quá trình tạo PDF. Vui lòng thử lại.");
+            alert("Đã xảy ra lỗi khi tạo PDF. Bạn vui lòng thử lại trên trình duyệt khác!");
             btn.innerText = originalText;
             btn.disabled = false;
         });
