@@ -661,7 +661,7 @@
             "A": "Năng lực sáng tạo đột phá, tư duy thẩm mỹ và linh hoạt trong giải quyết vấn đề.",
             "S": "Trí tuệ cảm xúc cao, thấu cảm sâu sắc và có năng lực sư phạm, hỗ trợ cộng đồng.",
             "E": "Năng lực lãnh đạo, tầm nhìn chiến lược, khả năng thương thuyết và ra quyết định nhanh.",
-            "C": "Tư duy hệ thống chặt chẽ, tuân thủ nghiêm ngặt quy trình và xử lý số liệu chính xác.",
+            "C": "Tư duy hệ thống chặt column chẽ, tuân thủ nghiêm ngặt quy trình và xử lý số liệu chính xác.",
             "D": "Kỷ luật thép, bản lĩnh vững vàng, trung thành và phản ứng cực nhanh trong tình huống áp lực."
         };
 
@@ -675,23 +675,35 @@
             "D": "cơ quan thực thi pháp luật, lực lượng vũ trang nhân dân, hoặc đơn vị an ninh mạng."
         };
 
+        // BỘ DỮ LIỆU DỰ BÁO XU HƯỚNG TƯƠNG LẠI (Dành riêng cho mục 5)
+        const marketTrends = {
+            "R": "Giai đoạn 2026-2030, Việt Nam tiếp tục đón làn sóng FDI mạnh mẽ vào lĩnh vực công nghiệp và tự động hóa. Nhu cầu nhân lực kỹ thuật (kỹ sư cơ điện tử, công nghệ ô tô, IoT, xây dựng) đang tăng vọt. Kỹ năng vận hành máy móc và tư duy thực hành của bạn sẽ là chìa khóa để nắm bắt các cơ hội thu nhập cao trong nền công nghiệp 4.0.",
+            "I": "Với sự bùng nổ của AI, Big Data và công nghệ sinh học, thị trường đang cực kỳ 'khát' nhân sự R&D, chuyên gia dữ liệu và y bác sĩ chất lượng cao. Khả năng tư duy logic và nghiên cứu độc lập của bạn là lợi thế lớn nhất. Bạn thuộc nhóm ngành dẫn dắt nền kinh tế số, mang lại vị thế chuyên gia khó bị thay thế bởi máy móc.",
+            "A": "Kỷ nguyên số chứng kiến sự lên ngôi của ngành sáng tạo nội dung, thiết kế UX/UI và truyền thông đa phương tiện. Trong khi AI có thể làm thay các công việc rập khuôn, thì sự sáng tạo nguyên bản, tư duy thẩm mỹ và tính cá nhân hóa (điểm mạnh của bạn) lại càng trở nên đắt giá. Nhu cầu nhân lực kinh tế sáng tạo dự báo tăng trưởng trên 20%/năm.",
+            "S": "Dân số già hóa và áp lực tâm lý xã hội đang làm gia tăng mạnh mẽ nhu cầu về y tế, giáo dục, tham vấn tâm lý và dịch vụ xã hội. Nhóm ngành này cực kỳ an toàn trước làn sóng tự động hóa vì máy móc không thể thay thế trí tuệ cảm xúc (EQ) và sự thấu cảm. Năng lực kết nối và chăm sóc của bạn sẽ luôn là mảnh ghép thiết yếu của xã hội.",
+            "E": "Chuyển đổi số, thương mại điện tử xuyên biên giới và hệ sinh thái khởi nghiệp đang thay đổi cách doanh nghiệp vận hành. Thị trường đang rất cần những nhân sự có tầm nhìn chiến lược, khả năng đàm phán và thích ứng nhanh với biến động. Năng lực lãnh đạo và tư duy kinh doanh của bạn sẽ mở ra cơ hội vươn lên các vị trí quản lý cấp cao.",
+            "C": "Chuyển đổi số trong tài chính, ngân hàng và logistics đang định hình lại nhóm ngành nghiệp vụ. Dù công việc văn thư cơ bản có xu hướng tự động hóa, thị trường lại cực kỳ thiếu hụt chuyên gia phân tích dữ liệu tài chính, quản trị chuỗi cung ứng và kế toán chiến lược. Tư duy hệ thống và sự chính xác tuyệt đối của bạn là bảo chứng cho sự nghiệp bền vững.",
+            "D": "Trước thách thức về an ninh mạng, tội phạm công nghệ cao và yêu cầu bảo vệ chủ quyền, nhà nước đang đầu tư mạnh mẽ để hiện đại hóa lực lượng vũ trang và cơ quan thực thi pháp luật. Khả năng tuân thủ kỷ luật, bản lĩnh vững vàng và sự nhạy bén của bạn rất phù hợp để trở thành sĩ quan, chuyên gia an ninh hoặc trinh sát trong tình hình mới."
+        };
+
         let majorsHtml = `<ul style="line-height: 1.8; margin-bottom: 10px;">`;
         top3.forEach(t => { 
             majorsHtml += `<li style="margin-bottom: 15px;"><strong>Nhóm ${traitNamesVN[t.category]}:</strong><br> ${majorDatabase[t.category]}</li>`; 
         });
         majorsHtml += `</ul>`;
-        majorsHtml += `<p style="font-style: italic; color: #2980b9;">Bạn có thể tìm các ngành nghề trên tại các trường đại học phù hợp với yều cầu, điều kiện và hoàn cảnh của bạn.</p>`;
+        majorsHtml += `<p style="font-style: italic; color: #2980b9;">Bạn có thể tìm các ngành nghề trên tại các trường đại học phù hợp với yêu cầu, điều kiện và hoàn cảnh của bạn.</p>`;
 
         let vocationalHtml = `<ul style="line-height: 1.8; margin-bottom: 10px;">`;
         top3.forEach(t => { 
             vocationalHtml += `<li style="margin-bottom: 15px;"><strong>Nhóm ${traitNamesVN[t.category]}:</strong><br> ${vocationalDatabase[t.category]}</li>`; 
         });
         vocationalHtml += `</ul>`;
-        vocationalHtml += `<p style="font-style: italic; color: #2980b9;">Bạn có thể tìm các ngành nghề trên tại các trường trung cấp, cao đẳng có đào tạo, phù hợp với yều cầu, điều kiện và hoàn cảnh của bạn.</p>`;
+        vocationalHtml += `<p style="font-style: italic; color: #2980b9;">Bạn có thể tìm các ngành nghề trên tại các trường trung cấp, cao đẳng có đào tạo, phù hợp với yêu cầu, điều kiện và hoàn cảnh của bạn.</p>`;
 
         let trait1 = coreTraits[top3[0].category].replace('.', '');
         let trait2 = coreTraits[top3[1].category].replace('.', '').toLowerCase();
         let env1 = workEnvs[top3[0].category];
+        let marketForecast = marketTrends[top3[0].category]; // Trích xuất dự báo đúng theo Top 1
 
         return `
             <div class="ai-report-box">
@@ -718,7 +730,7 @@
             
             <div class="ai-report-box">
                 <h4>📈 5. Tầm nhìn thị trường lao động (2026 - 2030)</h4>
-                <p>Bộ mật mã năng lực của bạn chứa đựng những 'điểm chạm nhân bản' và khả năng ra quyết định phức tạp - những kỹ năng mà AI không thể thay thế. Nếu tiếp tục trau dồi các kỹ năng cốt lõi thuộc nhóm <strong>${traitNamesVN[top3[0].category]}</strong>, bạn sẽ thuộc nhóm nhân sự chất lượng cao, có năng lực cạnh tranh toàn cầu.</p>
+                <p>${marketForecast}</p>
             </div>
         `;
     }
